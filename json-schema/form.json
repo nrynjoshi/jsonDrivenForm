@@ -1,11 +1,35 @@
 {
-  "name": {
-    "type": "string",
-    "title": "Name",
-    "required": true
+  "schema" : {
+    "name": {
+      "type": "string",
+      "title": "Name",
+      "description": "Enter you name here",
+      "required": true
+    },
+    "age": {
+      "type": "number",
+      "title": "Age"
+    },
+    "password": {
+      "type": "string",
+      "title": "password",
+      "default": ""
+    }
   },
-  "age": {
-    "type": "number",
-    "title": "Age"
-  }
+  "form": [
+    "name",
+    {
+      "type": "actions",
+      "items": [
+        {
+          "type": "submit",
+          "title": "Submit"
+        },
+        {
+          "type": "button",
+          "title": "Cancel"
+        }
+      ]
+    }
+  ]
 }

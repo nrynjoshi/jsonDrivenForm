@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script src='<c:url value="/js/underscore-min.js"/>'></script>
 <script src='<c:url value="/js/jsonform.min.js"/>'></script>
 <script type="text/javascript">
