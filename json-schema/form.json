@@ -1,35 +1,40 @@
 {
-  "schema" : {
-    "name": {
-      "type": "string",
-      "title": "Name",
-      "description": "Enter you name here",
-      "required": true
-    },
-    "age": {
-      "type": "number",
-      "title": "Age"
-    },
-    "password": {
-      "type": "string",
-      "title": "password",
-      "default": ""
+  "definitions":{
+    "method":"POST",
+    "action":"/save",
+    "jsmethod":"formSubmit()",
+    "class":"",
+    "id":"",
+    "fields":{
+       "name":{
+         "type":"text",
+         "label":"Full Name",
+         "placeholder":"Enter your name",
+         "value":"",
+         "gridindex":"1,1",
+         "jsvalidation":"",
+         "submittransform":"",
+         "icon":"",
+         "required":true
+       },
+       "email":{
+        "type":"text",
+        "label":"Email",
+        "value":"",
+        "gridindex":"1,1",
+        "jsvalidation":"",
+        "submittransform":""
+      },
+      "create":{
+        "type":"submit",
+        "label":"Create",
+        "value":"",
+        "gridindex":"1,1",
+        "jsvalidation":"",
+        "submittransform":"",
+        "class":"btn btn-success submitButton"
+      }
+
     }
-  },
-  "form": [
-    "name",
-    {
-      "type": "actions",
-      "items": [
-        {
-          "type": "submit",
-          "title": "Submit"
-        },
-        {
-          "type": "button",
-          "title": "Cancel"
-        }
-      ]
-    }
-  ]
+  }
 }

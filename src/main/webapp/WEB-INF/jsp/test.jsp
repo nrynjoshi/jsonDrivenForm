@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+         pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>JSON Form</title>
+    <title>JSON Form Builder</title>
     <link rel="stylesheet" href='<c:url value="/css/bootstrap.min.css"/>'>
     <style>
         pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
@@ -18,42 +18,39 @@
         .key { color: red; }
     </style>
 </head>
-<body>
-
-<div class="Container">
-    <div class="row" style="height: 100%;">
-        <div class="col-md-2" style="background-color: #e8e8e8">
-
-
-        </div>
-        <div class="col-md-6">
-            <div class="card-body">
-                <form class="jsonFormPopulate" action="/" data-jsonURI="" method="POST"></form>
+<body style="background-color: #D3D3D3">
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">RAW JSON Form </h3>
             </div>
-        </div>
-        <div class="col-md-4" style="background-color: #141414;color: white;">
-
-            <div id="json-content">
-                {
-                ${form_schema_defination}
-                <c:if test="${not empty form_defination}">
-                    ,form:${form_defination}
-                </c:if>
-                <c:if test="${not empty form_value}">
-                    ,value:${form_value},
-                </c:if>
-                }
+            <div class="card-body">
+                <div id="json-content">
+                    ${unProcessedJSON}
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">JSON Form Builder</h3>
+            </div>
+            <div class="card-body">
+
+                ${JSONForm}
+            </div>
+        </div>
+    </div>
+
+</div>
 <!-- Javascript files-->
 <script src='<c:url value="/js/jquery-3.2.1.min.js"/>'></script>
-<script src='<c:url value="/js/underscore-min.js"/>'></script>
 <script src='<c:url value="/js/popper.js"/>'></script>
 <script src='<c:url value="/js/bootstrap.js"/>'></script>
-<jsp:include page="jsonform.jsp"/>
+
 <script>
     $(document).ready(function(){
         var prettyJSON=syntaxHighlight();
@@ -80,9 +77,8 @@
                 return '<span class="' + cls + '">' + match + '</span>';
             });
         }
-
     });
-
 </script>
+
 </body>
 </html>
