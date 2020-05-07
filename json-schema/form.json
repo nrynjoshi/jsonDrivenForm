@@ -15,7 +15,9 @@
          "jsvalidation":"",
          "submittransform":"",
          "icon":"",
-         "required":true
+         "required":true,
+         "class": "",
+         "id": ""
        },
        "email":{
         "type":"text",

@@ -2,28 +2,48 @@ package com.jsondrivenform;
 
 import freemarker.template.TemplateException;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller
 public class TestController {
 
-    @Autowired TemplateParser templateParser;
-
+    @Autowired
+    TemplateParser templateParser;
 
     @GetMapping("/")
     public String page(Model model) throws IOException, TemplateException {
-        String execute = templateParser.execute(new File("C:\\narayan-joshi-files\\subodh\\jsondrivenform\\jsondrivenform\\json-schema\\form.json"));
-        model.addAttribute("JSONForm",execute);
-        String unProcessedJSON = FileUtils.readFileToString(new File("C:\\narayan-joshi-files\\subodh\\jsondrivenform\\jsondrivenform\\json-schema\\form.json"), StandardCharsets.UTF_8);
-        model.addAttribute("unProcessedJSON",unProcessedJSON);
+        File file = Paths.get("json-schema", "form.json").toFile();
+        String execute = templateParser.execute(file);
+        String unProcessedJSON = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+
+        model.addAttribute("JSONForm", execute);
+        model.addAttribute("unProcessedJSON", unProcessedJSON);
         return "test";
     }
+
+    @PostMapping("/")
+    public @ResponseBody
+    String pageUpdate(@RequestBody MultiValueMap jsonMap) throws IOException, TemplateException {
+        String json= (String) jsonMap.toSingleValueMap().get("json");
+        if (StringUtils.isBlank(json)) {
+            return "test";
+        }
+        String  execute = templateParser.execute(json);
+        return execute;
+    }
+
+
 }
