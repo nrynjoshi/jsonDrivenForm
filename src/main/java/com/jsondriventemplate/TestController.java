@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class TestController {
@@ -29,6 +32,11 @@ public class TestController {
 
         model.addAttribute("JSONForm", execute);
         model.addAttribute("unProcessedJSON", unProcessedJSON);
+        List jsonList =Files.walk(Paths.get("json-schema"))
+                .filter(Files::isRegularFile)
+                .map(path ->StringUtils.replace( path.getFileName().toString(),"json-schema\\",""))
+                .collect(Collectors.toList());
+        model.addAttribute("jsonList",jsonList);
         return "test";
     }
 

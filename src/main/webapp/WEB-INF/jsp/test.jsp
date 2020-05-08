@@ -61,16 +61,15 @@
 
     </style>
 </head>
-<body style="background-color: #D3D3D3">
+<body>
 <div class="row">
-    <div class="col-lg-12" style="background-color: floralwhite !important;">
+    <div class="col-lg-12">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-        <div class="card-header d-flex align-items-center">
-            <div class="col-lg-6">
-                <h3 class="h4">JSON Driven Template</h3>
-            </div>
-
-        </div>
+            <a class="navbar-brand" href="/">
+                <img src="images/json.png" height="32px" class="d-inline-block align-top" alt="">
+                Driven Template</a>
+        </nav>
     </div>
 
 
