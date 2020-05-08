@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>JSON Form Builder</title>
+    <title>JSON HTML Template Builder</title>
     <link rel="stylesheet" href='<c:url value="/css/bootstrap.min.css"/>'>
     <style>
         pre {
@@ -66,7 +66,7 @@
 
         <div class="card-header d-flex align-items-center">
             <div class="col-lg-6">
-                <h3 class="h4">JSON Form Builder</h3>
+                <h3 class="h4">JSON Template Builder</h3>
             </div>
             <div class="col-lg-6 pull-right">
                 <button type="button" id="run" class="btn btn-primary">Run</button>

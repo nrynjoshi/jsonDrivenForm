@@ -1,5 +1,6 @@
 {
   "definitions":{
+    "type":"form",
     "method":"POST",
     "action":"/save",
     "jsmethod":"formSubmit()",
