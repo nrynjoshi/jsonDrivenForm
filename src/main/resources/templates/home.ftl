@@ -1,9 +1,4 @@
-<#switch definitions.type>
-    <#case "form" >
-        <#include "form.ftl" >
-        <#break>
-    <#case "table" >
-        <#include "table.ftl" >
-        <#break>
-</#switch>
 
+<#include "layout/header.ftl">
+<#include "body.ftl" >
+<#include "layout/footer.ftl">

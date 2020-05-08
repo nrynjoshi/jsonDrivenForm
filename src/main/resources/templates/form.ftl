@@ -1,11 +1,11 @@
-<form   <#if definitions.class?has_content> class="${definitions.class}" </#if>
-        <#if definitions.id?has_content> id="${definitions.id}" </#if>
-        <#if definitions.method?has_content> method="${definitions.method}" </#if>
-        <#if definitions.action?has_content> action="${definitions.action}" </#if>
-        <#if definitions.jsmethod?has_content> onsubmit="${definitions.jsmethod}" </#if>
+<form   <#if element.definitions.class?has_content> class="${element.definitions.class}" </#if>
+        <#if element.definitions.id?has_content> id="${element.definitions.id}" </#if>
+        <#if element.definitions.method?has_content> method="${element.definitions.method}" </#if>
+        <#if element.definitions.action?has_content> action="${element.definitions.action}" </#if>
+        <#if element.definitions.jsmethod?has_content> onsubmit="${element.definitions.jsmethod}" </#if>
 >
-    <#list definitions.fields?keys as name>
-        <#assign field=definitions.fields[name]>
+    <#list element.definitions.fields?keys as name>
+        <#assign field=element.definitions.fields[name]>
         <#switch field.type>
             <#case "select" >
                 CASE2

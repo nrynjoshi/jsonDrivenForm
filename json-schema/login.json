@@ -1,0 +1,14 @@
+{
+  "definitions": {
+    "title": "JSON Template Builder Login",
+    "layout": "layout.json",
+    "body": {
+      "css": ""
+    },
+    "elements": [
+      {
+        "$ref": "/login-form.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "definitions":{
+    "type":"form",
+    "method":"POST",
+    "action":"/login",
+    "class":"",
+    "id":"",
+    "fields":{
+      "username":{
+        "type":"text",
+        "label":"Username",
+        "placeholder":"Enter your username",
+        "value":"",
+        "gridindex":"1,1",
+        "jsvalidation":"",
+        "submittransform":"",
+        "icon":"",
+        "required":true,
+        "class": "",
+        "id": ""
+      },
+      "password":{
+        "type":"password",
+        "label":"Password",
+        "placeholder":"Enter your password",
+        "value":"",
+        "gridindex":"1,1",
+        "jsvalidation":"",
+        "submittransform":"",
+        "icon":"",
+        "required":true,
+        "class": "",
+        "id": ""
+      },
+
+      "create":{
+        "type":"submit",
+        "label":"Login",
+        "value":"",
+        "gridindex":"1,1",
+        "jsvalidation":"",
+        "submittransform":"",
+        "class":"btn btn-success submitButton"
+      }
+
+    }
+  }
+}

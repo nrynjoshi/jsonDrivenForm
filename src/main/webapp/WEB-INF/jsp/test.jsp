@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>JSON Driven Template</title>
     <link rel="stylesheet" href='<c:url value="/css/bootstrap.min.css"/>'>
+    <link rel="stylesheet" href='<c:url value="/css/json-viewer.css"/>'>
     <style>
         pre {
             outline: 1px solid #ccc;
@@ -94,6 +95,7 @@
 <script src='<c:url value="/js/popper.js"/>'></script>
 <script src='<c:url value="/js/bootstrap.js"/>'></script>
 <script src='<c:url value="/js/jquery.json-editor.min.js"/>'></script>
+<script src='<c:url value="/js/json-viewer.js"/>'></script>
 
 <script>
 
