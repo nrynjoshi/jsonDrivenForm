@@ -68,9 +68,7 @@
             <div class="col-lg-6">
                 <h3 class="h4">JSON Template Builder</h3>
             </div>
-            <div class="col-lg-6 pull-right">
-                <button type="button" id="run" class="btn btn-primary">Run</button>
-            </div>
+
         </div>
     </div>
 
@@ -79,7 +77,10 @@
                 <pre id="json-display" style="overflow: scroll;height: 570px;">${unProcessedJSON}</pre>
     </div>
 
-    <div class="col-lg-6 p-0 mt-3">
+    <div class="col-lg-6 p-0">
+        <div class="col-lg-12 mt-1 mb-1">
+            <button type="button" id="run" class="btn btn-primary">Run</button>
+        </div>
         <div class="card">
             <div class="card-body" id="json-form">
                 ${JSONForm}

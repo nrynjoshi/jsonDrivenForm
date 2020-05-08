@@ -2,8 +2,8 @@
     <#case "form" >
         <#include "form.ftl" >
         <#break>
-    <#case "button" >
-        <#include "button.ftl" >
+    <#case "table" >
+        <#include "table.ftl" >
         <#break>
 </#switch>
 
