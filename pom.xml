@@ -9,11 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com</groupId>
-	<artifactId>jsondrivenform</artifactId>
+	<artifactId>jsondriventemplate</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>jsondrivenform</name>
-	<description>JSON Driven Forms</description>
+	<name>JSON Driven Template</name>
+	<description>JSON Driven Template</description>
 
 	<properties>
 		<java.version>1.8</java.version>

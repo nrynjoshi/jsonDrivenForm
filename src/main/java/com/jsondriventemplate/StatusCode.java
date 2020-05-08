@@ -1,4 +1,4 @@
-package com.jsondrivenform;
+package com.jsondriventemplate;
 
 public enum  StatusCode {
 

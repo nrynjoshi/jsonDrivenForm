@@ -1,7 +1,7 @@
-package com.jsondrivenform;
+package com.jsondriventemplate;
 
-import com.jsondrivenform.config.MessageReader;
-import com.jsondrivenform.exception.URINotFoundException;
+import com.jsondriventemplate.config.MessageReader;
+import com.jsondriventemplate.exception.URINotFoundException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -43,7 +43,7 @@ public class TemplateParser {
         paramMap.put("layout",layoutProcess(jsonData));
         paramMap.put("element",element(jsonData));
         Template template = configuration.getTemplate("home.ftl");
-        return execute(jsonData,template,paramMap);
+        return executeDef(jsonData,template,paramMap);
     }
 
     private Map<String,Object> layoutProcess(String  jsonData) throws IOException, TemplateException {
@@ -90,5 +90,10 @@ public class TemplateParser {
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, dataMap);
     }
 
+    private String executeDef(String json, Template template, Map<String, Object> paramMap) throws IOException, TemplateException {
+        Map<String, Object> dataMap = JSONLoader.mapper(json);
+        dataMap.putAll(paramMap);
+        return FreeMarkerTemplateUtils.processTemplateIntoString(template, dataMap);
+    }
 
 }

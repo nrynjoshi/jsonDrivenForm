@@ -1,4 +1,4 @@
-package com.jsondrivenform.exception;
+package com.jsondriventemplate.exception;
 
 public class URINotFoundException  extends Exception {
 

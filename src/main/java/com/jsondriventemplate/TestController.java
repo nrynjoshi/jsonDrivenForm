@@ -1,4 +1,4 @@
-package com.jsondrivenform;
+package com.jsondriventemplate;
 
 import freemarker.template.TemplateException;
 import org.apache.commons.io.FileUtils;

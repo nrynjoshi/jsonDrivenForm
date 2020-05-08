@@ -1,4 +1,4 @@
-package com.jsondrivenform;
+package com.jsondriventemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

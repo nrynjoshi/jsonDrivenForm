@@ -1,4 +1,4 @@
-package com.jsondrivenform;
+package com.jsondriventemplate;
 
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;

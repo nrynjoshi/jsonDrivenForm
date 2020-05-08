@@ -1,13 +1,13 @@
-package com.jsondrivenform;
+package com.jsondriventemplate;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JSONDrivenFormApplication {
+public class JSONDrivenTemplateApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(JSONDrivenFormApplication.class, args);
+        SpringApplication.run(JSONDrivenTemplateApplication.class, args);
     }
 
 }

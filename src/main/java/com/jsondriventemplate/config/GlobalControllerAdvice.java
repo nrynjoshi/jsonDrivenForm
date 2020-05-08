@@ -1,6 +1,6 @@
-package com.jsondrivenform.config;
+package com.jsondriventemplate.config;
 
-import com.jsondrivenform.exception.URINotFoundException;
+import com.jsondriventemplate.exception.URINotFoundException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
