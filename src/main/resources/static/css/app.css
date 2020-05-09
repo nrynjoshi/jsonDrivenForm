@@ -1,5 +1,9 @@
 .center-content {
-    min-height: 100vh; /* These two lines are counted as one :-)       */
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
+}
+
+.min-vw-70{
+    min-width: 70vh;
 }

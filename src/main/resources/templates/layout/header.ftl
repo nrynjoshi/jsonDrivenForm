@@ -8,5 +8,5 @@
         <link rel="stylesheet" href="${cssURL}">
     </#list>
 </head>
-<body <#if definitions.body.css?has_content> <label>${definitions.body.css}</label> </#if> >
+<body >
 

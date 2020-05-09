@@ -61,7 +61,7 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12 pr-0">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
             <div class="col-lg-5">
@@ -79,7 +79,7 @@
 
 
     <div class="col-lg-6 pr-0 pt-0" >
-                <pre id="json-display" style="overflow: scroll;height: 85vh">${unProcessedJSON}</pre>
+                <pre id="json-display" style="overflow: scroll;height: 90vh">${unProcessedJSON}</pre>
     </div>
 
     <div class="col-lg-6 p-0">

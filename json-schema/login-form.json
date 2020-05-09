@@ -3,14 +3,14 @@
     "type":"form",
     "method":"POST",
     "action":"/login",
-    "class":"center-content",
+    "class":"",
     "id":"",
     "fields":{
       "username":{
         "type":"text",
         "label":"Username",
         "placeholder":"Enter your username",
-        "template":"div.form-group",
+        "snippet":"div.form-group",
         "value":"",
         "gridindex":"1,1",
         "jsvalidation":"",
@@ -24,7 +24,7 @@
         "type":"password",
         "label":"Password",
         "placeholder":"Enter your password",
-        "template":"div.form-group",
+        "snippet":"div.form-group",
         "value":"",
         "gridindex":"1,1",
         "jsvalidation":"",
@@ -42,7 +42,7 @@
         "gridindex":"1,1",
         "jsvalidation":"",
         "submittransform":"",
-        "class":"btn btn-primary"
+        "class":"btn btn-primary btn-block"
       }
 
     }
