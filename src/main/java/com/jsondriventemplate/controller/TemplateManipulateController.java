@@ -1,9 +1,9 @@
-package com.jsondriventemplate;
+package com.jsondriventemplate.controller;
 
+import com.jsondriventemplate.AppInject;
 import freemarker.template.TemplateException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -18,16 +18,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class TestController {
+@RequestMapping("/admin")
+public class TemplateManipulateController {
 
-    @Autowired
-    TemplateParser templateParser;
 
-    @GetMapping("/")
-    public String page(Model model, @RequestParam(name = "query",defaultValue = "sample",required = false) String query) throws Exception {
-        templateParser.validateURIJSON(query);
+    @GetMapping("/dashboard")
+    public String dashboard(Model model, @RequestParam(name = "query",defaultValue = "sample",required = false) String query) throws Exception {
+        AppInject.templateParser.validateURIJSON(query);
         File file = Paths.get("json-schema", query+".json").toFile();
-        String execute = templateParser.execute(file);
+        String execute = AppInject.templateParser.execute(file);
         String unProcessedJSON = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
 
         model.addAttribute("JSONForm", execute);
@@ -37,19 +36,17 @@ public class TestController {
                 .map(path ->StringUtils.replace( path.getFileName().toString(),"json-schema\\",""))
                 .collect(Collectors.toList());
         model.addAttribute("jsonList",jsonList);
-        return "test";
+        return "admin/dashboard";
     }
 
-
-
-    @PostMapping("/")
+    @PostMapping("/dashboard")
     public @ResponseBody
     String pageUpdate(@RequestBody MultiValueMap jsonMap) throws IOException, TemplateException {
         String json= (String) jsonMap.toSingleValueMap().get("json");
         if (StringUtils.isBlank(json)) {
-            return "test";
+            return "Non thing to display..";
         }
-        String  execute = templateParser.execute(json);
+        String  execute = AppInject.templateParser.execute(json);
         return execute;
     }
 

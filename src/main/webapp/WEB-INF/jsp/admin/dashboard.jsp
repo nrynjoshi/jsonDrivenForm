@@ -57,8 +57,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
-
-
     </style>
 </head>
 <body>
@@ -66,7 +64,7 @@
     <div class="col-lg-12">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="javaScript:void(0)">
                 <img src="images/json.png" height="32px" class="d-inline-block align-top" alt="">
                 Driven Template</a>
         </nav>
@@ -74,7 +72,7 @@
 
 
     <div class="col-lg-6 pr-0 pt-0" >
-                <pre id="json-display" style="overflow: scroll;height: 570px;">${unProcessedJSON}</pre>
+                <pre id="json-display" style="overflow: scroll;height: 85vh">${unProcessedJSON}</pre>
     </div>
 
     <div class="col-lg-6 p-0">
@@ -112,20 +110,14 @@
 
             $.ajax({
                 type: 'POST',
-                url: "/",
+                url: "/admin/dashboard",
                 data: {json:data},
                 success: function(resultData) {
                     $('#json-form').html(resultData);
                 },
             });
         });
-
-
     });
-
-
-
-
 </script>
 
 </body>

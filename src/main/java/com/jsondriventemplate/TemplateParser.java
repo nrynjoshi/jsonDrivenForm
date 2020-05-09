@@ -1,14 +1,11 @@
 package com.jsondriventemplate;
 
-import com.jsondriventemplate.config.MessageReader;
 import com.jsondriventemplate.exception.URINotFoundException;
-import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
@@ -22,18 +19,15 @@ import java.util.Map;
 @Component
 public class TemplateParser {
 
-    @Autowired
-    private Configuration configuration;
-    @Autowired
-    private MessageReader messageReader;
+
 
     public void validateURIJSON(String uri) throws Exception {
         if (StringUtils.isBlank(uri)) {
-            throw new URINotFoundException(messageReader.get(StatusCode.NOT_FOUND.value()));
+            throw new URINotFoundException(AppInject.messageReader.get(StatusCode.NOT_FOUND.value()));
         }
         File file = Paths.get("json-schema", uri + ".json").toFile();
         if (!file.exists()) {
-            throw new URINotFoundException(messageReader.get(StatusCode.NOT_FOUND.value()));
+            throw new URINotFoundException(AppInject.messageReader.get(StatusCode.NOT_FOUND.value()));
         }
     }
 
@@ -42,7 +36,7 @@ public class TemplateParser {
         Map<String,Object> paramMap=new HashMap<>();
         paramMap.put("layout",layoutProcess(jsonData));
         paramMap.put("element",element(jsonData));
-        Template template = configuration.getTemplate("home.ftl");
+        Template template = AppInject.configuration.getTemplate("home.ftl");
         return executeDef(jsonData,template,paramMap);
     }
 
@@ -75,7 +69,7 @@ public class TemplateParser {
     }
 
     public String execute(String json) throws IOException, TemplateException {
-        Template template = configuration.getTemplate("body.ftl");
+        Template template = AppInject.configuration.getTemplate("body.ftl");
         return execute(json, template);
     }
 

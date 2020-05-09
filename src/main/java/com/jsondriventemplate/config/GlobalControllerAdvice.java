@@ -12,14 +12,21 @@ public class GlobalControllerAdvice {
     public String notFound(Model model, Exception x){
         x.printStackTrace();
         model.addAttribute("errorMessage",x.getMessage());
-        return "error";
+        return "error/404";
+    }
+
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    public String accessDeniedException(Model model, Exception x){
+        x.printStackTrace();
+        model.addAttribute("errorMessage",x.getMessage());
+        return "error/403";
     }
 
     @ExceptionHandler(Exception.class)
     public String global(Model model, Exception x){
         x.printStackTrace();
         model.addAttribute("errorMessage",x.getMessage());
-        return "error";
+        return "error/-1";
     }
 
 }
