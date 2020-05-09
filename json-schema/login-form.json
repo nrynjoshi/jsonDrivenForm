@@ -3,7 +3,7 @@
     "type":"form",
     "method":"POST",
     "action":"/login",
-    "class":"",
+    "class":"center-content",
     "id":"",
     "fields":{
       "username":{
