@@ -2,11 +2,13 @@ package com.jsondriventemplate.config;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jsondriventemplate.exception.AuthenticationException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,8 +26,9 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 		String redirectUrl = null;
 
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-		GrantedAuthority role_super_admin = authorities.stream().filter(data -> StringUtils.equals(((GrantedAuthority) data).getAuthority(), "ROLE_SUPER_ADMIN")).findFirst().get();
-		if(role_super_admin!=null){
+		Optional<? extends GrantedAuthority> role_super_admin = authorities.stream().filter(data -> StringUtils.equals(((GrantedAuthority) data).getAuthority(), "ROLE_SUPER_ADMIN")).findFirst();
+
+		if(role_super_admin!=null && role_super_admin.isPresent()){
 			redirectUrl = "/admin/dashboard";
 		}else{
 			for (GrantedAuthority grantedAuthority : authorities) {

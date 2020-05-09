@@ -2,6 +2,7 @@
   "definitions": {
     "title": "JSON Template Builder Login",
     "layout": "layout.json",
+    "template":"div.container > div.row",
     "body": {
       "css": ""
     },

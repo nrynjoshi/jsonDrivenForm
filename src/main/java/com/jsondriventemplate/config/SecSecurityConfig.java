@@ -29,7 +29,6 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
           .csrf().disable()
           .authorizeRequests()
           .antMatchers("/templates/**").hasRole("NOT_PERMITTED")
-          .antMatchers("/admin/dashboard").permitAll()
           .antMatchers("/admin/**").hasRole("SUPER_ADMIN")
           .antMatchers("/auth/*").authenticated()
           .anyRequest().permitAll()
@@ -37,7 +36,8 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .successHandler(myAuthenticationSuccessHandler())
                 .permitAll()
-                .and().logout().deleteCookies().logoutSuccessUrl("/");
+                .and().logout().deleteCookies().logoutSuccessUrl("/").invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID");
     }
      
     @Bean

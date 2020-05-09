@@ -1,5 +1,6 @@
 package com.jsondriventemplate;
 
+import com.jsondriventemplate.exception.AuthenticationException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,7 +13,10 @@ import java.util.Set;
 
 public class AuthProvider {
 
-    public static UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken(String username,String password){
+    public static UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken(String username,String password) throws AuthenticationException {
+        if(StringUtils.isBlank(username) || StringUtils.isBlank(password)){
+            throw new AuthenticationException("Username/Password is empty");
+        }
         Set<GrantedAuthority> authoritySet=new HashSet<>();
         if(StringUtils.equalsIgnoreCase(username,"superadmin")){
             authoritySet.add(new SimpleGrantedAuthority("ROLE_SUPER_ADMIN"));
@@ -23,7 +27,7 @@ public class AuthProvider {
         return authReq;
     }
 
-    public static void authenticate(String username,String password){
+    public static void authenticate(String username,String password) throws AuthenticationException {
 
         UsernamePasswordAuthenticationToken token = usernamePasswordAuthenticationToken(username, password);
         SecurityContext sc = SecurityContextHolder.getContext();

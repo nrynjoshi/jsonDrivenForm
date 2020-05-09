@@ -1,5 +1,6 @@
 package com.jsondriventemplate.config;
 
+import com.jsondriventemplate.exception.AuthenticationException;
 import com.jsondriventemplate.exception.URINotFoundException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,6 +21,13 @@ public class GlobalControllerAdvice {
         x.printStackTrace();
         model.addAttribute("errorMessage",x.getMessage());
         return "error/403";
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public String authenticationException(Model model, Exception x){
+        x.printStackTrace();
+        model.addAttribute("errorMessage",x.getMessage());
+        return "/login";
     }
 
     @ExceptionHandler(Exception.class)
