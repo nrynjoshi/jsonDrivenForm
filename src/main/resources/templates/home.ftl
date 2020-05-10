@@ -1,7 +1,7 @@
 
 <#compress>
     <#include "layout/header.ftl">
-    <@templateParser template=definitions.snippet>
+    <@templateParser template=(definitions.page.snippet)>
 
     </@templateParser>
     <#include "layout/footer.ftl">

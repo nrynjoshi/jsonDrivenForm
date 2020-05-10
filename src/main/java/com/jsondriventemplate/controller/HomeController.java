@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 public class HomeController {
 
     @GetMapping("/")
-    public String indexPage(Model model) throws Exception {
+    public String indexPage() {
         return "index";
     }
 

@@ -1,6 +1,5 @@
 package com.jsondriventemplate.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,43 +9,51 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
 @Configuration
 @EnableWebSecurity
 public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private CustomAuthenticationProvider authProvider;
+    private final CustomAuthenticationProvider authProvider;
+
+    public SecSecurityConfig(CustomAuthenticationProvider authProvider) {
+        this.authProvider = authProvider;
+    }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authProvider);
     }
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
-          .csrf().disable()
-          .authorizeRequests()
-          .antMatchers("/templates/**").hasRole("NOT_PERMITTED")
-          .antMatchers("/admin/**").hasRole("SUPER_ADMIN")
-          .antMatchers("/auth/*").authenticated()
-          .anyRequest().permitAll()
-          .and().formLogin()
+                .csrf().disable()
+                .headers().addHeaderWriter(
+                new XFrameOptionsHeaderWriter(
+                        XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+                .and()
+                .authorizeRequests()
+                .antMatchers("/templates/**").hasRole("NOT_PERMITTED")
+                .antMatchers("/admin/**").hasRole("SUPER_ADMIN")
+                .antMatchers("/auth/*").authenticated()
+                .anyRequest().permitAll()
+                .and().formLogin()
                 .loginPage("/login")
                 .successHandler(myAuthenticationSuccessHandler())
                 .permitAll()
                 .and().logout().deleteCookies().logoutSuccessUrl("/").invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID");
     }
-     
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
         return new CustomSuccessHandler();
     }
 }

@@ -1,5 +1,5 @@
-<table   <#if element.definitions.class?has_content> class="${element.definitions.class}" </#if>
-        <#if element.definitions.id?has_content> id="${element.definitions.id}" </#if>
+<table   <#if elementObj.definitions.class?has_content> class="${elementObj.definitions.class}" </#if>
+        <#if elementObj.definitions.id?has_content> id="${elementObj.definitions.id}" </#if>
 >
 
 </table>

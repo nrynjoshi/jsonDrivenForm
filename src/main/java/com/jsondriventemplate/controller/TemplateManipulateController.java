@@ -21,33 +21,37 @@ import java.util.stream.Collectors;
 @RequestMapping("/admin")
 public class TemplateManipulateController {
 
-
     @GetMapping("/dashboard")
-    public String dashboard(Model model, @RequestParam(name = "query",defaultValue = "sample",required = false) String query) throws Exception {
+    public String dashboard() {
+        return "admin/dashboard";
+    }
+
+    @GetMapping("/editor")
+    public String editor(Model model, @RequestParam(name = "query", defaultValue = "login", required = false) String query) throws Exception {
         AppInject.templateParser.validateURIJSON(query);
-        File file = Paths.get("json-schema", query+".json").toFile();
-        String execute = AppInject.templateParser.execute(file);
+        File file = Paths.get("json-schema", query + ".json").toFile();
+        String execute = AppInject.templateParser.pageDefinition(file);
         String unProcessedJSON = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
 
         model.addAttribute("JSONForm", execute);
         model.addAttribute("unProcessedJSON", unProcessedJSON);
-        List jsonList =Files.walk(Paths.get("json-schema"))
+        List jsonList = Files.walk(Paths.get("json-schema"))
                 .filter(Files::isRegularFile)
-                .map(path ->StringUtils.replace( path.getFileName().toString(),"json-schema\\",""))
+                .map(path -> StringUtils.replace(path.getFileName().toString(), "json-schema\\", ""))
                 .collect(Collectors.toList());
-        model.addAttribute("jsonList",jsonList);
-        return "admin/dashboard";
+        model.addAttribute("jsonList", jsonList);
+
+        return "admin/editor";
     }
 
-    @PostMapping("/dashboard")
+    @PostMapping("/editor")
     public @ResponseBody
     String pageUpdate(@RequestBody MultiValueMap jsonMap) throws IOException, TemplateException {
-        String json= (String) jsonMap.toSingleValueMap().get("json");
+        String json = (String) jsonMap.toSingleValueMap().get("json");
         if (StringUtils.isBlank(json)) {
             return "Non thing to display..";
         }
-        String  execute = AppInject.templateParser.execute(json);
-        return execute;
+        return AppInject.templateParser.execute(json);
     }
 
 
