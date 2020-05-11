@@ -108,7 +108,7 @@
             <div class="col-lg-6 p-0">
                 <h6>Display Board</h6>
                 <div class="" id="json-form">
-                    <iframe src="auth/login" style="overflow: scroll;height: 65vh; width: 100%">
+                    <iframe src="/auth/login" style="overflow: scroll;height: 65vh; width: 100%">
 
                     </iframe>
 
