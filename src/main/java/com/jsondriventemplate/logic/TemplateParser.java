@@ -1,6 +1,9 @@
-package com.jsondriventemplate;
+package com.jsondriventemplate.logic;
 
 import com.jayway.jsonpath.JsonPath;
+import com.jsondriventemplate.AppInject;
+import com.jsondriventemplate.JSONTemplateConst;
+import com.jsondriventemplate.StatusCode;
 import com.jsondriventemplate.exception.URINotFoundException;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -22,7 +25,7 @@ public class TemplateParser {
         if (StringUtils.isBlank(uri)) {
             throw new URINotFoundException(AppInject.messageReader.get(StatusCode.NOT_FOUND.value()));
         }
-        File file = Paths.get("json-schema", uri + ".json").toFile();
+        File file = Paths.get(JSONTemplateConst.JSON_SCHEMA_ATTR, uri + ".json").toFile();
         if (!file.exists()) {
             throw new URINotFoundException(AppInject.messageReader.get(StatusCode.NOT_FOUND.value()));
         }
@@ -31,8 +34,8 @@ public class TemplateParser {
     public String pageDefinition(File jsonFile) throws IOException, TemplateException {
         String jsonData = JSONLoader.laodJSONDefinition(jsonFile);
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("layout", layoutProcess(jsonData));
-        paramMap.put("elements", element(jsonData));
+        paramMap.put(JSONTemplateConst.LAYOUT, layoutProcess(jsonData));
+        paramMap.put(JSONTemplateConst.ELEMENTS, element(jsonData));
         Template template = AppInject.configuration.getTemplate("home.ftl");
         return executeDef(jsonData, template, paramMap);
     }
@@ -40,7 +43,7 @@ public class TemplateParser {
 
     private Map<String, Object> layoutProcess(String jsonData) throws IOException {
         String layout = JsonPath.parse(jsonData).read("$['definitions']['page']['layout']");
-        File file = Paths.get("json-schema", layout).toFile();
+        File file = Paths.get(JSONTemplateConst.JSON_SCHEMA_ATTR, layout).toFile();
         return JSONLoader.mapper(JSONLoader.laodJSONDefinition(file));
     }
 
@@ -68,11 +71,6 @@ public class TemplateParser {
         return elementList;
     }
 
-    public String execute(File jsonFile) throws IOException, TemplateException {
-        String jsonData = JSONLoader.laodJSONDefinition(jsonFile);
-        return execute(jsonData);
-    }
-
     public String execute(String json) throws IOException, TemplateException {
         Template template = AppInject.configuration.getTemplate("body.ftl");
         return execute(json, template);
@@ -80,7 +78,7 @@ public class TemplateParser {
 
     private String execute(String json, Template template) throws IOException, TemplateException {
         Map<String, Object> dataMap = new HashMap<>();
-        dataMap.put("element", JSONLoader.mapper(json));
+        dataMap.put(JSONTemplateConst.ELEMENTS, JSONLoader.mapper(json));
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, dataMap);
     }
 

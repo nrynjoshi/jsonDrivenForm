@@ -21,10 +21,10 @@
         </ul>
         </li>--%>
             <li>
-                <a href="/admin/dashboard" <c:if test="${uri eq '/admin/dashboard'}">class="active"</c:if> >Dashboard</a>
+                <a href="/admin/dashboard"  >Dashboard</a>
             </li>
         <li>
-        <a href="/admin/editor" <c:if test="${uri eq '/admin/dashboard'}">class="active"</c:if>>Editor</a>
+        <a href="/admin/editor" >Editor</a>
         </li>
         </ul>
         </nav>

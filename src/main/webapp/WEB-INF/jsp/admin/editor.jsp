@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>JSON Driven Template</title>
-    <link rel="stylesheet" href='<c:url value="/css/bootstrap.min.css"/>'>
-    <link rel="stylesheet" href='<c:url value="/css/sidebar.css"/>'>
-    <link rel="stylesheet" href='<c:url value="/css/json-viewer.css"/>'>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/json-viewer.css">
     <style>
         pre {
             outline: 1px solid #ccc;
@@ -59,7 +58,7 @@
             background: #555;
         }
 
-        .btn-op{
+        .btn-op {
             padding: 2px !important;
             color: #444 !important;
             background-color: #D3D3D3 !important;
@@ -81,29 +80,39 @@
 </head>
 <body>
 <div class="row">
-    <jsp:include page="layout/header.jsp" />
+    <jsp:include page="layout/header.jsp"/>
     <jsp:include page="layout/sidebar.jsp">
         <jsp:param name="uri" value="<%= request.getRequestURI() %>"/>
     </jsp:include>
 
     <div class="col-lg-10">
         <div class="row">
+
             <div class="col-lg-12 m-1 p-0">
+                <select class="custom-select" required>
+                    <option value="">Select JSON Template</option>
+                    <c:forEach items="${jsonList}" var="item">
+                        <option value="${item}">${item}</option>
+                    </c:forEach>
+                </select>
+
                 <button type="button" id="run" class="btn btn-primary btn-op">Execute</button>
-                <a href="/auth/login" class="btn btn-primary btn-op" target="_blank">Preview</a>
+                <a href=/auth/login" class="btn btn-primary btn-op" target="_blank">Preview</a>
+
+
             </div>
-            <div class="col-lg-6 pl-0 pr-0 pt-0" >
+            <div class="col-lg-6 pl-0 pr-0 pt-0">
                 <pre id="json-display" style="overflow: scroll;height: 81vh">${unProcessedJSON}</pre>
             </div>
 
             <div class="col-lg-6 p-0">
                 <h6>Display Board</h6>
-                    <div class="" id="json-form">
-                        <iframe src="/auth/login" frameborder="0" style="overflow: scroll;height: 65vh; width: 100%">
+                <div class="" id="json-form">
+                    <iframe src="auth/login" style="overflow: scroll;height: 65vh; width: 100%">
 
-                        </iframe>
+                    </iframe>
 
-                    </div>
+                </div>
             </div>
         </div>
 
@@ -111,15 +120,14 @@
     </div>
 
 
-
 </div>
 <!-- Javascript files-->
-<script src='<c:url value="/js/jquery-3.2.1.min.js"/>'></script>
-<script src='<c:url value="/js/popper.js"/>'></script>
-<script src='<c:url value="/js/bootstrap.js"/>'></script>
-<script src='<c:url value="/js/sidebar.js"/>'></script>
-<script src='<c:url value="/js/jquery.json-editor.min.js"/>'></script>
-<script src='<c:url value="/js/json-viewer.js"/>'></script>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/js/popper.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/jquery.json-editor.min.js"></script>
+<script src="/js/json-viewer.js"></script>
 
 <script>
 
@@ -132,21 +140,20 @@
             alert('Wrong JSON Format: ' + ex);
         }
 
-        $('#run').bind("click",function(){
-            var data=$('#json-display').text();
+        $('#run').bind("click", function () {
+            var data = $('#json-display').text();
 
             $.ajax({
                 type: 'POST',
                 url: "/admin/editor",
-                data: {json:data},
-                success: function(resultData) {
+                data: {json: data},
+                success: function (resultData) {
                     $('#json-form').html(resultData);
                 },
             });
         });
 
     });
-
 
 
 </script>

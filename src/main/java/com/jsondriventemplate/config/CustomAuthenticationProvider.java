@@ -1,6 +1,6 @@
 package com.jsondriventemplate.config;
 
-import com.jsondriventemplate.AuthProvider;
+import com.jsondriventemplate.logic.AuthProvider;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,7 +13,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication)
       throws AuthenticationException {
-  
         String name = authentication.getName();
         String password = authentication.getCredentials().toString();
         return AuthProvider.usernamePasswordAuthenticationToken(name,password);

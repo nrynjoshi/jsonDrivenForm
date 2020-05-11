@@ -1,5 +1,6 @@
 package com.jsondriventemplate.config;
 
+import com.jsondriventemplate.controller.Endpoints;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,15 +27,15 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 		Optional<? extends GrantedAuthority> role_super_admin = authorities.stream().filter(data -> StringUtils.equals(data.getAuthority(), "ROLE_SUPER_ADMIN")).findFirst();
 
 		if(role_super_admin.isPresent()){
-			redirectUrl = "/admin/dashboard";
+			redirectUrl = Endpoints.ADMIN+Endpoints.DASHBOARD;
 		}else{
 			for (GrantedAuthority grantedAuthority : authorities) {
 				System.out.println("role " + grantedAuthority.getAuthority());
 				if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
-					redirectUrl = "/auth/dashboard";
+					redirectUrl = Endpoints.AUTH+Endpoints.DASHBOARD;
 					break;
 				} else if (grantedAuthority.getAuthority().equals("ROLE_SUPER_ADMIN")) {
-					redirectUrl = "/admin/dashboard";
+					redirectUrl = Endpoints.ADMIN+Endpoints.DASHBOARD;
 					break;
 				}
 			}

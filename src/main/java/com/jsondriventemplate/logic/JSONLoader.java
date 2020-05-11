@@ -1,4 +1,4 @@
-package com.jsondriventemplate;
+package com.jsondriventemplate.logic;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-public final class JSONLoader {
+final class JSONLoader {
 
 
     protected static String laodJSONDefinition(File jsonFile) throws IOException {

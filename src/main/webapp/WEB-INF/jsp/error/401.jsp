@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
 
@@ -22,7 +23,7 @@
         <div class="col-md-10">
             <h3>OPPSSS!!!! Sorry...</h3>
             <p>Sorry, your access is refused due to security reasons of our server and also our sensitive data.<br/>Please click on login page link below to get access to this page.</p>
-            <a class="btn btn-success" href="/login">Login</a>
+            <a class="btn btn-success" href=/login">Login</a>
         </div>
     </div>
 </div>

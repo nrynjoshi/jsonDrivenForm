@@ -1,6 +1,7 @@
 package com.jsondriventemplate;
 
 import com.jsondriventemplate.config.MessageReader;
+import com.jsondriventemplate.logic.TemplateParser;
 import freemarker.template.Configuration;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +14,8 @@ public class AppInject {
 
     public AppInject(TemplateParser templateParser, MessageReader messageReader,
                      Configuration configuration) {
-        this.templateParser = templateParser;
-        this.messageReader = messageReader;
-        this.configuration = configuration;
+        AppInject.templateParser = templateParser;
+        AppInject.messageReader = messageReader;
+        AppInject.configuration = configuration;
     }
 }

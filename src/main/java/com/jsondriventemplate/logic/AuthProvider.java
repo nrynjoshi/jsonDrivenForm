@@ -1,4 +1,4 @@
-package com.jsondriventemplate;
+package com.jsondriventemplate.logic;
 
 import com.jsondriventemplate.exception.AuthenticationException;
 import org.apache.commons.lang3.StringUtils;
