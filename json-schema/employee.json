@@ -1,0 +1,41 @@
+{
+    "definitions":{
+      "page":{
+        "title": "Employe Dashboard",
+        "layout": "layout.json",
+        "snippet":"div.page.login-page>div.container.d-flex.align-items-center>div.form-holder.has-shadow>div.row",
+        "elements": [
+          {
+            "$ref": "#/definitions/nav-bar"
+          }
+        ]
+      },
+      "nav-bar":{
+        "definitions":{
+          "type":"code",
+          "class":"",
+          "id":"",
+          "snippet":"div.col-lg-12>div.nav-bar-wrapper>div.row",
+          "elements":[
+            {
+              "definitions":{
+                "type":"code",
+                "class":"",
+                "id":"",
+                "snippet":"div.col-md-1"
+              }
+            },
+            {
+              "definitions":{
+                "type":"code",
+                "class":"",
+                "id":"",
+                "snippet":"div.col-md-2>ul.nav.nav-pills.nav-stacked>li.fa.fa-home"
+              }
+          }
+          ]
+          
+        }
+      }
+    }
+  }
