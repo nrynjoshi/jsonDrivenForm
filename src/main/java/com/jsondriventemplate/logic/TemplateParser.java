@@ -33,13 +33,16 @@ public class TemplateParser {
 
     public String pageDefinition(File jsonFile) throws IOException, TemplateException {
         String jsonData = JSONLoader.laodJSONDefinition(jsonFile);
+        return pageDefinition(jsonData);
+    }
+
+    public String pageDefinition(String jsonData) throws IOException, TemplateException {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put(JSONTemplateConst.LAYOUT, layoutProcess(jsonData));
         paramMap.put(JSONTemplateConst.ELEMENTS, element(jsonData));
         Template template = AppInject.configuration.getTemplate("home.ftl");
         return executeDef(jsonData, template, paramMap);
     }
-
 
     private Map<String, Object> layoutProcess(String jsonData) throws IOException {
         String layout = JsonPath.parse(jsonData).read("$['definitions']['page']['layout']");

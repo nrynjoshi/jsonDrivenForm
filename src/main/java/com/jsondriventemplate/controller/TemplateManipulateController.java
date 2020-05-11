@@ -48,6 +48,7 @@ public class TemplateManipulateController {
             return "Non thing to display..";
         }
         try{
+
            return AppInject.templateParser.pageDefinition(new File(json));
         }catch (Exception x){
             return AppInject.templateParser.execute(json);
