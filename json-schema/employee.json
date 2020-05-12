@@ -1,41 +1,82 @@
 {
-    "definitions":{
-      "page":{
-        "title": "Employe Dashboard",
-        "layout": "layout.json",
-        "snippet":"div.page.login-page>div.container.d-flex.align-items-center>div.form-holder.has-shadow>div.row",
+  "definitions": {
+    "page": {
+      "title": "Employe Dashboard",
+      "layout": "layout.json",
+      "snippet": "div.page.login-page>div.container.d-flex.align-items-center>div.form-holder.has-shadow",
+      "elements": [
+        {
+          "$ref": "#/definitions/nav-bar"
+        }
+      ]
+    },
+    "nav-bar": {
+      "definitions": {
+        "type": "code",
+        "class": "",
+        "id": "",
+        "snippet": "div.row>div.col-lg-12>div.nav-bar-wrapper>div.row",
         "elements": [
           {
-            "$ref": "#/definitions/nav-bar"
+            "definitions": {
+              "type": "code",
+              "class": "",
+              "id": "",
+              "snippet": "div.col-md-1,div.col-md-2>ul.nav.nav-pills.nav-stacked>li.fa.fa-home",
+              "elements": [
+                {
+                  "definitions": {
+                    "type": "form",
+                    "method": "POST",
+                    "action": "/login",
+                    "class": "",
+                    "id": "",
+                    "fields": {
+                      "username": {
+                        "type": "text",
+                        "label": "Username",
+                        "placeholder": "Enter your username",
+                        "snippet": "div.form-group",
+                        "value": "",
+                        "gridindex": "1,1",
+                        "jsvalidation": "",
+                        "submittransform": "",
+                        "icon": "",
+                        "required": true,
+                        "class": "form-control",
+                        "id": ""
+                      },
+                      "password": {
+                        "type": "password",
+                        "label": "Password",
+                        "placeholder": "Enter your password",
+                        "snippet": "div.form-group",
+                        "value": "",
+                        "gridindex": "1,1",
+                        "jsvalidation": "",
+                        "submittransform": "",
+                        "icon": "",
+                        "required": true,
+                        "class": "form-control",
+                        "id": ""
+                      },
+                      "create": {
+                        "type": "submit",
+                        "label": "Login",
+                        "value": "",
+                        "gridindex": "1,1",
+                        "jsvalidation": "",
+                        "submittransform": "",
+                        "class": "btn btn-primary btn-block"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
           }
         ]
-      },
-      "nav-bar":{
-        "definitions":{
-          "type":"code",
-          "class":"",
-          "id":"",
-          "snippet":"div.col-lg-12>div.nav-bar-wrapper>div.row",
-          "elements":[
-            {
-              "definitions":{
-                "type":"code",
-                "class":"",
-                "id":"",
-                "snippet":"div.col-md-1"
-              }
-            },
-            {
-              "definitions":{
-                "type":"code",
-                "class":"",
-                "id":"",
-                "snippet":"div.col-md-2>ul.nav.nav-pills.nav-stacked>li.fa.fa-home"
-              }
-          }
-          ]
-          
-        }
       }
     }
   }
+}

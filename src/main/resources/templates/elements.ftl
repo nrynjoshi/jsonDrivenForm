@@ -1,17 +1,32 @@
 <#macro body elements>
-    <#list elements as elementObj>
-        <#switch elementObj.definitions.type>
-            <#case "form" >
-                <@formBody requestData=elementObj.definitions></@formBody>
-                <#break>
-            <#case "table" >
-                <@tableBody requestData=elementObj.definitions></@tableBody>
-                <#break>
-            <#case "code">
-                "inner snippet detected"
-                <#break >
-        </#switch>
-    </#list>
+    <#if elements??>
+        <#list elements as elementObj>
+            <#if elementObj.definitions.type??>
+                <#switch elementObj.definitions.type>
+                    <#case "form" >
+                        <@formBody requestData=elementObj.definitions></@formBody>
+                        <#break>
+                    <#case "table" >
+                        <@tableBody requestData=elementObj.definitions></@tableBody>
+                        <#break>
+                    <#case "code">
+                        <#local closingTag="">
+                        <#list elementObj.definitions.snippet?split(",") as level1>
+                            <@small level1=level1/>
+                        </#list>
+                        <#if elementObj.definitions.elements??>
+                                <@body elements=elementObj.definitions.elements ></@body>
+                        </#if>
+
+                    <#list elementObj.definitions.snippet?split(",") as level1>
+                        ${endingTagIdentifer(level1)}
+                    </#list>
+                        <#break >
+                </#switch>
+            </#if>
+        </#list>
+    </#if>
+
 </#macro>
 
 <#macro populate field>
@@ -47,7 +62,7 @@
         <div class="input-group">
             <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i>
                 </span> </#if>
-            <input name="${name}" <@populate field=field ></@populate> >
+            <input name="${name}" <@populate field=field ></@populate> />
         </div>
     </div>
 </#macro>
@@ -85,43 +100,61 @@
 
 </#macro>
 
-
-
 <#macro templateParser template elements>
-    <#assign closingTag="">
+    <#local closingTag="">
     <#list template?split(",") as level1>
         <@small level1=level1/>
     </#list>
-        <@body elements=elements ></@body>
+    <@body elements=elements ></@body>
+    <#list template?split(",") as level1>
+        ${endingTagIdentifer(level1)}
+    </#list>
 
-
-    ${closingTag}
 </#macro>
+
+<#function endingTagIdentifer level1>
+ <#local localTag="">
+    <#assign items=level1?split(">")>
+    <#list items as level2>
+        <#assign level3=level2?replace('div|span|h5', '', 'r')>
+        <#if level2?starts_with("div")>
+            <#if level2?index==items?size-1><#else><#local  localTag+="</div> "></#if>
+        <#elseif level2?starts_with("span")>
+            <#if level2?index==items?size-1><#else><#local  localTag+="</span> "></#if>
+        <#elseif level2?starts_with("p") >
+            <#if level2?index==items?size-1><#else><#local  localTag+="</p> "></#if>
+        <#elseif level2?starts_with("a") >
+            <#if level2?index==items?size-1><#else><#local  localTag+="</a> "></#if>
+        <#elseif level2?starts_with("h5") >
+            <#if level2?index==items?size-1><#else><#local localTag+="</h5> "></#if>
+        </#if >
+    </#list>
+    <#return localTag>
+</#function>
 
 <#macro small level1>
     <#assign items=level1?split(">")>
-
     <#list items as level2>
         <#assign level3=level2?replace('div|span|h5', '', 'r')>
         <#if level2?starts_with("div")>
             <@helper tag="div" data=level3 />
-            <#if level2?index==items?size-1></div><#else><#assign closingTag=closingTag+"</div> "></#if>
+            <#if level2?index==items?size-1></div></#if>
         <#elseif level2?starts_with("span")>
             <@helper tag="span" data=level3 />
-            <#if level2?index==items?size-1></span><#else><#assign closingTag=closingTag+"</span> "></#if>
+            <#if level2?index==items?size-1></span></#if>
         <#elseif level2?starts_with("p") >
             <@helper tag="p" data=level3 />
-            <#if level2?index==items?size-1></p><#else><#assign closingTag=closingTag+"</p> "></#if>
+            <#if level2?index==items?size-1></p></#if>
         <#elseif level2?starts_with("a") >
             <@helper tag="a" data=level3 />
-            <#if level2?index==items?size-1></a><#else><#assign closingTag=closingTag+"</a> "></#if>
+            <#if level2?index==items?size-1></a></#if>
         <#elseif level2?starts_with("h5") >
             <@helper tag="h5" data=level3 />
-            <#if level2?index==items?size-1></h5><#else><#assign closingTag=closingTag+"</h5> "></#if>
+            <#if level2?index==items?size-1></h5></#if>
         </#if >
     </#list>
+<#--    "=========== : "${localTag} " : ==========="-->
 </#macro>
-
 
 <#macro helper tag data>
     <#if data?contains("[") >

@@ -17,11 +17,11 @@
 <div class="container py-5">
     <div class="row">
         <div class="col-md-2 text-center">
-            <p><i class="fa fa-exclamation-triangle fa-5x"></i><br/>Status Code: 404</p>
+            <p><i class="fa fa-exclamation-triangle fa-5x"></i><br/>Status Code: 500</p>
         </div>
         <div class="col-md-10">
             <h3>OPPSSS!!!! Sorry...</h3>
-            <p>Sorry, I/We apologise for any inconvenience caused and will inform to administrator for this caused.<br/>Please go back to the previous page to continue browsing.</p>
+            <p>Sorry, We apologise for this inconvenience caused and will inform to administrator for this.<br/>Please go back to the previous page to continue browsing.</p>
             <a class="btn btn-danger" href="javascript:history.back()">Go Back</a>
         </div>
     </div>
