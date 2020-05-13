@@ -37,6 +37,11 @@ public class MongoClientProvider {
         return mongoOperations.findAll(Map.class, collectionName);
     }
 
+    public Map findById(String id, String collectionName) {
+        Query query = Query.query(Criteria.where("_id").is(id));
+        return mongoOperations.findOne(query, Map.class,collectionName);
+    }
+
     private void collection(String collectionName) {
         boolean collectionExists = mongoOperations.collectionExists(collectionName);
         if (collectionExists) {
