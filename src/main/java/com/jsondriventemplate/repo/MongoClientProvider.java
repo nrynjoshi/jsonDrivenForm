@@ -1,5 +1,6 @@
 package com.jsondriventemplate.repo;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -22,7 +23,9 @@ public class MongoClientProvider {
     public Document save(Map dataMap, String collectionName) {
         collection(collectionName);
         Document document = new Document();
-        document.put("_id", UUID());
+        if(!dataMap.containsKey("_id") && StringUtils.isBlank((CharSequence) dataMap.get("_id"))){
+            document.put("_id", UUID());
+        }
         document.putAll(dataMap);
         mongoOperations.save(document, collectionName);
         return document;
@@ -42,7 +45,17 @@ public class MongoClientProvider {
         return mongoOperations.findOne(query, Map.class,collectionName);
     }
 
-    private void collection(String collectionName) {
+    public Map findByURL(String url, String collectionName) {
+        Query query = Query.query(Criteria.where("url").is(url));
+        return mongoOperations.findOne(query, Map.class,collectionName);
+    }
+    public Map findByAtt(String attr,String value, String collectionName) {
+        Query query = Query.query(Criteria.where(attr).is(value));
+        return mongoOperations.findOne(query, Map.class,collectionName);
+    }
+
+
+    public void collection(String collectionName) {
         boolean collectionExists = mongoOperations.collectionExists(collectionName);
         if (collectionExists) {
             return;

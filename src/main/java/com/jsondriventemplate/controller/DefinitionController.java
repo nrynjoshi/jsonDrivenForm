@@ -16,20 +16,20 @@ public class DefinitionController {
 
     @GetMapping(value = Endpoints.JSON_TEMPLATE)
     public String jsonTemplate(Model model) {
-        List all = AppInject.mongoClientProvider.findAll(DBConstant.TEMPLATE_DEFINITION);
+        List all = AppInject.mongoClientProvider.findAll(DBConstant.TEMPLATE_INFORMATION);
         model.addAttribute("templateList",all);
         return ViewResolver.ADMIN_JSON_TEMPLATE;
     }
 
     @PostMapping(value = Endpoints.JSON_TEMPLATE)
     public String saveJsonTemplateInfo(@RequestBody MultiValueMap valueMap) {
-        AppInject.mongoClientProvider.save(valueMap.toSingleValueMap(),DBConstant.TEMPLATE_DEFINITION);
+        AppInject.mongoClientProvider.save(valueMap.toSingleValueMap(),DBConstant.TEMPLATE_INFORMATION);
         return "redirect:" + Endpoints.ADMIN + Endpoints.JSON_TEMPLATE;
     }
 
     @GetMapping(value = Endpoints.JSON_TEMPLATE + Endpoints.ID)
     public String deleteJsonTemplateInfo(@PathVariable String id) {
-        AppInject.mongoClientProvider.delete(id,DBConstant.TEMPLATE_DEFINITION);
+        AppInject.mongoClientProvider.delete(id,DBConstant.TEMPLATE_INFORMATION);
         return "redirect:" + Endpoints.ADMIN + Endpoints.JSON_TEMPLATE;
     }
 

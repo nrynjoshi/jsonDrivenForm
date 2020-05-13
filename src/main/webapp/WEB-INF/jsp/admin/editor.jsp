@@ -161,6 +161,5 @@
 
 
 </script>
-<jsp:include page="modal.jsp"></jsp:include>
 </body>
 </html>

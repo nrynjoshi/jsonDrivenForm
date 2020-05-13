@@ -29,13 +29,11 @@ public class TemplateManipulateController {
 
     @GetMapping(value = Endpoints.EDITOR)
     public String editor(Model model, @RequestParam(name = JSONTemplateConst.query, defaultValue = "login", required = false) String query) throws Exception {
-        AppInject.templateParser.validateURIJSON(query);
-        File file = Paths.get(JSONTemplateConst.JSON_SCHEMA_ATTR, query + ".json").toFile();
-        String execute = AppInject.templateParser.pageDefinition(file);
-        String unProcessedJSON = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+        String jsonData = AppInject.templateService.getJSONFromURI(query);
+        String execute = AppInject.templateParser.pageDefinition(jsonData);
 
         model.addAttribute(JSONTemplateConst.JSONForm, execute);
-        model.addAttribute(JSONTemplateConst.unProcessedJSON, unProcessedJSON);
+        model.addAttribute(JSONTemplateConst.unProcessedJSON, jsonData);
         model.addAttribute(JSONTemplateConst.jsonList, readFiles());
         return ViewResolver.ADMIN_EDITOR;
     }
@@ -43,15 +41,14 @@ public class TemplateManipulateController {
     @PostMapping(value = Endpoints.EDITOR)
     public @ResponseBody
     String pageUpdate(@RequestBody MultiValueMap jsonMap) throws IOException, TemplateException {
-        String json = (String) jsonMap.toSingleValueMap().get("json");
-        if (StringUtils.isBlank(json)) {
+        String jsonData = (String) jsonMap.toSingleValueMap().get("json");
+        if (StringUtils.isBlank(jsonData)) {
             return "Non thing to display..";
         }
         try{
-
-           return AppInject.templateParser.pageDefinition(new File(json));
+           return AppInject.templateParser.pageDefinition(jsonData);
         }catch (Exception x){
-            return AppInject.templateParser.execute(json);
+            return AppInject.templateParser.execute(jsonData);
         }
 
     }

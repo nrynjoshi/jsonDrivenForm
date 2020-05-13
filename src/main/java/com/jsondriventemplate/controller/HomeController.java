@@ -20,9 +20,8 @@ public class HomeController {
     @GetMapping(value = Endpoints.LOGIN)
     public String loginPage(Model model) throws Exception {
         String login = "login";
-        AppInject.templateParser.validateURIJSON(login);
-        File file = Paths.get(JSONTemplateConst.JSON_SCHEMA_ATTR, login + ".json").toFile();
-        model.addAttribute(JSONTemplateConst.TEMPLATE, AppInject.templateParser.pageDefinition(file));
+        String jsonData = AppInject.templateService.getJSONFromURI(login);
+        model.addAttribute(JSONTemplateConst.TEMPLATE, AppInject.templateParser.pageDefinition(jsonData));
         return ViewResolver.AUTH_INDEX;
     }
 }

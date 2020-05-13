@@ -5,6 +5,7 @@ import com.jsondriventemplate.AppInject;
 import com.jsondriventemplate.JSONTemplateConst;
 import com.jsondriventemplate.StatusCode;
 import com.jsondriventemplate.exception.URINotFoundException;
+import com.jsondriventemplate.repo.DBConstant;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import net.minidev.json.JSONArray;
@@ -25,16 +26,12 @@ public class TemplateParser {
         if (StringUtils.isBlank(uri)) {
             throw new URINotFoundException(AppInject.messageReader.get(StatusCode.NOT_FOUND.value()));
         }
-        File file = Paths.get(JSONTemplateConst.JSON_SCHEMA_ATTR, uri + ".json").toFile();
-        if (!file.exists()) {
+        Map byURL = AppInject.mongoClientProvider.findByURL(uri, DBConstant.TEMPLATE_INFORMATION);
+        if (byURL==null || byURL.isEmpty()) {
             throw new URINotFoundException(AppInject.messageReader.get(StatusCode.NOT_FOUND.value()));
         }
     }
 
-    public String pageDefinition(File jsonFile) throws IOException, TemplateException {
-        String jsonData = JSONLoader.laodJSONDefinition(jsonFile);
-        return pageDefinition(jsonData);
-    }
 
     public String pageDefinition(String jsonData) throws IOException, TemplateException {
         Map<String, Object> paramMap = new HashMap<>();
