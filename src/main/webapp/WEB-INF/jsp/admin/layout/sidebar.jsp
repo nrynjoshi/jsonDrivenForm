@@ -26,6 +26,9 @@
         <li>
         <a href="/admin/editor" >Editor</a>
         </li>
+        <li>
+        <a href="/admin/jsontemplate" >JSON Template</a>
+        </li>
         </ul>
         </nav>
         </aside>

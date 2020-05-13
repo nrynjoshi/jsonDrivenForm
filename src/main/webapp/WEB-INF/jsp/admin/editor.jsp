@@ -96,8 +96,12 @@
                     </c:forEach>
                 </select>
 
+                <a href="/auth/login" class="btn btn-primary btn-op modalDisplay">Create</a>
+                <a href="/auth/login" class="btn btn-primary btn-op modalDisplay">Save</a>
                 <button type="button" id="run" class="btn btn-primary btn-op">Execute</button>
-                <a href=/auth/login" class="btn btn-primary btn-op" target="_blank">Preview</a>
+                <a href="/auth/login" class="btn btn-primary btn-op" target="_blank">Preview</a>
+
+
 
 
             </div>
@@ -157,6 +161,6 @@
 
 
 </script>
-
+<jsp:include page="modal.jsp"></jsp:include>
 </body>
 </html>
