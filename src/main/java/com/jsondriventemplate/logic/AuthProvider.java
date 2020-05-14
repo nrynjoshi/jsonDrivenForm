@@ -1,6 +1,5 @@
 package com.jsondriventemplate.logic;
 
-import com.jsondriventemplate.constant.AppUserRoleConstant;
 import com.jsondriventemplate.exception.AuthenticationException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,10 +16,10 @@ public class AuthProvider {
             throw new AuthenticationException("Username/Password is empty");
         }
         Set<GrantedAuthority> authoritySet=new HashSet<>();
-        if(StringUtils.equalsIgnoreCase(username,AppUserRoleConstant.SUPER_ADMIN)){
-            authoritySet.add(new SimpleGrantedAuthority(AppUserRoleConstant.ROLE_SUPER_ADMIN));
+        if(StringUtils.equalsIgnoreCase(username,"superadmin")){
+            authoritySet.add(new SimpleGrantedAuthority("ROLE_SUPER_ADMIN"));
         }
-        authoritySet.add(new SimpleGrantedAuthority(AppUserRoleConstant.ROLE_USER));
+        authoritySet.add(new SimpleGrantedAuthority("ROLE_USER"));
         return new UsernamePasswordAuthenticationToken(username, password,authoritySet);
     }
 

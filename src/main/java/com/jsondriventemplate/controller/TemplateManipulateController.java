@@ -2,14 +2,9 @@ package com.jsondriventemplate.controller;
 
 import com.jsondriventemplate.AppInject;
 import com.jsondriventemplate.JSONTemplateConst;
-import com.jsondriventemplate.constant.AppConstant;
-import com.jsondriventemplate.constant.UrlConstant;
-
 import freemarker.template.TemplateException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -22,21 +17,18 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
-@RequestMapping(value = UrlConstant.ADMIN)
+@RequestMapping(value = Endpoints.ADMIN)
 public class TemplateManipulateController {
-	@Autowired
-    private MessageSource messageSource;
 
-    @GetMapping(value = UrlConstant.DASHBOARD)
+    @GetMapping(value = Endpoints.DASHBOARD)
     public String dashboard() {
         return ViewResolver.ADMIN_DASHBOARD;
     }
 
-    @GetMapping(value = UrlConstant.EDITOR)
-    public String editor(Model model, @RequestParam(name = JSONTemplateConst.query, defaultValue = AppConstant.LOGIN, required = false) String query) throws Exception {
+    @GetMapping(value = Endpoints.EDITOR)
+    public String editor(Model model, @RequestParam(name = JSONTemplateConst.query, defaultValue = "login", required = false) String query) throws Exception {
         String jsonData = AppInject.templateService.getJSONFromURI(query);
         String execute = AppInject.templateParser.pageDefinition(jsonData);
 
@@ -46,12 +38,12 @@ public class TemplateManipulateController {
         return ViewResolver.ADMIN_EDITOR;
     }
 
-    @PostMapping(value = UrlConstant.EDITOR)
+    @PostMapping(value = Endpoints.EDITOR)
     public @ResponseBody
     String pageUpdate(@RequestBody MultiValueMap jsonMap) throws IOException, TemplateException {
-        String jsonData = (String) jsonMap.toSingleValueMap().get(AppConstant.JSON);
+        String jsonData = (String) jsonMap.toSingleValueMap().get("json");
         if (StringUtils.isBlank(jsonData)) {
-            return messageSource.getMessage("error.employee.errordisplay", null, Locale.getDefault());
+            return "Non thing to display..";
         }
         try{
            return AppInject.templateParser.pageDefinition(jsonData);
@@ -63,7 +55,7 @@ public class TemplateManipulateController {
 
     private List<String> readFiles() {
         File file1 = Paths.get(JSONTemplateConst.JSON_SCHEMA_ATTR).toFile();
-        Collection<File> files = FileUtils.listFiles(file1,new String[]{AppConstant.JSON},false);
+        Collection<File> files = FileUtils.listFiles(file1,new String[]{"json"},false);
         List<String> fileNames=new ArrayList<>();
         for (File file:files) {
             fileNames.add(file.getName());
