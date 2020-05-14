@@ -1,12 +1,14 @@
 package com.jsondriventemplate.config;
 
-import com.jsondriventemplate.controller.Endpoints;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+
+import com.jsondriventemplate.constant.AppUserRoleConstant;
+import com.jsondriventemplate.constant.UrlConstant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,15 +29,15 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 		Optional<? extends GrantedAuthority> role_super_admin = authorities.stream().filter(data -> StringUtils.equals(data.getAuthority(), "ROLE_SUPER_ADMIN")).findFirst();
 
 		if(role_super_admin.isPresent()){
-			redirectUrl = Endpoints.ADMIN+Endpoints.DASHBOARD;
+			redirectUrl = UrlConstant.ADMIN+UrlConstant.DASHBOARD;
 		}else{
 			for (GrantedAuthority grantedAuthority : authorities) {
 				System.out.println("role " + grantedAuthority.getAuthority());
-				if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
-					redirectUrl = Endpoints.AUTH+Endpoints.DASHBOARD;
+				if (grantedAuthority.getAuthority().equals(AppUserRoleConstant.ROLE_USER)) {
+					redirectUrl = UrlConstant.AUTH+UrlConstant.DASHBOARD;
 					break;
-				} else if (grantedAuthority.getAuthority().equals("ROLE_SUPER_ADMIN")) {
-					redirectUrl = Endpoints.ADMIN+Endpoints.DASHBOARD;
+				} else if (grantedAuthority.getAuthority().equals(AppUserRoleConstant.ROLE_SUPER_ADMIN)) {
+					redirectUrl = UrlConstant.ADMIN+UrlConstant.DASHBOARD;
 					break;
 				}
 			}

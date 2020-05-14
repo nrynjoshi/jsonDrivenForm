@@ -11,6 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
+import com.jsondriventemplate.constant.AppConstant;
+import com.jsondriventemplate.constant.AppUserRoleConstant;
+import com.jsondriventemplate.constant.UrlConstant;
+
 @Configuration
 @EnableWebSecurity
 public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -35,16 +39,16 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
                         XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
                 .and()
                 .authorizeRequests()
-                .antMatchers("/templates/**").hasRole("NOT_PERMITTED")
-                .antMatchers("/admin/**").hasRole("SUPER_ADMIN")
-                .antMatchers("/auth/*").authenticated()
+                .antMatchers(UrlConstant.TEMPLATES).hasRole(AppUserRoleConstant.NOT_PERMITTED)
+                .antMatchers(UrlConstant.ADMINS).hasRole(AppUserRoleConstant.SUPER_ADMIN)
+                .antMatchers(UrlConstant.AUTHS).authenticated()
                 .anyRequest().permitAll()
                 .and().formLogin()
-                .loginPage("/login")
+                .loginPage(UrlConstant.LOGIN)
                 .successHandler(myAuthenticationSuccessHandler())
                 .permitAll()
-                .and().logout().deleteCookies().logoutSuccessUrl("/").invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID");
+                .and().logout().deleteCookies().logoutSuccessUrl(UrlConstant.URL_ROOT).invalidateHttpSession(true)
+                .deleteCookies(AppConstant.JSESSIONID);
     }
 
     @Bean

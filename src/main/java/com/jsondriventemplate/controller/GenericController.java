@@ -2,6 +2,7 @@ package com.jsondriventemplate.controller;
 
 import com.jsondriventemplate.AppInject;
 import com.jsondriventemplate.JSONTemplateConst;
+import com.jsondriventemplate.constant.UrlConstant;
 import com.jsondriventemplate.repo.DBConstant;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = Endpoints.AUTH)
+@RequestMapping(value = UrlConstant.AUTH)
 public class GenericController {
 
-    @GetMapping(value = Endpoints.URI)
+    @GetMapping(value = UrlConstant.URI)
     public String loginPage(Model model, @PathVariable String uri) throws Exception {
         String jsonData = AppInject.templateService.getJSONFromURI(uri);
         model.addAttribute(JSONTemplateConst.TEMPLATE,AppInject.templateParser.pageDefinition(jsonData));

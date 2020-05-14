@@ -7,6 +7,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
+import com.jsondriventemplate.constant.AppConstant;
+import com.jsondriventemplate.constant.UrlConstant;
+
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -23,8 +26,8 @@ public class MongoClientProvider {
     public Document save(Map dataMap, String collectionName) {
         collection(collectionName);
         Document document = new Document();
-        if(!dataMap.containsKey("_id") && StringUtils.isBlank((CharSequence) dataMap.get("_id"))){
-            document.put("_id", UUID());
+        if(!dataMap.containsKey(AppConstant.ID) && StringUtils.isBlank((CharSequence) dataMap.get(AppConstant.ID))){
+            document.put(AppConstant.ID, UUID());
         }
         document.putAll(dataMap);
         mongoOperations.save(document, collectionName);
@@ -32,7 +35,7 @@ public class MongoClientProvider {
     }
 
     public void delete(String id, String collectionName) {
-        Query query = Query.query(Criteria.where("_id").is(id));
+        Query query = Query.query(Criteria.where(AppConstant.ID).is(id));
         mongoOperations.remove(query, collectionName);
     }
 
@@ -41,12 +44,12 @@ public class MongoClientProvider {
     }
 
     public Map findById(String id, String collectionName) {
-        Query query = Query.query(Criteria.where("_id").is(id));
+        Query query = Query.query(Criteria.where(AppConstant.ID).is(id));
         return mongoOperations.findOne(query, Map.class,collectionName);
     }
 
     public Map findByURL(String url, String collectionName) {
-        Query query = Query.query(Criteria.where("url").is(url));
+        Query query = Query.query(Criteria.where(UrlConstant.URL).is(url));
         return mongoOperations.findOne(query, Map.class,collectionName);
     }
     public Map findByAtt(String attr,String value, String collectionName) {
