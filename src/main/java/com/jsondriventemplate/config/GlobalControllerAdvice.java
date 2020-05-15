@@ -1,10 +1,15 @@
 package com.jsondriventemplate.config;
 
 import com.jsondriventemplate.exception.AuthenticationException;
+import com.jsondriventemplate.exception.JSONValidationException;
 import com.jsondriventemplate.exception.URINotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class GlobalControllerAdvice {
@@ -14,6 +19,8 @@ public class GlobalControllerAdvice {
         process(model, x);
         return "error/404";
     }
+
+
 
     @ExceptionHandler(freemarker.core.NonSequenceOrCollectionException.class)
     public String parserError(Model model, Exception x) {
@@ -37,6 +44,13 @@ public class GlobalControllerAdvice {
     public String authenticationException(Model model, Exception x) {
         process(model, x);
         return "/login";
+    }
+
+    @ExceptionHandler(JSONValidationException.class)
+    public @ResponseBody
+    ResponseEntity jsonValidationException(JSONValidationException x) {
+        x.printStackTrace();
+        return new ResponseEntity<String>(x.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)

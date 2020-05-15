@@ -20,7 +20,7 @@ public class HomeController {
     @GetMapping(value = Endpoints.LOGIN)
     public String loginPage(Model model) throws Exception {
         String login = "login";
-        String jsonData = AppInject.templateService.getJSONFromURI(login);
+        String jsonData = AppInject.templateService.getJSONOnlyFromURI(login);
         model.addAttribute(JSONTemplateConst.TEMPLATE, AppInject.templateParser.pageDefinition(jsonData));
         return ViewResolver.AUTH_INDEX;
     }

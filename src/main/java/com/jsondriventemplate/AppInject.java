@@ -1,6 +1,7 @@
 package com.jsondriventemplate;
 
 import com.jsondriventemplate.config.MessageReader;
+import com.jsondriventemplate.logic.JSONValidator;
 import com.jsondriventemplate.logic.JsonTemplateService;
 import com.jsondriventemplate.logic.TemplateParser;
 import com.jsondriventemplate.repo.MongoClientProvider;
@@ -15,13 +16,16 @@ public class AppInject {
     public static MessageReader messageReader;
     public static MongoClientProvider mongoClientProvider;
     public static JsonTemplateService templateService;
+    public static JSONValidator jsonValidator;
 
     public AppInject(TemplateParser templateParser, MessageReader messageReader, MongoClientProvider mongoClientProvider, JsonTemplateService templateService,
-                     Configuration configuration) {
+                     Configuration configuration, JSONValidator jsonValidator
+    ) {
         AppInject.templateParser = templateParser;
         AppInject.messageReader = messageReader;
         AppInject.configuration = configuration;
         AppInject.mongoClientProvider = mongoClientProvider;
         AppInject.templateService = templateService;
+        AppInject.jsonValidator = jsonValidator;
     }
 }

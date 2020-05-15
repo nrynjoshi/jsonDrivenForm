@@ -17,7 +17,7 @@ public class GenericController {
 
     @GetMapping(value = Endpoints.URI)
     public String loginPage(Model model, @PathVariable String uri) throws Exception {
-        String jsonData = AppInject.templateService.getJSONFromURI(uri);
+        String jsonData = AppInject.templateService.getJSONOnlyFromURI(uri);
         model.addAttribute(JSONTemplateConst.TEMPLATE,AppInject.templateParser.pageDefinition(jsonData));
         return ViewResolver.AUTH_INDEX;
     }

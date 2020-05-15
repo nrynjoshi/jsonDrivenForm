@@ -87,32 +87,34 @@
 
     <div class="col-lg-10">
         <div class="row">
-
-            <div class="col-lg-12 m-1 p-0">
-                <select class="custom-select" required>
-                    <option value="">Select JSON Template</option>
-                    <c:forEach items="${jsonList}" var="item">
-                        <option value="${item}">${item}</option>
-                    </c:forEach>
-                </select>
-
-                <a href="/auth/login" class="btn btn-primary btn-op modalDisplay">Create</a>
-                <a href="/auth/login" class="btn btn-primary btn-op modalDisplay">Save</a>
-                <button type="button" id="run" class="btn btn-primary btn-op">Execute</button>
-                <a href="/auth/login" class="btn btn-primary btn-op" target="_blank">Preview</a>
-
-
-
-
-            </div>
             <div class="col-lg-6 pl-0 pr-0 pt-0">
-                <pre id="json-display" style="overflow: scroll;height: 81vh">${unProcessedJSON}</pre>
+                <form action="/admin/editor" method="GET">
+                    <select class="custom-select" name="query" id="query" required>
+                        <option value="">Select JSON Template</option>
+                        <c:forEach items="${jsonList}" var="item">
+                            <option value="${item.url}"
+                                    <c:if test="${item.url eq query }">selected</c:if> >${item.name}</option>
+                        </c:forEach>
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-op modalDisplay"
+                            title="Unsaved information will be lost when click it">Load
+                    </button>
+                </form>
+                <pre id="json-display" data-id="${unProcessedJSON._id}" style="overflow: scroll;height: 81vh">${unProcessedJSON.json}</pre>
             </div>
 
             <div class="col-lg-6 p-0">
+                <div class="col-lg-6 m-1 p-0">
+                    <button id="saveJSON" class="btn btn-primary btn-op modalDisplay">Save</button>
+                    <button type="button" id="run" class="btn btn-primary btn-op">Execute</button>
+                    <a href="/auth/login" class="btn btn-primary btn-op" target="_blank">Preview</a>
+                </div>
                 <h6>Display Board</h6>
                 <div class="" id="json-form">
-                    <iframe src="/auth/login" style="overflow: scroll;height: 65vh; width: 100%">
+
+                    <iframe
+                            <c:if test="${not empty preview_url }">src="${preview_url}"</c:if>
+                            style="overflow: scroll;height: 65vh; width: 100%">
 
                     </iframe>
 
@@ -146,7 +148,6 @@
 
         $('#run').bind("click", function () {
             var data = $('#json-display').text();
-
             $.ajax({
                 type: 'POST',
                 url: "/admin/editor",
@@ -154,6 +155,22 @@
                 success: function (resultData) {
                     $('#json-form').html(resultData);
                 },
+            });
+        });
+
+        $('#saveJSON').bind("click", function () {
+            var data = $('#json-display').text();
+            $.ajax({
+                type: 'POST',
+                url: "/admin/json_definition",
+                data: {
+                    json: data,
+                    _id:$("#json-display").data("id")
+                },
+                success: function (resultData) {
+                }, error: function (error) {
+                    alert(error);
+                }
             });
         });
 

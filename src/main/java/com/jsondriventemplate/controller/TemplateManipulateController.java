@@ -2,6 +2,7 @@ package com.jsondriventemplate.controller;
 
 import com.jsondriventemplate.AppInject;
 import com.jsondriventemplate.JSONTemplateConst;
+import com.jsondriventemplate.repo.DBConstant;
 import freemarker.template.TemplateException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -14,9 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = Endpoints.ADMIN)
@@ -28,13 +27,24 @@ public class TemplateManipulateController {
     }
 
     @GetMapping(value = Endpoints.EDITOR)
-    public String editor(Model model, @RequestParam(name = JSONTemplateConst.query, defaultValue = "login", required = false) String query) throws Exception {
-        String jsonData = AppInject.templateService.getJSONFromURI(query);
-        String execute = AppInject.templateParser.pageDefinition(jsonData);
+    public String editor(Model model, @RequestParam(name = JSONTemplateConst.query, defaultValue = "", required = false) String query) throws Exception {
+        Map jsonData=null;
+        String previewURL="";
+        if(StringUtils.isNotBlank(query)){
+            jsonData = AppInject.templateService.getJSONFromURIEditorView(query);
+            previewURL="/auth/"+query;
+        }
 
-        model.addAttribute(JSONTemplateConst.JSONForm, execute);
+        if(jsonData==null){
+            jsonData=new HashMap();
+            jsonData.put("_id","");
+            jsonData.put("json","{}");
+        }
+
+        model.addAttribute("query",query);
+        model.addAttribute(JSONTemplateConst.PREVIEW_URL, previewURL);
         model.addAttribute(JSONTemplateConst.unProcessedJSON, jsonData);
-        model.addAttribute(JSONTemplateConst.jsonList, readFiles());
+        model.addAttribute(JSONTemplateConst.jsonList, AppInject.mongoClientProvider.findAll(DBConstant.TEMPLATE_INFORMATION));
         return ViewResolver.ADMIN_EDITOR;
     }
 
@@ -51,16 +61,6 @@ public class TemplateManipulateController {
             return AppInject.templateParser.execute(jsonData);
         }
 
-    }
-
-    private List<String> readFiles() {
-        File file1 = Paths.get(JSONTemplateConst.JSON_SCHEMA_ATTR).toFile();
-        Collection<File> files = FileUtils.listFiles(file1,new String[]{"json"},false);
-        List<String> fileNames=new ArrayList<>();
-        for (File file:files) {
-            fileNames.add(file.getName());
-        }
-        return fileNames;
     }
 
 
