@@ -23,6 +23,14 @@ public class JsonTemplateService {
        return (String) getJSONFromURI(uri).get("json");
     }
 
+    public String getURIID(String uri){
+        Map byURL = AppInject.mongoClientProvider.findByURL(uri, DBConstant.TEMPLATE_INFORMATION);
+        if(byURL==null){
+            return "";
+        }
+        return (String) byURL.get("_id");
+    }
+
     public Map getJSONFromURI(String uri) throws Exception {
         AppInject.templateParser.validateURIJSON(uri);
         Map byURL = AppInject.mongoClientProvider.findByURL(uri, DBConstant.TEMPLATE_INFORMATION);

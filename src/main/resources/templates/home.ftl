@@ -12,8 +12,10 @@
     </head>
     <body>
     <#--    main content part-->
-
+<#if elements??>
     <@elem.templateParser template=(definitions.page.snippet) elements=elements></@elem.templateParser>
+</#if>
+
     <#--    footer part start from here -->
     <#list layout.definitions.js_url as jsURL>
         <script src="${jsURL}"></script>

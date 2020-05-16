@@ -107,14 +107,14 @@
                 <div class="col-lg-6 m-1 p-0">
                     <button id="saveJSON" class="btn btn-primary btn-op modalDisplay">Save</button>
                     <button type="button" id="run" class="btn btn-primary btn-op">Execute</button>
-                    <a href="/auth/login" class="btn btn-primary btn-op" target="_blank">Preview</a>
+                    <a <c:if test="${not empty preview_url }">href="${preview_url}"</c:if> class="btn btn-primary btn-op" target="_blank">Preview</a>
                 </div>
                 <h6>Display Board</h6>
                 <div class="" id="json-form">
 
                     <iframe
                             <c:if test="${not empty preview_url }">src="${preview_url}"</c:if>
-                            style="overflow: scroll;height: 65vh; width: 100%">
+                            style="overflow: scroll;height: 65vh; width: 100%" sandbox>
 
                     </iframe>
 

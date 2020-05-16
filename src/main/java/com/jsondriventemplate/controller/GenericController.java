@@ -12,14 +12,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = Endpoints.AUTH)
 public class GenericController {
 
-    @GetMapping(value = Endpoints.URI)
-    public String loginPage(Model model, @PathVariable String uri) throws Exception {
+    @GetMapping(value = Endpoints.AUTH+Endpoints.URI)
+    public String globalPage(Model model, @PathVariable String uri) throws Exception {
         String jsonData = AppInject.templateService.getJSONOnlyFromURI(uri);
         model.addAttribute(JSONTemplateConst.TEMPLATE,AppInject.templateParser.pageDefinition(jsonData));
         return ViewResolver.AUTH_INDEX;
     }
+
+    @GetMapping(value = Endpoints.PREVIEW+Endpoints.URI)
+    public String previewPage(Model model, @PathVariable String uri) throws Exception {
+        String jsonData = AppInject.templateService.getJSONOnlyFromURI(uri);
+        model.addAttribute(JSONTemplateConst.TEMPLATE,AppInject.templateParser.pageDefinition(jsonData,true));
+        return ViewResolver.AUTH_INDEX;
+    }
+
 
 }

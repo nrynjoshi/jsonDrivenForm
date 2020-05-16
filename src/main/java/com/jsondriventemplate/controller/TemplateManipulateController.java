@@ -32,12 +32,12 @@ public class TemplateManipulateController {
         String previewURL="";
         if(StringUtils.isNotBlank(query)){
             jsonData = AppInject.templateService.getJSONFromURIEditorView(query);
-            previewURL="/auth/"+query;
+            previewURL="/preview/"+query;
         }
 
         if(jsonData==null){
             jsonData=new HashMap();
-            jsonData.put("_id","");
+            jsonData.put("_id",AppInject.templateService.getURIID(query));
             jsonData.put("json","{}");
         }
 
@@ -58,7 +58,7 @@ public class TemplateManipulateController {
         try{
            return AppInject.templateParser.pageDefinition(jsonData);
         }catch (Exception x){
-            return AppInject.templateParser.execute(jsonData);
+            return "";
         }
 
     }

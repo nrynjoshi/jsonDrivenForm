@@ -27,16 +27,25 @@ public class TemplateParser {
             throw new URINotFoundException(AppInject.messageReader.get(StatusCode.NOT_FOUND.value()));
         }
         Map byURL = AppInject.mongoClientProvider.findByURL(uri, DBConstant.TEMPLATE_INFORMATION);
-        if (byURL==null || byURL.isEmpty()) {
+        if (byURL == null || byURL.isEmpty()) {
             throw new URINotFoundException(AppInject.messageReader.get(StatusCode.NOT_FOUND.value()));
         }
     }
 
-
     public String pageDefinition(String jsonData) throws IOException, TemplateException {
+        return pageDefinition(jsonData, false);
+    }
+
+    public String pageDefinition(String jsonData, boolean isAdminPreview) throws IOException, TemplateException {
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put(JSONTemplateConst.LAYOUT, layoutProcess(jsonData));
-        paramMap.put(JSONTemplateConst.ELEMENTS, element(jsonData));
+        try {
+            paramMap.put(JSONTemplateConst.LAYOUT, layoutProcess(jsonData));
+            paramMap.put(JSONTemplateConst.ELEMENTS, element(jsonData));
+        } catch (Exception x) {
+            if (!isAdminPreview) {
+                throw x;
+            }
+        }
         Template template = AppInject.configuration.getTemplate("home.ftl");
         return executeDef(jsonData, template, paramMap);
     }
