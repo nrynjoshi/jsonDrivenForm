@@ -35,7 +35,7 @@ public class GenericController {
     }
 
     // TODO: 5/18/2020 on development
-    @PostMapping(value = Endpoints.PREVIEW + Endpoints.PROCESS)
+    @GetMapping(value = Endpoints.PREVIEW + Endpoints.PROCESS)
     public String get(@RequestBody RequestDTO requestDTO) throws Exception {
         return AppInject.jdtScript.processAndReturn(requestDTO);
     }
