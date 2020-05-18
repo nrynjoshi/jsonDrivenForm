@@ -93,4 +93,44 @@ public class AdminController {
         return "success";
     }
 
+    //Process Function APIS
+    @GetMapping(value = Endpoints.PROCESS_FUNCTION)
+    public String processFunction(Model model) {
+        List all = AppInject.mongoClientProvider.findAll(DBConstant.PROCESS_FUNCTION);
+        model.addAttribute("functionList", all);
+        return ViewResolver.ADMIN_PROCESS_FUNCTION;
+    }
+
+    @PostMapping(value = Endpoints.PROCESS_FUNCTION)
+    public String saveProcessFunction(@RequestBody MultiValueMap valueMap) {
+        AppInject.mongoClientProvider.save(valueMap.toSingleValueMap(), DBConstant.PROCESS_FUNCTION);
+        return "redirect:" + Endpoints.ADMIN+Endpoints.PROCESS_FUNCTION;
+    }
+
+    @GetMapping(value = Endpoints.PROCESS_FUNCTION + Endpoints.ID)
+    public String deleteProcessFunctiono(@PathVariable String id) {
+        AppInject.mongoClientProvider.delete(id, DBConstant.PROCESS_FUNCTION);
+        return "redirect:" + Endpoints.ADMIN + Endpoints.PROCESS_FUNCTION;
+    }
+
+//    JS FUNCTION APIS
+    @GetMapping(value = Endpoints.JS_FUNCTION)
+    public String jsFunction(Model model) {
+        List all = AppInject.mongoClientProvider.findAll(DBConstant.JS_FUNCTION);
+        model.addAttribute("functionList", all);
+        return ViewResolver.ADMIN_JS_FUNCTION;
+    }
+
+    @PostMapping(value = Endpoints.JS_FUNCTION)
+    public String saveJsFunction(@RequestBody MultiValueMap valueMap) {
+        AppInject.mongoClientProvider.save(valueMap.toSingleValueMap(), DBConstant.JS_FUNCTION);
+        return "redirect:" + Endpoints.ADMIN+Endpoints.JS_FUNCTION;
+    }
+
+    @GetMapping(value = Endpoints.JS_FUNCTION + Endpoints.ID)
+    public String deleteJsFunctiono(@PathVariable String id) {
+        AppInject.mongoClientProvider.delete(id, DBConstant.JS_FUNCTION);
+        return "redirect:" + Endpoints.ADMIN + Endpoints.JS_FUNCTION;
+    }
+
 }

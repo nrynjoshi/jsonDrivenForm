@@ -12,6 +12,8 @@ public final class Endpoints {
     public static final String URI="/{uri}";
     public static final String AUTH="/auth";
     public static final String PREVIEW="/preview";
+    public static final String PROCESS_FUNCTION="/processfunction";
+    public static final String JS_FUNCTION="/jsfunction";
 
     public static final String PROCESS="/process";
 

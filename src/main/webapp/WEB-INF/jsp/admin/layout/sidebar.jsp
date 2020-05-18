@@ -30,11 +30,11 @@
         <a href="/admin/jsontemplate" >JSON Template</a>
         </li>
         <li>
-        <a href="/admin/jsontemplate" >Process Function</a>
+        <a href="/admin/processfunction" >Process Function</a>
         </li>
         </li>
         <li>
-        <a href="/admin/jsontemplate" >JS Function</a>
+        <a href="/admin/jsfunction" >JS Function</a>
         </li>
         </ul>
         </nav>
