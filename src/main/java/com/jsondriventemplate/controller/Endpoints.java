@@ -13,4 +13,6 @@ public final class Endpoints {
     public static final String AUTH="/auth";
     public static final String PREVIEW="/preview";
 
+    public static final String PROCESS="/process";
+
 }
