@@ -1,12 +1,15 @@
 package com.jsondriventemplate.repo;
 
+import com.mongodb.BasicDBObject;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
+import org.springframework.data.domain.Example;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -52,6 +55,14 @@ public class MongoClientProvider {
     public Map findByAtt(String attr,String value, String collectionName) {
         Query query = Query.query(Criteria.where(attr).is(value));
         return mongoOperations.findOne(query, Map.class,collectionName);
+    }
+
+    public List<?> search(Map<String,Object> searchMap, String collectionName) {
+        Query query = new Query();
+        for(Map.Entry<String, Object> entity:searchMap.entrySet()){
+            query.addCriteria(Criteria.where(entity.getKey()).regex(String.valueOf(entity.getValue())));
+        }
+        return mongoOperations.find(query,Map.class,collectionName);
     }
 
 
