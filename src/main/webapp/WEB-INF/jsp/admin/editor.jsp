@@ -99,6 +99,7 @@
                     <button type="submit" class="btn btn-primary btn-op modalDisplay"
                             title="Unsaved information will be lost when click it">Load
                     </button>
+                    <button type="button" id="rearrangejson" class="btn btn-primary btn-op">Beautify</button>
                 </form>
                 <pre id="json-display" data-id="${unProcessedJSON._id}" style="overflow: scroll;height: 81vh">${unProcessedJSON.json}</pre>
             </div>
@@ -107,6 +108,7 @@
                 <div class="col-lg-6 m-1 p-0">
                     <button id="saveJSON" class="btn btn-primary btn-op modalDisplay">Save</button>
                     <button type="button" id="run" class="btn btn-primary btn-op">Execute</button>
+
                     <a <c:if test="${not empty preview_url }">href="${preview_url}"</c:if> class="btn btn-primary btn-op" target="_blank">Preview</a>
                 </div>
                 <h6>Display Board</h6>
@@ -138,13 +140,11 @@
 <script>
 
     $(document).ready(function () {
-        try {
-            var json = JSON.parse($('#json-display').text());
-            $('#json-display').html("");
-            new JsonEditor('#json-display', json);
-        } catch (ex) {
-            alert('Wrong JSON Format: ' + ex);
-        }
+        arrangeJSON();
+
+        $('#rearrangejson').bind("click", function () {
+            arrangeJSON();
+        });
 
         $('#run').bind("click", function () {
             var data = $('#json-display').text();
@@ -175,6 +175,16 @@
         });
 
     });
+
+    function arrangeJSON() {
+        try {
+            var json = JSON.parse($('#json-display').text());
+            $('#json-display').html("");
+            new JsonEditor('#json-display', json);
+        } catch (ex) {
+            alert('Wrong JSON Format: ' + ex);
+        }
+    }
 
 
 </script>
