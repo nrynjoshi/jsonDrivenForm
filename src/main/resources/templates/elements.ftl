@@ -36,7 +36,7 @@
     <#if field.submittransform?has_content> ontest="${field.submittransform}" </#if>
     <#if field.type?has_content> type="${field.type}" </#if>
     <#if field.placeholder?has_content> placeholder="${field.placeholder}" </#if>
-    <#if field.value?has_content> type="${field.value}" </#if>
+    <#if field.value?has_content> value="${field.value}" </#if>
     <#if field.required?has_content> <#if field.required==true>required="required"</#if> </#if>
 </#macro>
 
@@ -53,6 +53,34 @@
         <button type="submit" name="${name}" <@populate field=field ></@populate>
         <#if field.icon?has_content><i class="fa fa-${field.icon}"></i></#if> >${field.label}
         </button>
+    </div>
+</#macro>
+
+<#macro selectBody field name>
+    <div class="form-group">
+        <#if name?has_content> <label>${field.label}</label> </#if>
+        <div class="input-group">
+            <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i> </span> </#if>
+            <select name="${name}" <@populate field=field ></@populate> >
+                <#list field["list"]?keys as groupKey>
+                    <option <#if field.value==groupKey>selected</#if> value='${(groupKey!"")}' >${field["list"][groupKey]}</option>
+                </#list>
+            </select>
+        </div>
+    </div>
+</#macro>
+
+<#macro checkBoxBody field name>
+    <div class="form-group">
+        <input name="${name}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
+        <#if name?has_content> <label class="form-check-label" >${field.label} </label> </#if>
+    </div>
+</#macro>
+
+<#macro radioButton field name>
+    <div class="form-group">
+        <input name="${field.radioname}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
+        <#if name?has_content> <label class="form-check-label" >${field.label}</label> </#if>
     </div>
 </#macro>
 
@@ -78,7 +106,7 @@
             <#assign field=requestData.fields[name]>
             <#switch field.type>
                 <#case "select" >
-                    CASE2
+                    <@selectBody field=field name=name></@selectBody>
                     <#break>
                 <#case "button" >
                     <@buttonBody field=field name=name></@buttonBody>
@@ -87,10 +115,10 @@
                     <@buttonBody field=field name=name></@buttonBody>
                     <#break>
                 <#case "checkbox">
-                    CASE3
+                    <@checkBoxBody field=field name=name></@checkBoxBody>
                     <#break>
                 <#case "radio">
-                    CASE3
+                    <@radioButton field=field name=name></@radioButton>
                     <#break>
                 <#default>
                     <@default field=field name=name></@default>
@@ -109,7 +137,6 @@
     <#list template?split(",") as level1>
         ${endingTagIdentifer(level1)}
     </#list>
-
 </#macro>
 
 <#function endingTagIdentifer level1>
