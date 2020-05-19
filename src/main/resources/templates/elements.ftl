@@ -194,3 +194,27 @@
     <#if attribute?has_content >${attribute}</#if>
     > <#if attribute?has_content >${attribute}</#if>
 </#macro>
+
+
+<#function gridindexwork grid gridindexcolumn gridindexrow>
+    <#local grid="" />
+
+    <#if grid??>
+        <#local grid+="display: \'grid\'" />
+    </#if>
+
+    <#if gridindexrow??>
+        <#local gridstart=gridindexrow?split(",")[0] >
+        <#local gridend=gridindexrow?split(",")[1] >
+        <#local grid+="grid-row-start: \'"+gridstart+"\'" />
+        <#local grid+="grid-row-end: \'"+gridend+"\'" />
+    </#if>
+
+    <#if gridindexcolumn??>
+        <#local gridstart=gridindexcolumn?split(",")[0] >
+        <#local gridend=gridindexcolumn?split(",")[1] >
+        <#local grid+="grid-column-start: \'"+gridstart+"\'" />
+        <#local grid+="grid-column-end: \'"+gridend+"\'" />
+    </#if>
+    <#return grid>
+</#function>

@@ -63,8 +63,29 @@ public class AdminController {
         }
 
     }
+//----------------------------------------------------------------------------------------------------------------------
+
+    @GetMapping(value = Endpoints.USER)
+    public String user(Model model) {
+        List all = AppInject.mongoClientProvider.findAll(DBConstant.USER);
+        model.addAttribute("templateList", all);
+        return ViewResolver.ADMIN_USER;
+    }
+
+    @PostMapping(value = Endpoints.USER)
+    public String saveUser(@RequestBody MultiValueMap valueMap) {
+        AppInject.mongoClientProvider.save(valueMap.toSingleValueMap(), DBConstant.USER);
+        return "redirect:" + Endpoints.ADMIN + Endpoints.USER;
+    }
+
+    @GetMapping(value = Endpoints.USER + Endpoints.ID)
+    public String deleteUser(@PathVariable String id) {
+        AppInject.mongoClientProvider.delete(id, DBConstant.USER);
+        return "redirect:" + Endpoints.ADMIN + Endpoints.USER;
+    }
 
 
+    //------------------------------------------------------------------------------------------------------------------
     @GetMapping(value = Endpoints.JSON_TEMPLATE)
     public String jsonTemplate(Model model) {
         List all = AppInject.mongoClientProvider.findAll(DBConstant.TEMPLATE_INFORMATION);
