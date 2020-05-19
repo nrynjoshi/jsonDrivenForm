@@ -14,7 +14,7 @@
       "definitions": {
         "type": "form",
         "method": "POST",
-        "action": "/employee-create",
+        "action": "/admin/create-employee",
         "class": "",
         "id": "",
         "fields": {
