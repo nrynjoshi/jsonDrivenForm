@@ -17,6 +17,5 @@ public final class Endpoints {
     public static final String JS_FUNCTION="/jsfunction";
 
     public static final String PROCESS="/process";
-    public static final String CREATE_EMPLOYEE="/create-employee";
 
 }

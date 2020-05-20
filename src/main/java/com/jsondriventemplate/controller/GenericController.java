@@ -29,13 +29,13 @@ public class GenericController {
     //------------------- Post and get Function will be used for all json request as per script -------------------------
 
     // TODO: 5/18/2020 on development
-    @PostMapping(value = Endpoints.PREVIEW + Endpoints.PROCESS)
+    @PostMapping(value = Endpoints.AUTH + Endpoints.PROCESS)
     public void post(@RequestBody RequestDTO requestDTO) throws Exception {
         AppInject.jdtScript.process(requestDTO);
     }
 
     // TODO: 5/18/2020 on development
-    @GetMapping(value = Endpoints.PREVIEW + Endpoints.PROCESS)
+    @GetMapping(value = Endpoints.AUTH + Endpoints.PROCESS)
     public String get(@RequestBody RequestDTO requestDTO) throws Exception {
         return AppInject.jdtScript.processAndReturn(requestDTO);
     }

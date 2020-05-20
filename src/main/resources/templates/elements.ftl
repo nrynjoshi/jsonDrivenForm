@@ -76,6 +76,9 @@
         <#if name?has_content> <label class="form-check-label" >${field.label} </label> </#if>
     </div>
 </#macro>
+<#macro hidden field name>
+        <input name="${name}" type="hidden" value="${field.value}" >
+</#macro>
 
 <#macro radioButton field name>
     <div class="form-group">
@@ -119,6 +122,9 @@
                     <#break>
                 <#case "radio">
                     <@radioButton field=field name=name></@radioButton>
+                    <#break>
+                <#case "hidden">
+                    <@hidden field=field name=name></@hidden>
                     <#break>
                 <#default>
                     <@default field=field name=name></@default>

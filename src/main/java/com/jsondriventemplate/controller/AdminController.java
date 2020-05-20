@@ -156,11 +156,4 @@ public class AdminController {
         AppInject.mongoClientProvider.delete(id, DBConstant.JS_FUNCTION);
         return "redirect:" + Endpoints.ADMIN + Endpoints.JS_FUNCTION;
     }
-
-    @PostMapping(value = Endpoints.CREATE_EMPLOYEE)
-    public String saveEmployee(@RequestBody MultiValueMap valueMap) {
-        AppInject.mongoClientProvider.save(valueMap.toSingleValueMap(), DBConstant.EMPLOYEE_DETAILS);
-        return "redirect:/preview"+Endpoints.CREATE_EMPLOYEE;
-    }
-
 }
