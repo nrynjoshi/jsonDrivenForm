@@ -18,4 +18,12 @@ public final class Endpoints {
 
     public static final String PROCESS="/process";
 
+    //
+    public static final String SAVE="/save";
+    public static final String DELETE="/delete";
+    public static final String UPDATE="/update";
+    public static final String SEARCH="/search";
+    public static final String GET_ID="/getId";
+    public static final String GET="/get";
+
 }

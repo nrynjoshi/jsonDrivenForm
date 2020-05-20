@@ -14,7 +14,7 @@
       "definitions": {
         "type": "form",
         "method": "POST",
-        "action": "/auth/process",
+        "action": "/auth/process/save",
         "class": "",
         "id": "",
         "fields": {
@@ -133,10 +133,6 @@
             "required": true,
             "class": "form-control",
             "id": ""
-          },
-          "type": {
-            "type": "hidden",
-            "value": "save"
           },
           "create": {
             "type": "submit",

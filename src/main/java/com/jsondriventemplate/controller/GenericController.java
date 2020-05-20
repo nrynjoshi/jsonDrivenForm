@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Map;
+
 @Controller
 public class GenericController {
 
@@ -30,16 +32,46 @@ public class GenericController {
     //------------------- Post and get Function will be used for all json request as per script -------------------------
 
     // TODO: 5/18/2020 on development
-    @PostMapping(value = Endpoints.AUTH + Endpoints.PROCESS)
-    public void post(@RequestBody MultiValueMap map) throws Exception {
-        AppInject.jdtScript.process(map.toSingleValueMap());
+    @PostMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.SAVE)
+    public void saveRecord(@RequestBody MultiValueMap map) throws Exception {
+        Map map1 = map.toSingleValueMap();
+        map1.put("type","create");
+        AppInject.jdtScript.process(map1);
     }
 
-    // TODO: 5/18/2020 on development
-    @GetMapping(value = Endpoints.AUTH + Endpoints.PROCESS)
-    public String get(@RequestBody MultiValueMap requestDTO) throws Exception {
-        return (String) AppInject.jdtScript.processAndReturn(requestDTO.toSingleValueMap());
+    @PostMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.UPDATE)
+    public void updateRecord(@RequestBody MultiValueMap map) throws Exception {
+        Map map1 = map.toSingleValueMap();
+        map1.put("type","update");
+        AppInject.jdtScript.process(map1);
     }
+
+    @PostMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.SEARCH)
+    public void searchRecord(@RequestBody MultiValueMap map) throws Exception {
+        Map map1 = map.toSingleValueMap();
+        map1.put("type","search");
+        AppInject.jdtScript.process(map1);
+    }
+
+    @PostMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.DELETE)
+    public void deleteRecord(@RequestBody MultiValueMap map) throws Exception {
+        Map map1 = map.toSingleValueMap();
+        map1.put("type","delete");
+        AppInject.jdtScript.process(map1);
+    }
+    @PostMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.GET_ID)
+    public void getById(@RequestBody MultiValueMap map) throws Exception {
+        Map map1 = map.toSingleValueMap();
+        map1.put("type","retrieveByID");
+        AppInject.jdtScript.process(map1);
+    }
+    @PostMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.GET)
+    public void getAll(@RequestBody MultiValueMap map) throws Exception {
+        Map map1 = map.toSingleValueMap();
+        map1.put("type","retrieve");
+        AppInject.jdtScript.process(map1);
+    }
+
 
 
 }
