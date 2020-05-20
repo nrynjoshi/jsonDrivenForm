@@ -36,6 +36,9 @@
         <li>
         <a href="/admin/jsfunction" >JS Function</a>
         </li>
+            <li>
+            <a href="/admin/user" >User</a>
+            </li>
         </ul>
         </nav>
         </aside>

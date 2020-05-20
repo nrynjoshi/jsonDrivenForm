@@ -7,6 +7,7 @@ import com.jsondriventemplate.logic.JsonTemplateService;
 import com.jsondriventemplate.logic.TemplateParser;
 import com.jsondriventemplate.repo.MongoClientProvider;
 import freemarker.template.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,9 +20,10 @@ public class AppInject {
     public static JsonTemplateService templateService;
     public static JSONValidator jsonValidator;
     public static JDTScript jdtScript;
+    public static PasswordEncoder passwordEncoder;
 
     public AppInject(TemplateParser templateParser, MessageReader messageReader, MongoClientProvider mongoClientProvider, JsonTemplateService templateService,
-                     Configuration configuration, JSONValidator jsonValidator,JDTScript jdtScript
+                     Configuration configuration, JSONValidator jsonValidator,JDTScript jdtScript,PasswordEncoder passwordEncoder
     ) {
         AppInject.templateParser = templateParser;
         AppInject.messageReader = messageReader;
@@ -30,5 +32,6 @@ public class AppInject {
         AppInject.templateService = templateService;
         AppInject.jsonValidator = jsonValidator;
         AppInject.jdtScript = jdtScript;
+        AppInject.passwordEncoder = passwordEncoder;
     }
 }

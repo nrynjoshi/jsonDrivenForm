@@ -32,6 +32,19 @@ public class JSONDrivenTemplateApplication implements CommandLineRunner {
         AppInject.mongoClientProvider.collection(DBConstant.JSON_TEMPLATE_DEFINITION);
 
         {
+            Map login = AppInject.mongoClientProvider.findByAtt("username","superadmin", DBConstant.USER);
+            if(login==null || StringUtils.isBlank((CharSequence) login.get("_id"))){
+                Map<String,String> user=new HashMap<>();
+                user.put("username","superadmin");
+                user.put("password",AppInject.passwordEncoder.encode("superadmin123"));
+                user.put("enable","on");
+                user.put("fullname","Super User");
+                user.put("role","Super_Admin");
+                AppInject.mongoClientProvider.save(user, DBConstant.USER);
+            }
+        }
+
+        {
             Map login = AppInject.mongoClientProvider.findByURL("login", DBConstant.TEMPLATE_INFORMATION);
             if(login==null || StringUtils.isBlank((CharSequence) login.get("url"))){
                 Map<String,String> loginTemplateInformation=new HashMap<>();

@@ -74,7 +74,10 @@ public class AdminController {
 
     @PostMapping(value = Endpoints.USER)
     public String saveUser(@RequestBody MultiValueMap valueMap) {
-        AppInject.mongoClientProvider.save(valueMap.toSingleValueMap(), DBConstant.USER);
+
+        Map dataMap = valueMap.toSingleValueMap();
+        dataMap.put("password",AppInject.passwordEncoder.encode((CharSequence) dataMap.get("password")));
+        AppInject.mongoClientProvider.save(dataMap, DBConstant.USER);
         return "redirect:" + Endpoints.ADMIN + Endpoints.USER;
     }
 

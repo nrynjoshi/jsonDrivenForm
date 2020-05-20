@@ -31,11 +31,11 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 		}else{
 			for (GrantedAuthority grantedAuthority : authorities) {
 				System.out.println("role " + grantedAuthority.getAuthority());
-				if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
-					redirectUrl = Endpoints.AUTH+Endpoints.DASHBOARD;
-					break;
-				} else if (grantedAuthority.getAuthority().equals("ROLE_SUPER_ADMIN")) {
+				if (grantedAuthority.getAuthority().equals("ROLE_SUPER_ADMIN")) {
 					redirectUrl = Endpoints.ADMIN+Endpoints.DASHBOARD;
+					break;
+				}else{
+					redirectUrl = Endpoints.AUTH+Endpoints.DASHBOARD;
 					break;
 				}
 			}
