@@ -58,7 +58,7 @@ public class AdminController {
             return "Non thing to display..";
         }
         try{
-           return AppInject.templateParser.pageDefinition(jsonData);
+           return AppInject.templateParser.pageDefinition(jsonData,"");
         }catch (Exception x){
             return "";
         }

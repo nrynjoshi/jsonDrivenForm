@@ -10,6 +10,12 @@
         }
       ]
     },
+    "employee-list": {
+      "definitions": {
+        "type": "table",
+        "data-url": "/auth/process/get?uri=employee"
+      }
+    },
     "employee-form": {
       "definitions": {
         "type": "form",

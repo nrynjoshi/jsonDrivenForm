@@ -32,15 +32,15 @@ public class TemplateParser {
         }
     }
 
-    public String pageDefinition(String jsonData) throws IOException, TemplateException {
-        return pageDefinition(jsonData, false);
+    public String pageDefinition(String jsonData, String type) throws IOException, TemplateException {
+        return pageDefinition(jsonData, false, type);
     }
 
-    public String pageDefinition(String jsonData, boolean isAdminPreview) throws IOException, TemplateException {
+    public String pageDefinition(String jsonData, boolean isAdminPreview, String type) throws IOException, TemplateException {
         Map<String, Object> paramMap = new HashMap<>();
         try {
             paramMap.put(JSONTemplateConst.LAYOUT, layoutProcess(jsonData));
-            paramMap.put(JSONTemplateConst.ELEMENTS, element(jsonData));
+            paramMap.put(JSONTemplateConst.ELEMENTS, element(jsonData, type));
         } catch (Exception x) {
             if (!isAdminPreview) {
                 throw x;
@@ -56,23 +56,35 @@ public class TemplateParser {
         return JSONLoader.mapper(JSONLoader.laodJSONDefinition(file));
     }
 
-    private List<LinkedHashMap> element(String jsonData) {
+    private List<LinkedHashMap> element(String jsonData, String type) {
+
         net.minidev.json.JSONArray elements = JsonPath.parse(jsonData).read("$['definitions']['page']['elements']");
-        return elementFilter(jsonData, elements);
+        return elementFilter(jsonData, elements, type);
     }
 
-    private List<LinkedHashMap> elementFilter(String jsonData, JSONArray elements) {
-        StringBuilder builder = new StringBuilder("$");
+    private List<LinkedHashMap> elementFilter(String jsonData, JSONArray elements, String type) {
+
         List<LinkedHashMap> elementList = new ArrayList<>();
         for (Object element : elements) {
+            StringBuilder builder = new StringBuilder("$");
             LinkedHashMap elementsJSONObject = (LinkedHashMap) element;
             String $ref = (String) elementsJSONObject.get("$ref");
             String[] splitVal = StringUtils.split($ref, "/");
+            String lastType = null;
             for (String val : splitVal) {
                 if (StringUtils.equalsAnyIgnoreCase(val, "#")) {
                     continue;
                 }
                 builder.append("['").append(val).append("']");
+                lastType = val;
+            }
+            if (StringUtils.isNotBlank(type)) {
+                if (StringUtils.equalsAnyIgnoreCase(lastType, type)) {
+                    LinkedHashMap jsonElement = JsonPath.parse(jsonData).read(builder.toString().trim());
+                    elementList.add(jsonElement);
+                    break;
+                }
+                continue;
             }
             LinkedHashMap jsonElement = JsonPath.parse(jsonData).read(builder.toString().trim());
             elementList.add(jsonElement);

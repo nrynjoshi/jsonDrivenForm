@@ -21,7 +21,7 @@ public class HomeController {
     public String loginPage(Model model) throws Exception {
         String login = "login";
         String jsonData = AppInject.templateService.getJSONOnlyFromURI(login);
-        model.addAttribute(JSONTemplateConst.TEMPLATE, AppInject.templateParser.pageDefinition(jsonData));
+        model.addAttribute(JSONTemplateConst.TEMPLATE, AppInject.templateParser.pageDefinition(jsonData,""));
         return ViewResolver.AUTH_INDEX;
     }
 }
