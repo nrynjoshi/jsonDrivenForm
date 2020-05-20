@@ -1,4 +1,4 @@
-<#macro body elements>
+<#macro body elements list_value>
     <#if elements??>
         <#list elements as elementObj>
             <#if elementObj.definitions.type??>
@@ -7,7 +7,7 @@
                         <@formBody requestData=elementObj.definitions></@formBody>
                         <#break>
                     <#case "table" >
-                        <@tableBody requestData=elementObj.definitions></@tableBody>
+                        <@tableBody requestData=elementObj.definitions list_value=list_value></@tableBody>
                         <#break>
                     <#case "code">
                         <#local closingTag="">
@@ -15,12 +15,12 @@
                             <@small level1=level1/>
                         </#list>
                         <#if elementObj.definitions.elements??>
-                                <@body elements=elementObj.definitions.elements ></@body>
+                            <@body elements=elementObj.definitions.elements list_value=list_value></@body>
                         </#if>
 
-                    <#list elementObj.definitions.snippet?split(",") as level1>
-                        ${endingTagIdentifer(level1)}
-                    </#list>
+                        <#list elementObj.definitions.snippet?split(",") as level1>
+                            ${endingTagIdentifer(level1)}
+                        </#list>
                         <#break >
                 </#switch>
             </#if>
@@ -40,11 +40,39 @@
     <#if field.required?has_content> <#if field.required==true>required="required"</#if> </#if>
 </#macro>
 
-<#macro tableBody requestData>
-    <table <#if requestData.class?has_content> class="${requestData.class}" </#if>
+<#macro tableBody requestData list_value>
+    <table class="table" <#if requestData.class?has_content> class="${requestData.class}" </#if>
             <#if requestData.id?has_content> id="${requestData.id}" </#if>
     >
+        <#local lastItem=list_value[list_value?size-1] >
+        <thead>
+        <tr>
+            <#list lastItem?keys as key>
+                <th scope="col">${key}</th>
+            </#list>
+            <th>Action</th>
+        </tr>
 
+        </thead>
+        <tbody>
+        <#list list_value as item>
+            <tr>
+                <#list lastItem?keys as key>
+                    <#local value=item[key]>
+                    <td>${value}</td>
+                </#list>
+                <td><button>Delete</button>
+                    <button>Update</button>
+                </td>
+            </tr>
+        </#list>
+        </tbody>
+
+
+        <#--<#if list_value??>
+
+
+        </#if>-->
     </table>
 </#macro>
 
@@ -60,10 +88,12 @@
     <div class="form-group">
         <#if name?has_content> <label>${field.label}</label> </#if>
         <div class="input-group">
-            <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i> </span> </#if>
+            <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i>
+                </span> </#if>
             <select name="${name}" <@populate field=field ></@populate> >
                 <#list field["list"]?keys as groupKey>
-                    <option <#if field.value==groupKey>selected</#if> value='${(groupKey!"")}' >${field["list"][groupKey]}</option>
+                    <option <#if field.value==groupKey>selected</#if>
+                            value='${(groupKey!"")}'>${field["list"][groupKey]}</option>
                 </#list>
             </select>
         </div>
@@ -73,17 +103,17 @@
 <#macro checkBoxBody field name>
     <div class="form-group">
         <input name="${name}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
-        <#if name?has_content> <label class="form-check-label" >${field.label} </label> </#if>
+        <#if name?has_content> <label class="form-check-label">${field.label} </label> </#if>
     </div>
 </#macro>
 <#macro hidden field name>
-        <input name="${name}" type="hidden" value="${field.value}" >
+    <input name="${name}" type="hidden" value="${field.value}">
 </#macro>
 
 <#macro radioButton field name>
     <div class="form-group">
         <input name="${field.radioname}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
-        <#if name?has_content> <label class="form-check-label" >${field.label}</label> </#if>
+        <#if name?has_content> <label class="form-check-label">${field.label}</label> </#if>
     </div>
 </#macro>
 
@@ -134,19 +164,19 @@
 
 </#macro>
 
-<#macro templateParser template elements>
+<#macro templateParser template elements list_value>
     <#local closingTag="">
     <#list template?split(",") as level1>
         <@small level1=level1/>
     </#list>
-    <@body elements=elements ></@body>
+    <@body elements=elements list_value=list_value></@body>
     <#list template?split(",") as level1>
         ${endingTagIdentifer(level1)}
     </#list>
 </#macro>
 
 <#function endingTagIdentifer level1>
- <#local localTag="">
+    <#local localTag="">
     <#assign items=level1?split(">")>
     <#list items as level2>
         <#assign level3=level2?replace('div|span|h5', '', 'r')>

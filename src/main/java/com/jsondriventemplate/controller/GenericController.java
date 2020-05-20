@@ -17,14 +17,14 @@ public class GenericController {
     public String globalPage(Model model, @PathVariable String uri,@RequestParam(defaultValue = "list",required = false) String type) throws Exception {
         String jsonData = AppInject.templateService.getJSONOnlyFromURI(uri);
         model.addAttribute("uri",uri);
-        model.addAttribute(JSONTemplateConst.TEMPLATE, AppInject.templateParser.pageDefinition(jsonData,type));
+        model.addAttribute(JSONTemplateConst.TEMPLATE, AppInject.templateParser.pageDefinition(uri,jsonData,type));
         return ViewResolver.AUTH_INDEX;
     }
 
     @GetMapping(value = Endpoints.PREVIEW + Endpoints.URI)
     public String previewPage(Model model, @PathVariable String uri,@RequestParam(value = "list",required = false) String type) throws Exception {
         String jsonData = AppInject.templateService.getJSONOnlyFromURI(uri);
-        model.addAttribute(JSONTemplateConst.TEMPLATE, AppInject.templateParser.pageDefinition(jsonData, true,type));
+        model.addAttribute(JSONTemplateConst.TEMPLATE, AppInject.templateParser.pageDefinition(uri,jsonData, true,type));
         return ViewResolver.AUTH_INDEX;
     }
     //------------------- Post and get Function will be used for all json request as per script -------------------------

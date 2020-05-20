@@ -32,15 +32,24 @@ public class TemplateParser {
         }
     }
 
-    public String pageDefinition(String jsonData, String type) throws IOException, TemplateException {
-        return pageDefinition(jsonData, false, type);
+    public String pageDefinition(String uri,String jsonData, String type) throws IOException, TemplateException {
+        return pageDefinition(uri,jsonData, false, type);
     }
 
-    public String pageDefinition(String jsonData, boolean isAdminPreview, String type) throws IOException, TemplateException {
+    public String pageDefinition(String uri,String jsonData, boolean isAdminPreview, String type) throws IOException, TemplateException {
         Map<String, Object> paramMap = new HashMap<>();
         try {
             paramMap.put(JSONTemplateConst.LAYOUT, layoutProcess(jsonData));
             paramMap.put(JSONTemplateConst.ELEMENTS, element(jsonData, type));
+
+            if(StringUtils.isNotBlank(type)){
+                switch (type){
+                    case "list":
+                        List<?> all = AppInject.mongoClientProvider.findAll(uri);
+                        paramMap.put("list_value",all);
+                        break;
+                }
+            }
         } catch (Exception x) {
             if (!isAdminPreview) {
                 throw x;
