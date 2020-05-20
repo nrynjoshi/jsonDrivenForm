@@ -54,7 +54,11 @@
                         <tr>
                             <td>${template.name}</td>
                             <td>${template.url}</td>
-                            <td><a href="/admin/jsontemplate/${template._id}" class="btn btn-danger">Delete</a></td>
+                            <td><c:if test="${template.url ne 'login'}">
+                                <a href="/admin/jsontemplate/edit/${template._id}" class="btn btn-primary">Edit</a>
+                                <a href="/admin/jsontemplate/${template._id}" class="btn btn-danger">Delete</a>
+                                </c:if>
+                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>

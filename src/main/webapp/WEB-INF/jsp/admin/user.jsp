@@ -79,10 +79,16 @@
                             <td>${template.fullname}</td>
                             <td>${template.username}</td>
                             <td>${template.role}</td>
-                            <td>${template.enable}</td>
+                            <td>
+                                <c:choose>
+                                <c:when test="${template.enable eq 'on'}">${template.enable}</c:when>
+                                <c:otherwise>off</c:otherwise>
+                                </c:choose>
+                            </td>
 
                             <td>
                                 <c:if test="${template.username ne 'superadmin'}">
+                                    <a href="/admin/user/edit/${template._id}" class="btn btn-primary">Edit</a>
                                     <a href="/admin/user/${template._id}" class="btn btn-danger">Delete</a>
                                 </c:if>
                             </td>

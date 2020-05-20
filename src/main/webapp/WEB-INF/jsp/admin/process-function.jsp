@@ -54,7 +54,10 @@
                         <tr>
                             <td>${function.name}</td>
                             <td>${function.url}</td>
-                            <td><a href="/admin/processfunction/${function._id}" class="btn btn-danger">Delete</a></td>
+                            <td>
+                                <a href="/admin/processfunction/edit/${function._id}" class="btn btn-primary">Edit</a>
+                                <a href="/admin/processfunction/${function._id}" class="btn btn-danger">Delete</a>
+                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>

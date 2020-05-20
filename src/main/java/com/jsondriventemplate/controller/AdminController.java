@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -74,10 +75,16 @@ public class AdminController {
 
     @PostMapping(value = Endpoints.USER)
     public String saveUser(@RequestBody MultiValueMap valueMap) {
-
         Map dataMap = valueMap.toSingleValueMap();
-        dataMap.put("password",AppInject.passwordEncoder.encode((CharSequence) dataMap.get("password")));
-        AppInject.mongoClientProvider.save(dataMap, DBConstant.USER);
+        if(!dataMap.containsKey("_id")) {
+            dataMap.put("password", AppInject.passwordEncoder.encode((CharSequence) dataMap.get("password")));
+        }
+        Map data  = AppInject.mongoClientProvider.findByAtt("username",(String)dataMap.get("username"),DBConstant.USER);
+        if(data==null) {
+            AppInject.mongoClientProvider.save(dataMap, DBConstant.USER);
+        }else if(dataMap.containsKey("_id") && dataMap.get("_id").toString().equals(data.get("_id").toString())) {
+            AppInject.mongoClientProvider.save(dataMap, DBConstant.USER);
+        }
         return "redirect:" + Endpoints.ADMIN + Endpoints.USER;
     }
 
@@ -87,6 +94,12 @@ public class AdminController {
         return "redirect:" + Endpoints.ADMIN + Endpoints.USER;
     }
 
+    @GetMapping(value = Endpoints.USER +Endpoints.EDIT+ Endpoints.ID)
+    public String editUser(@PathVariable String id,Model model) {
+        Map data = AppInject.mongoClientProvider.findById(id,DBConstant.USER);
+        model.addAttribute("template", data);
+        return ViewResolver.ADMIN_USER_EDIT;
+    }
 
     //------------------------------------------------------------------------------------------------------------------
     @GetMapping(value = Endpoints.JSON_TEMPLATE)
@@ -98,14 +111,28 @@ public class AdminController {
 
     @PostMapping(value = Endpoints.JSON_TEMPLATE)
     public String saveJsonTemplateInfo(@RequestBody MultiValueMap valueMap) {
-        AppInject.mongoClientProvider.save(valueMap.toSingleValueMap(), DBConstant.TEMPLATE_INFORMATION);
+        Map dataMap = valueMap.toSingleValueMap();
+        Map data  = AppInject.mongoClientProvider.findByAtt("url",(String)dataMap.get("url"),DBConstant.TEMPLATE_INFORMATION);
+        if(data==null) {
+            AppInject.mongoClientProvider.save(dataMap, DBConstant.TEMPLATE_INFORMATION);
+        }else if(dataMap.containsKey("_id") && dataMap.get("_id").toString().equals(data.get("_id").toString())) {
+            AppInject.mongoClientProvider.save(dataMap, DBConstant.TEMPLATE_INFORMATION);
+        }
         return "redirect:" + Endpoints.ADMIN + Endpoints.JSON_TEMPLATE;
     }
 
     @GetMapping(value = Endpoints.JSON_TEMPLATE + Endpoints.ID)
     public String deleteJsonTemplateInfo(@PathVariable String id) {
         AppInject.mongoClientProvider.delete(id, DBConstant.TEMPLATE_INFORMATION);
+        AppInject.mongoClientProvider.delete(id, DBConstant.JSON_TEMPLATE_DEFINITION);
         return "redirect:" + Endpoints.ADMIN + Endpoints.JSON_TEMPLATE;
+    }
+
+    @GetMapping(value = Endpoints.JSON_TEMPLATE +Endpoints.EDIT+ Endpoints.ID)
+    public String editJsonTemplateInfo(@PathVariable String id,Model model) {
+        Map data = AppInject.mongoClientProvider.findById(id,DBConstant.TEMPLATE_INFORMATION);
+        model.addAttribute("template", data);
+        return ViewResolver.ADMIN_JSON_TEMPLATE_EDIT;
     }
 
     @PostMapping(value = Endpoints.JSON_DEFINITION)
@@ -125,14 +152,27 @@ public class AdminController {
         return ViewResolver.ADMIN_PROCESS_FUNCTION;
     }
 
+    @GetMapping(value = Endpoints.PROCESS_FUNCTION +Endpoints.EDIT+ Endpoints.ID)
+    public String editProcessFunction(@PathVariable String id,Model model) {
+        Map data = AppInject.mongoClientProvider.findById(id,DBConstant.PROCESS_FUNCTION);
+        model.addAttribute("template", data);
+        return ViewResolver.ADMIN_PROCESS_FUNCTION_EDIT;
+    }
+
     @PostMapping(value = Endpoints.PROCESS_FUNCTION)
     public String saveProcessFunction(@RequestBody MultiValueMap valueMap) {
-        AppInject.mongoClientProvider.save(valueMap.toSingleValueMap(), DBConstant.PROCESS_FUNCTION);
+        Map dataMap = valueMap.toSingleValueMap();
+        Map data  = AppInject.mongoClientProvider.findByAtt("url",(String)dataMap.get("url"),DBConstant.PROCESS_FUNCTION);
+        if(data==null) {
+            AppInject.mongoClientProvider.save(dataMap, DBConstant.PROCESS_FUNCTION);
+        }else if(dataMap.containsKey("_id") && dataMap.get("_id").toString().equals(data.get("_id").toString())) {
+            AppInject.mongoClientProvider.save(dataMap, DBConstant.PROCESS_FUNCTION);
+        }
         return "redirect:" + Endpoints.ADMIN+Endpoints.PROCESS_FUNCTION;
     }
 
     @GetMapping(value = Endpoints.PROCESS_FUNCTION + Endpoints.ID)
-    public String deleteProcessFunctiono(@PathVariable String id) {
+    public String deleteProcessFunction(@PathVariable String id) {
         AppInject.mongoClientProvider.delete(id, DBConstant.PROCESS_FUNCTION);
         return "redirect:" + Endpoints.ADMIN + Endpoints.PROCESS_FUNCTION;
     }
@@ -145,14 +185,27 @@ public class AdminController {
         return ViewResolver.ADMIN_JS_FUNCTION;
     }
 
+    @GetMapping(value = Endpoints.JS_FUNCTION +Endpoints.EDIT+ Endpoints.ID)
+    public String editJsFunction(@PathVariable String id,Model model) {
+        Map data = AppInject.mongoClientProvider.findById(id,DBConstant.JS_FUNCTION);
+        model.addAttribute("template", data);
+        return ViewResolver.ADMIN_JS_FUNCTION_EDIT;
+    }
+
     @PostMapping(value = Endpoints.JS_FUNCTION)
     public String saveJsFunction(@RequestBody MultiValueMap valueMap) {
-        AppInject.mongoClientProvider.save(valueMap.toSingleValueMap(), DBConstant.JS_FUNCTION);
+        Map dataMap = valueMap.toSingleValueMap();
+        Map data  = AppInject.mongoClientProvider.findByAtt("url",(String)dataMap.get("url"),DBConstant.JS_FUNCTION);
+        if(data==null) {
+            AppInject.mongoClientProvider.save(dataMap, DBConstant.JS_FUNCTION);
+        }else if(dataMap.containsKey("_id") && dataMap.get("_id").toString().equals(data.get("_id").toString())) {
+            AppInject.mongoClientProvider.save(dataMap, DBConstant.JS_FUNCTION);
+        }
         return "redirect:" + Endpoints.ADMIN+Endpoints.JS_FUNCTION;
     }
 
     @GetMapping(value = Endpoints.JS_FUNCTION + Endpoints.ID)
-    public String deleteJsFunctiono(@PathVariable String id) {
+    public String deleteJsFunction(@PathVariable String id) {
         AppInject.mongoClientProvider.delete(id, DBConstant.JS_FUNCTION);
         return "redirect:" + Endpoints.ADMIN + Endpoints.JS_FUNCTION;
     }
