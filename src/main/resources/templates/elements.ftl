@@ -50,7 +50,7 @@
 
 <#macro buttonBody field name>
     <div class="box-footer">
-        <button type="submit" name="${name}" <@populate field=field ></@populate>
+        <button type="submit"<@populate field=field ></@populate>
         <#if field.icon?has_content><i class="fa fa-${field.icon}"></i></#if> >${field.label}
         </button>
     </div>

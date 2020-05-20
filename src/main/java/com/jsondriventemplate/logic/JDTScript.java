@@ -1,12 +1,12 @@
 package com.jsondriventemplate.logic;
 
 import com.jsondriventemplate.AppInject;
-import com.jsondriventemplate.dto.RequestDTO;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class JDTScript {
@@ -15,33 +15,40 @@ public class JDTScript {
             "create", "update", "delete", "retrieve", "retrieveByID","search"
     );
 
-    public void process(@NotNull RequestDTO requestDTO) throws Exception {
+    public void process(@NotNull Map<String,Object> requestDTO) throws Exception {
         processAndReturn(requestDTO);
     }
 
-    public <T>T processAndReturn(@NotNull RequestDTO requestDTO) throws Exception {
-        boolean isScriptProcessAble = JDT_SCRIPT.contains(requestDTO.getScript());
+    public <T>T processAndReturn(@NotNull Map<String,Object> requestDTO) throws Exception {
+        boolean isScriptProcessAble = JDT_SCRIPT.contains(requestDTO.get("type"));
         if (!isScriptProcessAble) {
             throw new Exception("provided script is not available within this system");
         }
-        AppInject.templateService.getURIID(requestDTO.getUri());
+        AppInject.templateService.getURIID((String) requestDTO.get("uri"));
         return (T) scriptProcess(requestDTO);
     }
 
-    private Object scriptProcess(RequestDTO requestDTO) {
-        switch (requestDTO.getScript()) {
+    private Object scriptProcess(Map<String,Object> requestDTO) {
+        switch ((String)requestDTO.get("type")) {
             case "delete":
-                AppInject.mongoClientProvider.delete(requestDTO.getId(), requestDTO.getUri());
+                AppInject.mongoClientProvider.delete((String)requestDTO.get("_id"), (String) requestDTO.get("uri"));
                 break;
             case "search":
-                return AppInject.mongoClientProvider.search(requestDTO.getData(), requestDTO.getUri());
+                removeBeforeOperation(requestDTO);
+                return AppInject.mongoClientProvider.search(requestDTO, (String) requestDTO.get("uri"));
             case "retrieve":
-                return  AppInject.mongoClientProvider.findAll(requestDTO.getUri());
+                return  AppInject.mongoClientProvider.findAll((String) requestDTO.get("uri"));
             case "retrieveByID":
-                return AppInject.mongoClientProvider.findById(requestDTO.getId(), requestDTO.getUri());
+                return AppInject.mongoClientProvider.findById((String)requestDTO.get("id"), (String) requestDTO.get("uri"));
             default:
-                AppInject.mongoClientProvider.save(requestDTO.getData(), requestDTO.getUri());
+                removeBeforeOperation(requestDTO);
+                AppInject.mongoClientProvider.save(requestDTO, (String) requestDTO.get("uri"));
         }
         return null;
+    }
+
+    private void removeBeforeOperation(Map<String, Object> requestDTO) {
+        requestDTO.remove("type");
+        requestDTO.remove("uri");
     }
 }
