@@ -48,16 +48,16 @@
     </table>
 </#macro>
 
-<#macro buttonBody field name>
-    <div class="box-footer">
+<#macro buttonBody field name columnindex>
+    <div class="box-footer col order-${columnindex}">
         <button type="submit"<@populate field=field ></@populate>
         <#if field.icon?has_content><i class="fa fa-${field.icon}"></i></#if> >${field.label}
         </button>
     </div>
 </#macro>
 
-<#macro selectBody field name>
-    <div class="form-group">
+<#macro selectBody field name columnindex>
+    <div class="form-group col order-${columnindex}">
         <#if name?has_content> <label>${field.label}</label> </#if>
         <div class="input-group">
             <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i> </span> </#if>
@@ -70,8 +70,8 @@
     </div>
 </#macro>
 
-<#macro checkBoxBody field name>
-    <div class="form-group">
+<#macro checkBoxBody field name columnindex>
+    <div class="form-group col order-${columnindex}">
         <input name="${name}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
         <#if name?has_content> <label class="form-check-label" >${field.label} </label> </#if>
     </div>
@@ -80,15 +80,15 @@
         <input name="${name}" type="hidden" value="${field.value}" >
 </#macro>
 
-<#macro radioButton field name>
-    <div class="form-group">
+<#macro radioButton field name columnindex>
+    <div class="form-group col order-${columnindex}">
         <input name="${field.radioname}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
         <#if name?has_content> <label class="form-check-label" >${field.label}</label> </#if>
     </div>
 </#macro>
 
-<#macro default field name>
-    <div class="form-group">
+<#macro default field name columnindex>
+    <div class="form-group col order-${columnindex}">
         <#if name?has_content> <label>${field.label}</label> </#if>
         <div class="input-group">
             <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i>
@@ -105,30 +105,43 @@
             <#if requestData.action?has_content> action="${requestData.action}" </#if>
             <#if requestData.jsmethod?has_content> onsubmit="${requestData.jsmethod}" </#if>
     >
+        <#assign row=0>
         <#list requestData.fields?keys as name>
             <#assign field=requestData.fields[name]>
+            <#assign indexes=field.gridindex?split(",")>
+            <#if indexes[0]?number==row+1 && (row>0)>
+                </div>
+                <div class="row">
+                <#assign row=indexes[0]?number>
+            <#elseif indexes[0]?number!=row>
+                <div class="row">
+                <#assign row=indexes[0]?number>
+            </#if>
             <#switch field.type>
                 <#case "select" >
-                    <@selectBody field=field name=name></@selectBody>
+                    <@selectBody field=field name=name columnindex=indexes[1]></@selectBody>
                     <#break>
                 <#case "button" >
-                    <@buttonBody field=field name=name></@buttonBody>
+                    <@buttonBody field=field name=name columnindex=indexes[1]></@buttonBody>
                     <#break>
                 <#case "submit" >
-                    <@buttonBody field=field name=name></@buttonBody>
+                    <@buttonBody field=field name=name columnindex=indexes[1]></@buttonBody>
                     <#break>
                 <#case "checkbox">
-                    <@checkBoxBody field=field name=name></@checkBoxBody>
+                    <@checkBoxBody field=field name=name columnindex=indexes[1]></@checkBoxBody>
                     <#break>
                 <#case "radio">
-                    <@radioButton field=field name=name></@radioButton>
+                    <@radioButton field=field name=name columnindex=indexes[1]></@radioButton>
                     <#break>
                 <#case "hidden">
-                    <@hidden field=field name=name></@hidden>
+                    <@hidden field=field name=name ></@hidden>
                     <#break>
                 <#default>
-                    <@default field=field name=name></@default>
+                    <@default field=field name=name columnindex=indexes[1]></@default>
             </#switch>
+            <#if !name_has_next>
+                </div>
+            </#if>
         </#list>
     </form>
 
