@@ -10,13 +10,13 @@
         }
       ]
     },
-    "employee-list": {
+    "list": {
       "definitions": {
         "type": "table",
         "data-url": "/auth/process/get?uri=employee"
       }
     },
-    "employee-form": {
+    "create": {
       "definitions": {
         "type": "form",
         "method": "POST",
