@@ -4,10 +4,3 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 ${template}
-<script>
-    $(document).ready(function () {
-        var $form = $('form');
-        var fieldHTML = '<input type="hidden" name="uri" value="${uri}"/>';
-        $($form).append(fieldHTML);
-    });
-</script>

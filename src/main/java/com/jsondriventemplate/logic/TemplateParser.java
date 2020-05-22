@@ -32,24 +32,34 @@ public class TemplateParser {
         }
     }
 
-    public String pageDefinition(String uri,String jsonData, String type) throws IOException, TemplateException {
-        return pageDefinition(uri,jsonData, false, type);
+    public String pageDefinition(String uri, String jsonData, String type) throws IOException, TemplateException {
+        return pageDefinition(uri, jsonData, false, type);
     }
 
-    public String pageDefinition(String uri,String jsonData, boolean isAdminPreview, String type) throws IOException, TemplateException {
+    public String pageDefinition(String uri, String jsonData, boolean isAdminPreview, String type) throws IOException, TemplateException {
         Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("uri", uri);
+        jsonData = cleanUpJSONData(jsonData, paramMap);
         try {
             paramMap.put(JSONTemplateConst.LAYOUT, layoutProcess(jsonData));
             paramMap.put(JSONTemplateConst.ELEMENTS, element(jsonData, type));
 
-            if(StringUtils.isNotBlank(type)){
-                switch (type){
-                    case "list":
-                        List<?> all = AppInject.mongoClientProvider.findAll(uri);
-                        paramMap.put("list_value",all);
-                        break;
+            try{
+                if (StringUtils.isBlank(type)) {
+                    type="list";
                 }
+                if (StringUtils.isNotBlank(type)) {
+                    switch (type) {
+                        case "list":
+                            List<?> all = AppInject.mongoClientProvider.findAll(uri);
+                            paramMap.put("list_value", all);
+                            break;
+                    }
+                }
+            }catch (Exception x){
+                type=null;
             }
+
         } catch (Exception x) {
             if (!isAdminPreview) {
                 throw x;
@@ -116,6 +126,11 @@ public class TemplateParser {
         Map<String, Object> dataMap = JSONLoader.mapper(json);
         dataMap.putAll(paramMap);
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, dataMap);
+    }
+
+    private String cleanUpJSONData(String jsonData, Map param) {
+        org.apache.commons.text.StrSubstitutor substitutor = new org.apache.commons.text.StrSubstitutor(param);
+        return substitutor.replace(jsonData);
     }
 
 }

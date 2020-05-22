@@ -3,20 +3,39 @@
     "page": {
       "title": "Employee Create Form",
       "layout": "layout.json",
-      "snippet": "div.container>div.row.center-content>div.card.min-vw-70>div.card-body>h5.card-title.text-center[Employee Create],p.card-text",
+      "snippet": "",
       "elements": [
         {
-          "$ref": "#/definitions/employee-form"
+          "$ref": "#/definitions/create"
+        },
+        {
+          "$ref": "#/definitions/list"
         }
       ]
     },
     "list": {
       "definitions": {
         "type": "table",
-        "data-url": "/auth/process/get?uri=employee"
+        "gridindex": "2",
+        "elements": {
+          "$ref": "#/definitions/addBtn",
+          "gridrowindex": "1,2",
+          "gridcolumnindex": "1,2"
+        }
       }
     },
-    "employee-form": {
+    "addBtn": {
+      "definitions": {
+        "type": "link",
+        "href": "/${uri}?type=create",
+        "value": "",
+        "gridindex": "1,1",
+        "jsvalidation": "",
+        "submittransform": "",
+        "class": "btn btn-primary btn-block"
+      }
+    },
+    "create": {
       "definitions": {
         "type": "form",
         "method": "POST",
@@ -27,6 +46,7 @@
           "columnsize": "11",
           "minrowheight": "10vh"
         },
+        "snippet": "div.container>div.row.center-content>div.card.min-vw-70>div.card-body>h5.card-title.text-center[Employee Create],p.card-text",
         "fields": {
           "firstname": {
             "type": "text",

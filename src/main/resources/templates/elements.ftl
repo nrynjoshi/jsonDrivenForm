@@ -9,6 +9,9 @@
                     <#case "table" >
                         <@tableBody requestData=elementObj.definitions list_value=list_value></@tableBody>
                         <#break>
+                    <#case "link" >
+                        <@linkBody requestData=elementObj.definitions></@linkBody>
+                        <#break>
                     <#case "code">
                         <#local closingTag="">
                         <#list elementObj.definitions.snippet?split(",") as level1>
@@ -44,29 +47,32 @@
     <table class="table" <#if requestData.class?has_content> class="${requestData.class}" </#if>
             <#if requestData.id?has_content> id="${requestData.id}" </#if>
     >
-        <#local lastItem=list_value[list_value?size-1] >
-        <thead>
-        <tr>
-            <#list lastItem?keys as key>
-                <th scope="col">${key}</th>
-            </#list>
-            <th>Action</th>
-        </tr>
-
-        </thead>
-        <tbody>
-        <#list list_value as item>
+        <#if  list_value??>
+            <#local lastItem=list_value[list_value?size-1] >
+            <thead>
             <tr>
                 <#list lastItem?keys as key>
-                    <#local value=item[key]>
-                    <td>${value}</td>
+                    <th scope="col">${key}</th>
                 </#list>
-                <td><button>Delete</button>
-                    <button>Update</button>
-                </td>
+                <th>Action</th>
             </tr>
-        </#list>
-        </tbody>
+
+            </thead>
+            <tbody>
+            <#list list_value as item>
+                <tr>
+                    <#list lastItem?keys as key>
+                        <#local value=item[key]>
+                        <td>${value}</td>
+                    </#list>
+                    <td><a class="btn btn-primary">Delete</a>
+                        <a class="btn btn-primary">Update</a>
+                    </td>
+                </tr>
+            </#list>
+            </tbody>
+        </#if>
+
 
 
         <#--<#if list_value??>
@@ -74,6 +80,15 @@
 
         </#if>-->
     </table>
+</#macro>
+
+<#macro linkBody requestData <#--columnindex-->>
+    <div>
+        <a href="<#if requestData.href?has_content> ${requestData.href}<#else> # </#if>" <#if requestData.class?has_content> class="${requestData.class}" </#if>
+                         <#if requestData.id?has_content> id="${requestData.id}" </#if>
+        >${requestData.label}
+        </a>
+    </div>
 </#macro>
 
 <#macro buttonBody field name>
