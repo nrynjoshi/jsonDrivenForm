@@ -76,16 +76,16 @@
     </table>
 </#macro>
 
-<#macro buttonBody field name columnindex>
-    <div class="box-footer col order-${columnindex}">
+<#macro buttonBody field name>
+    <div class="box-footer"   <#if field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> .">
         <button type="submit"<@populate field=field ></@populate>
         <#if field.icon?has_content><i class="fa fa-${field.icon}"></i></#if> >${field.label}
         </button>
     </div>
 </#macro>
 
-<#macro selectBody field name columnindex>
-    <div class="form-group col order-${columnindex}">
+<#macro selectBody field name>
+    <div class="form-group"   <#if field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> .">
         <#if name?has_content> <label>${field.label}</label> </#if>
         <div class="input-group">
             <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i>
@@ -100,8 +100,8 @@
     </div>
 </#macro>
 
-<#macro checkBoxBody field name columnindex>
-    <div class="form-group col order-${columnindex}">
+<#macro checkBoxBody field name >
+    <div class="form-group"   <#if field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> .">
         <input name="${name}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
         <#if name?has_content> <label class="form-check-label">${field.label} </label> </#if>
     </div>
@@ -110,15 +110,15 @@
     <input name="${name}" type="hidden" value="${field.value}">
 </#macro>
 
-<#macro radioButton field name columnindex>
-    <div class="form-group col order-${columnindex}">
+<#macro radioButton field name>
+    <div class="form-group"   <#if field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> .">
         <input name="${field.radioname}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
         <#if name?has_content> <label class="form-check-label">${field.label}</label> </#if>
     </div>
 </#macro>
 
-<#macro default field name columnindex>
-    <div class="form-group col order-${columnindex}">
+<#macro default field name>
+    <div class="form-group" <#if field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> >
         <#if name?has_content> <label>${field.label}</label> </#if>
         <div class="input-group">
             <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i>
@@ -135,44 +135,33 @@
             <#if requestData.action?has_content> action="${requestData.action}" </#if>
             <#if requestData.jsmethod?has_content> onsubmit="${requestData.jsmethod}" </#if>
     >
-        <#assign row=0>
+        <#if requestData.grid?has_content><div style="${gridcontainerwork(requestData.grid)}"></#if>
         <#list requestData.fields?keys as name>
             <#assign field=requestData.fields[name]>
-            <#assign indexes=field.gridindex?split(",")>
-            <#if indexes[0]?number==row+1 && (row>0)>
-                </div>
-                <div class="row">
-                <#assign row=indexes[0]?number>
-            <#elseif indexes[0]?number!=row>
-                <div class="row">
-                <#assign row=indexes[0]?number>
-            </#if>
             <#switch field.type>
                 <#case "select" >
-                    <@selectBody field=field name=name columnindex=indexes[1]></@selectBody>
+                    <@selectBody field=field name=name></@selectBody>
                     <#break>
                 <#case "button" >
-                    <@buttonBody field=field name=name columnindex=indexes[1]></@buttonBody>
+                    <@buttonBody field=field name=name></@buttonBody>
                     <#break>
                 <#case "submit" >
-                    <@buttonBody field=field name=name columnindex=indexes[1]></@buttonBody>
+                    <@buttonBody field=field name=name></@buttonBody>
                     <#break>
                 <#case "checkbox">
-                    <@checkBoxBody field=field name=name columnindex=indexes[1]></@checkBoxBody>
+                    <@checkBoxBody field=field name=name></@checkBoxBody>
                     <#break>
                 <#case "radio">
-                    <@radioButton field=field name=name columnindex=indexes[1]></@radioButton>
+                    <@radioButton field=field name=name></@radioButton>
                     <#break>
                 <#case "hidden">
                     <@hidden field=field name=name ></@hidden>
                     <#break>
                 <#default>
-                    <@default field=field name=name columnindex=indexes[1]></@default>
+                    <@default field=field name=name></@default>
             </#switch>
-            <#if !name_has_next>
-                </div>
-            </#if>
         </#list>
+        <#if requestData.grid?has_content></div></#if>
     </form>
 
 </#macro>
@@ -245,25 +234,35 @@
 </#macro>
 
 
-<#function gridindexwork grid gridindexcolumn gridindexrow>
-    <#local grid="" />
-
-    <#if grid??>
-        <#local grid+="display: \'grid\'" />
-    </#if>
-
-    <#if gridindexrow??>
-        <#local gridstart=gridindexrow?split(",")[0] >
-        <#local gridend=gridindexrow?split(",")[1] >
-        <#local grid+="grid-row-start: \'"+gridstart+"\'" />
-        <#local grid+="grid-row-end: \'"+gridend+"\'" />
-    </#if>
-
-    <#if gridindexcolumn??>
+<#function gridindexwork gridindexcolumn gridindexrow>
+    <#local gridstyle="" />
+<#--    <#if grid??>-->
+<#--        <#local grid+="display: \'grid\'" />-->
+<#--    </#if>-->
+    <#if gridindexcolumn?has_content>
         <#local gridstart=gridindexcolumn?split(",")[0] >
         <#local gridend=gridindexcolumn?split(",")[1] >
-        <#local grid+="grid-column-start: \'"+gridstart+"\'" />
-        <#local grid+="grid-column-end: \'"+gridend+"\'" />
+        <#local gridstyle+="grid-column-start: "+gridstart+"; " />
+        <#local gridstyle+="grid-column-end: "+gridend+"; " />
     </#if>
-    <#return grid>
+    <#if gridindexrow?has_content>
+        <#local gridstart=gridindexrow?split(",")[0] >
+        <#local gridend=gridindexrow?split(",")[1] >
+        <#local gridstyle+="grid-row-start: "+gridstart+"; " />
+        <#local gridstyle+="grid-row-end: "+gridend+"; " />
+    </#if>
+    <#return gridstyle>
+</#function>
+<#function gridcontainerwork grid>
+    <#local gridstyle="" />
+    <#local gridstyle+="display:grid; " />
+    <#if grid.columnsize?has_content>
+        <#local gridstyle+="grid-template-columns: repeat("+grid.columnsize+", 1fr); "/>
+    <#else>
+        <#local gridstyle+="grid-template-columns:repeat(12, 1fr); "/>
+    </#if>
+    <#if grid.minrowheight?has_content>
+        <#local gridstyle+="grid-template-rows: minmax("+grid.minrowheight+",auto); "/>
+    </#if>
+    <#return gridstyle>
 </#function>

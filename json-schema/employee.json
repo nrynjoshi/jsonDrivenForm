@@ -16,13 +16,17 @@
         "data-url": "/auth/process/get?uri=employee"
       }
     },
-    "create": {
+    "employee-form": {
       "definitions": {
         "type": "form",
         "method": "POST",
         "action": "/auth/process/save",
         "class": "",
         "id": "",
+        "grid": {
+          "columnsize": "11",
+          "minrowheight": "10vh"
+        },
         "fields": {
           "firstname": {
             "type": "text",
@@ -30,7 +34,10 @@
             "placeholder": "Enter your first name",
             "snippet": "div.form-group",
             "value": "",
-            "gridindex": "1,1",
+            "gridindex": {
+              "column": "1,6",
+              "row": "1,2"
+            },
             "jsvalidation": "",
             "submittransform": "",
             "icon": "",
@@ -44,7 +51,10 @@
             "placeholder": "Enter your last name",
             "snippet": "div.form-group",
             "value": "",
-            "gridindex": "1,1",
+            "gridindex": {
+              "column": "7,12",
+              "row": "1,2"
+            },
             "jsvalidation": "",
             "submittransform": "",
             "icon": "",
@@ -58,7 +68,10 @@
             "placeholder": "Enter the address",
             "snippet": "div.form-group",
             "value": "",
-            "gridindex": "1,1",
+            "gridindex": {
+              "column": "1,12",
+              "row": "2,3"
+            },
             "jsvalidation": "",
             "submittransform": "",
             "icon": "",
@@ -72,7 +85,10 @@
             "placeholder": "Enter your designation",
             "snippet": "div.form-group",
             "value": "",
-            "gridindex": "1,1",
+            "gridindex":{
+              "column": "1,6",
+              "row": "3,4"
+            },
             "jsvalidation": "",
             "submittransform": "",
             "icon": "",
@@ -86,7 +102,10 @@
             "placeholder": "Enter your salary",
             "snippet": "div.form-group",
             "value": "",
-            "gridindex": "1,1",
+            "gridindex": {
+              "column": "7,12",
+              "row": "3,4"
+            },
             "jsvalidation": "",
             "submittransform": "",
             "icon": "",
@@ -100,7 +119,10 @@
             "placeholder": "Enter your phone number",
             "snippet": "div.form-group",
             "value": "",
-            "gridindex": "1,1",
+            "gridindex": {
+              "column": "1,6",
+              "row": "4,5"
+            },
             "jsvalidation": "",
             "submittransform": "",
             "icon": "",
@@ -118,7 +140,10 @@
               "F": "Female",
               "O": "Other"
             },
-            "gridindex": "1,1",
+            "gridindex": {
+              "column": "7,12",
+              "row": "4,5"
+            },
             "jsvalidation": "",
             "submittransform": "",
             "icon": "",
@@ -132,7 +157,10 @@
             "placeholder": "Enter your age",
             "snippet": "div.form-group",
             "value": "",
-            "gridindex": "1,1",
+            "gridindex": {
+              "column": "1,12",
+              "row": "5,6"
+            },
             "jsvalidation": "",
             "submittransform": "",
             "icon": "",
@@ -144,7 +172,10 @@
             "type": "submit",
             "label": "Create Employee",
             "value": "",
-            "gridindex": "1,1",
+            "gridindex":{
+              "column": "5,8",
+              "row": "7,8"
+            },
             "jsvalidation": "",
             "submittransform": "",
             "class": "btn btn-primary btn-block"
