@@ -47,30 +47,30 @@
     <table class="table" <#if requestData.class?has_content> class="${requestData.class}" </#if>
             <#if requestData.id?has_content> id="${requestData.id}" </#if>
     >
-        <#if  list_value??>
-            <#local lastItem=list_value[list_value?size-1] >
-            <thead>
+        <#if  list_value?has_content>
+        <#local lastItem=list_value[list_value?size-1] >
+        <thead>
+        <tr>
+            <#list lastItem?keys as key>
+                <th scope="col">${key}</th>
+            </#list>
+            <th>Action</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        <#list list_value as item>
             <tr>
                 <#list lastItem?keys as key>
-                    <th scope="col">${key}</th>
+                    <#local value=item[key]>
+                    <td>${value}</td>
                 </#list>
-                <th>Action</th>
+                <td><a class="btn btn-primary">Delete</a>
+                    <a class="btn btn-primary">Update</a>
+                </td>
             </tr>
-
-            </thead>
-            <tbody>
-            <#list list_value as item>
-                <tr>
-                    <#list lastItem?keys as key>
-                        <#local value=item[key]>
-                        <td>${value}</td>
-                    </#list>
-                    <td><a class="btn btn-primary">Delete</a>
-                        <a class="btn btn-primary">Update</a>
-                    </td>
-                </tr>
-            </#list>
-            </tbody>
+        </#list>
+        </tbody>
         </#if>
 
 
@@ -92,7 +92,7 @@
 </#macro>
 
 <#macro buttonBody field name>
-    <div class="box-footer"   <#if field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> .">
+    <div class="box-footer"   <#if field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> >
         <button type="submit"<@populate field=field ></@populate>
         <#if field.icon?has_content><i class="fa fa-${field.icon}"></i></#if> >${field.label}
         </button>
