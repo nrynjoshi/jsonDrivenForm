@@ -14,7 +14,7 @@ import java.util.Map;
 public class GenericController {
 
     @GetMapping(value = Endpoints.AUTH + Endpoints.URI)
-    public String globalPage(Model model, @PathVariable String uri,@RequestParam(defaultValue = "list",required = false) String type) throws Exception {
+    public String globalPage(Model model, @PathVariable String uri,@RequestParam(required = false) String type) throws Exception {
         String jsonData = AppInject.templateService.getJSONOnlyFromURI(uri);
         model.addAttribute("uri",uri);
         model.addAttribute(JSONTemplateConst.TEMPLATE, AppInject.templateParser.pageDefinition(uri,jsonData,type));
@@ -22,7 +22,7 @@ public class GenericController {
     }
 
     @GetMapping(value = Endpoints.PREVIEW + Endpoints.URI)
-    public String previewPage(Model model, @PathVariable String uri,@RequestParam(value = "list",required = false) String type) throws Exception {
+    public String previewPage(Model model, @PathVariable String uri,@RequestParam(required = false) String type) throws Exception {
         String jsonData = AppInject.templateService.getJSONOnlyFromURI(uri);
         model.addAttribute(JSONTemplateConst.TEMPLATE, AppInject.templateParser.pageDefinition(uri,jsonData, true,type));
         return ViewResolver.AUTH_INDEX;

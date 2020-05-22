@@ -25,6 +25,13 @@
     <#list layout.definitions.js_url as jsURL>
         <script src="${jsURL}"></script>
     </#list>
+    <script>
+        $(document).ready(function () {
+            var $form = $('form');
+            var fieldHTML = '<input type="hidden" name="uri" value="${uri}"/>';
+            $($form).append(fieldHTML);
+        });
+    </script>
     </body>
     </html>
 </#compress>
