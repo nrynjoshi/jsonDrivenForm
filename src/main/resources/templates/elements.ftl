@@ -100,7 +100,7 @@
 </#macro>
 
 <#macro selectBody field name>
-    <div class="form-group"   <#if field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> .">
+    <div class="form-group"   <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> .">
         <#if name?has_content> <label>${field.label}</label> </#if>
         <div class="input-group">
             <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i>
@@ -116,7 +116,7 @@
 </#macro>
 
 <#macro checkBoxBody field name >
-    <div class="form-group"   <#if field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> .">
+    <div class="form-group"   <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> .">
         <input name="${name}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
         <#if name?has_content> <label class="form-check-label">${field.label} </label> </#if>
     </div>
@@ -126,14 +126,14 @@
 </#macro>
 
 <#macro radioButton field name>
-    <div class="form-group"   <#if field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> .">
+    <div class="form-group"   <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> .">
         <input name="${field.radioname}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
         <#if name?has_content> <label class="form-check-label">${field.label}</label> </#if>
     </div>
 </#macro>
 
 <#macro default field name>
-    <div class="form-group" <#if field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> >
+    <div class="form-group" <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> >
         <#if name?has_content> <label>${field.label}</label> </#if>
         <div class="input-group">
             <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i>
@@ -150,7 +150,7 @@
             <#if requestData.action?has_content> action="${requestData.action}" </#if>
             <#if requestData.jsmethod?has_content> onsubmit="${requestData.jsmethod}" </#if>
     >
-        <#if requestData.grid?has_content><div style="${gridcontainerwork(requestData.grid)}"></#if>
+        <#if requestData['grid']?? && requestData.grid?has_content><div style="${gridcontainerwork(requestData.grid)}"></#if>
         <#list requestData.fields?keys as name>
             <#assign field=requestData.fields[name]>
             <#switch field.type>
