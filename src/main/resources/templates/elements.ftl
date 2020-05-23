@@ -66,7 +66,7 @@
                     <td>${value}</td>
                 </#list>
                 <td><a class="btn btn-primary" href="/auth/process/delete?id=${item['_id']}&uri=${uri}">Delete</a>
-                    <a class="btn btn-primary">Update</a>
+                    <a class="btn btn-primary" href="/auth/${uri}?type=create&id=${item['_id']}">Update</a>
                 </td>
             </tr>
         </#list>

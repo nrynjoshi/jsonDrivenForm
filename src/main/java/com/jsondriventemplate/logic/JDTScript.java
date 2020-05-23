@@ -40,7 +40,7 @@ public class JDTScript {
             case "retrieve":
                 return  AppInject.mongoClientProvider.findAll(uri);
             case "retrieveByID":
-                return AppInject.mongoClientProvider.findById((String)requestDTO.get("id"), uri);
+                return AppInject.mongoClientProvider.findById((String)requestDTO.get("_id"), uri);
             default:
                 removeBeforeOperation(requestDTO);
                 AppInject.mongoClientProvider.save(requestDTO, uri);

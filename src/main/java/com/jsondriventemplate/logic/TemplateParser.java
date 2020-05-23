@@ -33,17 +33,23 @@ public class TemplateParser {
     }
 
     public String pageDefinition(String uri, String jsonData, String type) throws IOException, TemplateException {
-        return pageDefinition(uri, jsonData, false, type);
+        return pageDefinition(uri, jsonData, false, type,null);
     }
 
-    public String pageDefinition(String uri, String jsonData, boolean isAdminPreview, String type) throws IOException, TemplateException {
+    public String pageDefinition(String uri, String jsonData, String type,String id) throws IOException, TemplateException {
+        return pageDefinition(uri, jsonData, false, type,id);
+    }
+
+    public String pageDefinition(String uri, String jsonData, boolean isAdminPreview, String type,String id) throws IOException, TemplateException {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("uri", uri);
         jsonData = cleanUpJSONData(jsonData, paramMap);
         try {
             paramMap.put(JSONTemplateConst.LAYOUT, layoutProcess(jsonData));
             paramMap.put(JSONTemplateConst.ELEMENTS, element(jsonData, type));
-
+            if(StringUtils.isNotBlank(id)){
+                paramMap.put("_id",id);
+            }
             try{
                 if (StringUtils.isBlank(type)) {
                     type="list";

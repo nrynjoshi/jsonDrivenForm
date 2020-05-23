@@ -28,9 +28,32 @@
     <script>
         $(document).ready(function () {
             var $form = $('form');
-            var fieldHTML = '<input type="hidden" name="uri" value="${uri}"/>';
+            var fieldHTML = '<input type="hidden" name="uri" value="${uri}"/>' + <#if _id??>'<input type="hidden" name="_id" value="${_id}"/>'
+            <#else>''</#if>;
             $($form).append(fieldHTML);
+            <#if _id??>
+            loadData();
+            </#if>
+            <#if _id??>
+
+            function loadData() {
+                $.ajax({
+                    url: "/auth/process/getId?uri=${uri}&id=${_id}",
+                    type: 'GET',
+                    dataType: 'json', // added data type
+                    success: function (data) {
+                        console.log(data);
+                        for (var i in data) {
+                            $('input[name="'+i+'"]').val(data[i]);
+                        }
+                        // $('form').loadJSON(data);
+                    }
+                });
+            }
+
+            </#if>
         });
+
     </script>
     </body>
     </html>
