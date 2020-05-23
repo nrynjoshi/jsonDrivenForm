@@ -9,6 +9,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -18,6 +19,7 @@ public class GenericController {
     public String globalPage(Model model, @PathVariable String uri,@RequestParam(required = false) String type,@RequestParam(required = false) String id) throws Exception {
         String jsonData = AppInject.templateService.getJSONOnlyFromURI(uri);
         model.addAttribute("uri",uri);
+        model.addAttribute("type",type);
         model.addAttribute(JSONTemplateConst.TEMPLATE, AppInject.templateParser.pageDefinition(uri,jsonData,type,id));
         return ViewResolver.AUTH_INDEX;
     }
@@ -25,6 +27,8 @@ public class GenericController {
     @GetMapping(value = Endpoints.PREVIEW + Endpoints.URI)
     public String previewPage(Model model, @PathVariable String uri,@RequestParam(required = false) String type,@RequestParam(required = false) String id) throws Exception {
         String jsonData = AppInject.templateService.getJSONOnlyFromURI(uri);
+        model.addAttribute("uri",uri);
+        model.addAttribute("type",type);
         model.addAttribute(JSONTemplateConst.TEMPLATE, AppInject.templateParser.pageDefinition(uri,jsonData, true,type,id));
         return ViewResolver.AUTH_INDEX;
     }
@@ -41,10 +45,12 @@ public class GenericController {
     }
 
     @PostMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.SEARCH)
-    public void searchRecord(@RequestBody MultiValueMap map) throws Exception {
+    public @ResponseBody String searchRecord(@RequestBody MultiValueMap map) throws Exception {
         Map map1 = map.toSingleValueMap();
         map1.put("type","search");
-        AppInject.jdtScript.process(map1);
+        String uri = (String) map1.get("uri");
+        String jsonData = AppInject.templateService.getJSONOnlyFromURI(uri);
+        return  AppInject.templateParser.pageDefinition(uri,jsonData,false,true,"list",null,(List<Map>) AppInject.jdtScript.processAndReturn(map1));
     }
 
     @GetMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.DELETE)

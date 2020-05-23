@@ -36,6 +36,7 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers("/css/**","/js/**","/images/**").permitAll()
                 .antMatchers("/templates/**").hasRole("NOT_PERMITTED")
                 .antMatchers("/admin/**","/preview/**").hasRole("SUPER_ADMIN")
                 .antMatchers("/auth/*").hasRole("USER")

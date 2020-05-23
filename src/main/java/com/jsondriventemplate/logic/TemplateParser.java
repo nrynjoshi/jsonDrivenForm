@@ -12,6 +12,7 @@ import net.minidev.json.JSONArray;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,8 +42,13 @@ public class TemplateParser {
     }
 
     public String pageDefinition(String uri, String jsonData, boolean isAdminPreview, String type,String id) throws IOException, TemplateException {
+        return pageDefinition(uri,jsonData,isAdminPreview,false,type,id,null);
+    }
+
+    public String pageDefinition(String uri, String jsonData, boolean isAdminPreview,boolean isInnerBodyOnly, String type,String id,List<Map> value) throws IOException, TemplateException {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("uri", uri);
+        paramMap.put("type", type);
         jsonData = cleanUpJSONData(jsonData, paramMap);
         try {
             paramMap.put(JSONTemplateConst.LAYOUT, layoutProcess(jsonData));
@@ -50,28 +56,36 @@ public class TemplateParser {
             if(StringUtils.isNotBlank(id)){
                 paramMap.put("_id",id);
             }
-            try{
-                if (StringUtils.isBlank(type)) {
-                    type="list";
-                }
-                if (StringUtils.isNotBlank(type)) {
-                    switch (type) {
-                        case "list":
-                            List<?> all = AppInject.mongoClientProvider.findAll(uri);
-                            paramMap.put("list_value", all);
-                            break;
+            if(value!=null){
+                paramMap.put("list_value", value);
+            }else {
+                try{
+                    if (StringUtils.isBlank(type)) {
+                        type="list";
                     }
+                    if (StringUtils.isNotBlank(type)) {
+                        switch (type) {
+                            case "list":
+                                List<?> all = AppInject.mongoClientProvider.findAll(uri);
+                                paramMap.put("list_value", all);
+                                break;
+                        }
+                    }
+                }catch (Exception x){
                 }
-            }catch (Exception x){
-                type=null;
             }
+
 
         } catch (Exception x) {
             if (!isAdminPreview) {
                 throw x;
             }
         }
-        Template template = AppInject.configuration.getTemplate("home.ftl");
+        String templateFtl="home.ftl";
+        if(isInnerBodyOnly){
+            templateFtl="innerbody.ftl";
+        }
+        Template template = AppInject.configuration.getTemplate(templateFtl);
         return executeDef(jsonData, template, paramMap);
     }
 

@@ -1,3 +1,4 @@
+
 <#import "./elements.ftl" as elem>
 <#compress>
     <!DOCTYPE html>
@@ -11,7 +12,6 @@
         </#list>
     </head>
     <body>
-    <#--    main content part-->
     <#if elements??>
         <#if list_value??>
             <@elem.templateParser template=(definitions.page.snippet) elements=elements list_value=list_value uri=uri></@elem.templateParser>
@@ -21,6 +21,9 @@
 
     </#if>
 
+    <#if type?? && type="search">
+        <div id="searchList"></div>
+    </#if>
     <#--    footer part start from here -->
     <#list layout.definitions.js_url as jsURL>
         <script src="${jsURL}"></script>
@@ -34,6 +37,7 @@
             <#if _id??>
             loadData();
             </#if>
+
             <#if _id??>
 
             function loadData() {
@@ -42,7 +46,6 @@
                     type: 'GET',
                     dataType: 'json', // added data type
                     success: function (data) {
-                        console.log(data);
                         for (var i in data) {
                             $('input[name="'+i+'"]').val(data[i]);
                         }
@@ -50,6 +53,23 @@
                     }
                 });
             }
+
+            </#if>
+
+            <#if type?? && type=="search">
+            $('button[type="submit"]').on('click', function(e) { //use on if jQuery 1.7+
+                e.preventDefault();  //prevent form from submitting
+                var data = $("form :input").serializeArray();
+                console.log(data); //use the console for debugging, F12 in Chrome, not alerts
+                $.ajax({
+                    url: "/auth/process/search",
+                    type: 'POST',
+                    data:data,
+                    success: function (res) {
+                        $('#searchList').html(res);
+                    }
+                });
+            });
 
             </#if>
         });

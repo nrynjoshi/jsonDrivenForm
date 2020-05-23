@@ -10,6 +10,9 @@
         },
         {
           "$ref": "#/definitions/list"
+        },
+        {
+          "$ref": "#/definitions/search"
         }
       ]
     },
@@ -33,6 +36,64 @@
         "jsvalidation": "",
         "submittransform": "",
         "class": "btn btn-primary btn-block"
+      }
+    },
+    "search": {
+      "definitions": {
+        "type": "form",
+        "class": "",
+        "id": "",
+        "grid": {
+          "columnsize": "11",
+          "minrowheight": "10vh"
+        },
+        "snippet": "div.container>div.row.center-content>div.card.min-vw-70>div.card-body>h5.card-title.text-center[Employee Create],p.card-text",
+        "fields": {
+          "firstname": {
+            "type": "text",
+            "label": "First Name",
+            "placeholder": "Enter your first name",
+            "snippet": "div.form-group",
+            "value": "",
+            "gridindex": {
+              "column": "1,6",
+              "row": "1,2"
+            },
+            "jsvalidation": "",
+            "submittransform": "",
+            "icon": "",
+            "class": "form-control",
+            "id": ""
+          },
+          "lastname": {
+            "type": "text",
+            "label": "Last Name",
+            "placeholder": "Enter your last name",
+            "snippet": "div.form-group",
+            "value": "",
+            "gridindex": {
+              "column": "7,12",
+              "row": "1,2"
+            },
+            "jsvalidation": "",
+            "submittransform": "",
+            "icon": "",
+            "class": "form-control",
+            "id": ""
+          },
+          "search": {
+            "type": "submit",
+            "label": "Search",
+            "value": "",
+            "gridindex": {
+              "column": "5,8",
+              "row": "7,8"
+            },
+            "jsvalidation": "",
+            "submittransform": "",
+            "class": "btn btn-primary btn-block"
+          }
+        }
       }
     },
     "create": {
@@ -105,7 +166,7 @@
             "placeholder": "Enter your designation",
             "snippet": "div.form-group",
             "value": "",
-            "gridindex":{
+            "gridindex": {
               "column": "1,6",
               "row": "3,4"
             },
@@ -192,7 +253,7 @@
             "type": "submit",
             "label": "Create Employee",
             "value": "",
-            "gridindex":{
+            "gridindex": {
               "column": "5,8",
               "row": "7,8"
             },
