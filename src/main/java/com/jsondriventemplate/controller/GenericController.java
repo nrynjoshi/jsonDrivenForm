@@ -31,17 +31,22 @@ public class GenericController {
 
     // TODO: 5/18/2020 on development
     @PostMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.SAVE)
-    public void saveRecord(@RequestBody MultiValueMap map) throws Exception {
+    public String saveRecord(@RequestBody MultiValueMap map) throws Exception {
+
         Map map1 = map.toSingleValueMap();
+        String uri = (String) map1.get("uri");
         map1.put("type","create");
         AppInject.jdtScript.process(map1);
+        return "redirect:/auth/"+uri+"?type=list";
     }
 
     @PostMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.UPDATE)
-    public void updateRecord(@RequestBody MultiValueMap map) throws Exception {
+    public String updateRecord(@RequestBody MultiValueMap map) throws Exception {
         Map map1 = map.toSingleValueMap();
+        String uri = (String) map1.get("uri");
         map1.put("type","update");
         AppInject.jdtScript.process(map1);
+        return "redirect:/auth/"+uri+"?type=list";
     }
 
     @PostMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.SEARCH)
@@ -52,15 +57,16 @@ public class GenericController {
     }
 
     @GetMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.DELETE)
-    public void deleteRecord(@RequestPart String id,@RequestParam String uri) throws Exception {
+    public String deleteRecord(@RequestParam String id,@RequestParam String uri) throws Exception {
         Map map1 = new HashMap();
         map1.put("type","delete");
         map1.put("_id",id);
         map1.put("uri",uri);
         AppInject.jdtScript.process(map1);
+        return "redirect:/auth/"+uri+"?type=list";
     }
     @GetMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.GET_ID)
-    public void getById(@RequestPart String id,@RequestParam String uri) throws Exception {
+    public void getById(@RequestParam String id,@RequestParam String uri) throws Exception {
         Map map1 = new HashMap();
         map1.put("type","retrieveByID");
         map1.put("_id",id);

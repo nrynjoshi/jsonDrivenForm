@@ -1,4 +1,4 @@
-<#macro body elements list_value>
+<#macro body elements list_value uri>
     <#if elements??>
         <#list elements as elementObj>
             <#if elementObj.definitions.type??>
@@ -7,7 +7,7 @@
                         <@formBody requestData=elementObj.definitions></@formBody>
                         <#break>
                     <#case "table" >
-                        <@tableBody requestData=elementObj.definitions list_value=list_value></@tableBody>
+                        <@tableBody requestData=elementObj.definitions list_value=list_value uri=uri></@tableBody>
                         <#break>
                     <#case "link" >
                         <@linkBody requestData=elementObj.definitions></@linkBody>
@@ -18,7 +18,7 @@
                             <@small level1=level1/>
                         </#list>
                         <#if elementObj.definitions.elements??>
-                            <@body elements=elementObj.definitions.elements list_value=list_value></@body>
+                            <@body elements=elementObj.definitions.elements list_value=list_value uri=uri></@body>
                         </#if>
 
                         <#list elementObj.definitions.snippet?split(",") as level1>
@@ -43,7 +43,7 @@
     <#if field.required?has_content> <#if field.required==true>required="required"</#if> </#if>
 </#macro>
 
-<#macro tableBody requestData list_value>
+<#macro tableBody requestData list_value uri>
     <table class="table" <#if requestData.class?has_content> class="${requestData.class}" </#if>
             <#if requestData.id?has_content> id="${requestData.id}" </#if>
     >
@@ -65,7 +65,7 @@
                     <#local value=item[key]>
                     <td>${value}</td>
                 </#list>
-                <td><a class="btn btn-primary">Delete</a>
+                <td><a class="btn btn-primary" href="/auth/process/delete?id=${item['_id']}&uri=${uri}">Delete</a>
                     <a class="btn btn-primary">Update</a>
                 </td>
             </tr>
@@ -181,12 +181,12 @@
 
 </#macro>
 
-<#macro templateParser template elements list_value>
+<#macro templateParser template elements list_value uri>
     <#local closingTag="">
     <#list template?split(",") as level1>
         <@small level1=level1/>
     </#list>
-    <@body elements=elements list_value=list_value></@body>
+    <@body elements=elements list_value=list_value uri=uri></@body>
     <#list template?split(",") as level1>
         ${endingTagIdentifer(level1)}
     </#list>
