@@ -29,7 +29,11 @@ public class AuthProvider {
         if (!validPassword) {
             throw new UsernameNotFoundException("username not found");
         }
+
         String role = (String) user.get("role");
+        if(StringUtils.equalsAnyIgnoreCase(role,"SUPER_ADMIN")){
+            authoritySet.add(new SimpleGrantedAuthority("ROLE_USER"));
+        }
         authoritySet.add(new SimpleGrantedAuthority("ROLE_" + StringUtils.upperCase(role)));
 
         return new UsernamePasswordAuthenticationToken(username, password, authoritySet);

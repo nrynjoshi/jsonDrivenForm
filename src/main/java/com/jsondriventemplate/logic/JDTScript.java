@@ -29,20 +29,21 @@ public class JDTScript {
     }
 
     private Object scriptProcess(Map<String,Object> requestDTO) {
+        String uri = (String) requestDTO.get("uri");
         switch ((String)requestDTO.get("type")) {
             case "delete":
-                AppInject.mongoClientProvider.delete((String)requestDTO.get("_id"), (String) requestDTO.get("uri"));
+                AppInject.mongoClientProvider.delete((String)requestDTO.get("_id"), uri);
                 break;
             case "search":
                 removeBeforeOperation(requestDTO);
-                return AppInject.mongoClientProvider.search(requestDTO, (String) requestDTO.get("uri"));
+                return AppInject.mongoClientProvider.search(requestDTO, uri);
             case "retrieve":
-                return  AppInject.mongoClientProvider.findAll((String) requestDTO.get("uri"));
+                return  AppInject.mongoClientProvider.findAll(uri);
             case "retrieveByID":
-                return AppInject.mongoClientProvider.findById((String)requestDTO.get("id"), (String) requestDTO.get("uri"));
+                return AppInject.mongoClientProvider.findById((String)requestDTO.get("_id"), uri);
             default:
                 removeBeforeOperation(requestDTO);
-                AppInject.mongoClientProvider.save(requestDTO, (String) requestDTO.get("uri"));
+                AppInject.mongoClientProvider.save(requestDTO, uri);
         }
         return null;
     }
