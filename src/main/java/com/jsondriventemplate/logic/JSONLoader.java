@@ -10,10 +10,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-final class JSONLoader {
+public final class JSONLoader {
 
 
-    protected static String laodJSONDefinition(File jsonFile) throws IOException {
+    public static String laodJSONDefinition(File jsonFile) throws IOException {
         return FileUtils.readFileToString(jsonFile, StandardCharsets.UTF_8);
     }
 

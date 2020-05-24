@@ -12,6 +12,7 @@ import net.minidev.json.JSONArray;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,7 +72,8 @@ public class TemplateParser {
 
     private Map<String, Object> layoutProcess(String jsonData) throws IOException {
         String layout = JsonPath.parse(jsonData).read("$['definitions']['page']['layout']");
-        File file = Paths.get(JSONTemplateConst.JSON_SCHEMA_ATTR, layout).toFile();
+//        File file = Paths.get(JSONTemplateConst.JSON_SCHEMA_ATTR, layout).toFile();
+        File file = ResourceUtils.getFile("classpath:"+JSONTemplateConst.JSON_SCHEMA_ATTR+layout);
         return JSONLoader.mapper(JSONLoader.laodJSONDefinition(file));
     }
 

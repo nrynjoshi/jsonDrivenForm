@@ -2,7 +2,7 @@ package com.jsondriventemplate;
 
 public class JSONTemplateConst {
 
-    public static final String JSON_SCHEMA_ATTR ="json-schema";
+    public static final String JSON_SCHEMA_ATTR = "default/";
     public static final String TEMPLATE ="template";
     public static final String PREVIEW_URL ="preview_url";
     public static final String unProcessedJSON ="unProcessedJSON";
