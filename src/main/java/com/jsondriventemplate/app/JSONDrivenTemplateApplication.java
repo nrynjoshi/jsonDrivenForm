@@ -71,11 +71,49 @@ public class JSONDrivenTemplateApplication implements CommandLineRunner {
                 loginTemplateInformation.put("_id",  login.get("_id"));
                 File file = ResourceUtils.getFile("classpath:"+ JSONTemplateConst.JSON_SCHEMA_ATTR+"login.json");
                 loginTemplateInformation.put("json",JSONLoader.laodJSONDefinition(file));
-//                loginTemplateInformation.put("json","{ \"definitions\":{ \"page\":{ \"title\": \"JSON Template Builder Login\", \"layout\": \"layout.json\", \"snippet\":\"div.container>div.row.center-content>div.card.min-vw-70>div.card-body>h5.card-title.text-center[Login Page],p.card-text\", \"elements\": [ { \"$ref\": \"#/definitions/login-form\" } ] }, \"login-form\":{ \"definitions\":{ \"type\":\"form\", \"method\":\"POST\", \"action\":\"/login\", \"class\":\"\", \"grid\":\"\", \"id\":\"\", \"fields\":{ \"username\":{ \"type\":\"text\", \"label\":\"Username\", \"placeholder\":\"Enter your username\", \"snippet\":\"div.form-group\", \"value\":\"\", \"gridindex\":\"\", \"jsvalidation\":\"\", \"submittransform\":\"\", \"icon\":\"\", \"required\":true, \"class\": \"form-control\", \"id\": \"\" }, \"password\":{ \"type\":\"password\", \"label\":\"Password\", \"placeholder\":\"Enter your password\", \"snippet\":\"div.form-group\", \"value\":\"\", \"gridindex\":\"\", \"jsvalidation\":\"\", \"submittransform\":\"\", \"icon\":\"\", \"required\":true, \"class\": \"form-control\", \"id\": \"\" },  \"create\":{ \"type\":\"submit\", \"label\":\"Login\", \"value\":\"\", \"gridindex\":\"\", \"jsvalidation\":\"\", \"submittransform\":\"\", \"class\":\"btn btn-primary btn-block\" }  } } } } }");
                 AppInject.mongoClientProvider.save(loginTemplateInformation, DBConstant.JSON_TEMPLATE_DEFINITION);
             }
         }
-
+        {
+            Map login = AppInject.mongoClientProvider.findByURL("dashboard", DBConstant.TEMPLATE_INFORMATION);
+            if(login==null || StringUtils.isBlank((CharSequence) login.get("url"))){
+                Map<String,String> loginTemplateInformation=new HashMap<>();
+                loginTemplateInformation.put("url","dashboard");
+                loginTemplateInformation.put("name","Dashboard");
+                AppInject.mongoClientProvider.save(loginTemplateInformation, DBConstant.TEMPLATE_INFORMATION);
+            }
+        }
+        {
+            Map login = AppInject.mongoClientProvider.findByURL("dashboard", DBConstant.TEMPLATE_INFORMATION);
+            Map templateDef = AppInject.mongoClientProvider.findById((String) login.get("_id"), DBConstant.JSON_TEMPLATE_DEFINITION);
+            if(templateDef==null || StringUtils.isBlank((CharSequence) templateDef.get("value"))){
+                Map<String,Object> loginTemplateInformation=new HashMap<>();
+                loginTemplateInformation.put("_id",  login.get("_id"));
+                File file = ResourceUtils.getFile("classpath:"+ JSONTemplateConst.JSON_SCHEMA_ATTR+"dashboard.json");
+                loginTemplateInformation.put("json",JSONLoader.laodJSONDefinition(file));
+                AppInject.mongoClientProvider.save(loginTemplateInformation, DBConstant.JSON_TEMPLATE_DEFINITION);
+            }
+        }
+        {
+            Map login = AppInject.mongoClientProvider.findByURL("employee", DBConstant.TEMPLATE_INFORMATION);
+            if(login==null || StringUtils.isBlank((CharSequence) login.get("url"))){
+                Map<String,String> loginTemplateInformation=new HashMap<>();
+                loginTemplateInformation.put("url","employee");
+                loginTemplateInformation.put("name","Employee");
+                AppInject.mongoClientProvider.save(loginTemplateInformation, DBConstant.TEMPLATE_INFORMATION);
+            }
+        }
+        {
+            Map login = AppInject.mongoClientProvider.findByURL("employee", DBConstant.TEMPLATE_INFORMATION);
+            Map templateDef = AppInject.mongoClientProvider.findById((String) login.get("_id"), DBConstant.JSON_TEMPLATE_DEFINITION);
+            if(templateDef==null || StringUtils.isBlank((CharSequence) templateDef.get("value"))){
+                Map<String,Object> loginTemplateInformation=new HashMap<>();
+                loginTemplateInformation.put("_id",  login.get("_id"));
+                File file = ResourceUtils.getFile("classpath:"+ JSONTemplateConst.JSON_SCHEMA_ATTR+"employee.json");
+                loginTemplateInformation.put("json",JSONLoader.laodJSONDefinition(file));
+                AppInject.mongoClientProvider.save(loginTemplateInformation, DBConstant.JSON_TEMPLATE_DEFINITION);
+            }
+        }
 
 
     }

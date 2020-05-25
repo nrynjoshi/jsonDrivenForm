@@ -1,7 +1,7 @@
 {
   "definitions": {
     "page": {
-      "title": "JSON Template Builder Login",
+      "title": "Login",
       "layout": "layout.json",
       "snippet": "div.container>div.row.center-content>div.card.min-vw-70>div.card-body>h5.card-title.text-center[Login Page],p.card-text",
       "elements": [
@@ -17,6 +17,10 @@
         "action": "/login",
         "class": "",
         "id": "",
+        "grid": {
+          "columnsize": "5",
+          "minrowheight": "10vh"
+        },
         "fields": {
           "username": {
             "type": "text",
@@ -24,7 +28,10 @@
             "placeholder": "Enter your username",
             "snippet": "div.form-group",
             "value": "",
-            "gridindex": "",
+            "gridindex": {
+              "column": "1,3",
+              "row": "1,2"
+            },
             "jsvalidation": "",
             "submittransform": "",
             "icon": "",
@@ -38,7 +45,10 @@
             "placeholder": "Enter your password",
             "snippet": "div.form-group",
             "value": "",
-            "gridindex": "",
+            "gridindex": {
+              "column": "4,6",
+              "row": "1,2"
+            },
             "jsvalidation": "",
             "submittransform": "",
             "icon": "",
@@ -50,7 +60,10 @@
             "type": "submit",
             "label": "Login",
             "value": "",
-            "gridindex": "",
+            "gridindex": {
+              "column": "1,7",
+              "row": "3,4"
+            },
             "jsvalidation": "",
             "submittransform": "",
             "class": "btn btn-primary btn-block"

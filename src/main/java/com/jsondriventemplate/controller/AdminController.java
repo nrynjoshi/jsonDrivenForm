@@ -23,10 +23,10 @@ import java.util.*;
 @RequestMapping(value = Endpoints.ADMIN)
 public class AdminController {
 
-    @GetMapping(value = Endpoints.DASHBOARD)
-    public String dashboard() {
-        return ViewResolver.ADMIN_DASHBOARD;
-    }
+//    @GetMapping(value = Endpoints.DASHBOARD)
+//    public String dashboard() {
+//        return ViewResolver.ADMIN_DASHBOARD;
+//    }
 
     @GetMapping(value = Endpoints.EDITOR)
     public String editor(Model model, @RequestParam(name = JSONTemplateConst.query, defaultValue = "", required = false) String query) throws Exception {
