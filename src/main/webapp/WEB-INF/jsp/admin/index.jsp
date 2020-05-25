@@ -16,7 +16,11 @@
     </jsp:include>
     <div class="col-lg-10">
         ${template}
+        <c:if test="${not empty type && type eq 'search'}">
+            <div id="searchList"></div>
+        </c:if>
     </div>
+
 
     <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/popper.js"></script>
@@ -26,8 +30,8 @@
     <script>
         $(document).ready(function () {
             var $form = $('form');
-            var fieldHTML = '<input type="hidden" name="uri" value="${uri}"/>' <c:if test="${not empty _id}"> +'<input type="hidden" name="_id" value="${_id}"/>'
-            </c:if>;
+            var fieldHTML = '<input type="hidden" name="uri" value="${uri}"/>' <c:if test="${not empty _id}"> + '<input type="hidden" name="_id" value="${_id}"/>'
+                </c:if>;
             $($form).append(fieldHTML);
             <c:if test="${not empty _id}">
             loadData();
