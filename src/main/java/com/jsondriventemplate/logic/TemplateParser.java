@@ -104,7 +104,6 @@ public class TemplateParser {
     }
 
     private List<LinkedHashMap> element(String jsonData, String type) {
-
         net.minidev.json.JSONArray elements = JsonPath.parse(jsonData).read("$['definitions']['page']['elements']");
         return elementFilter(jsonData, elements, type);
     }
