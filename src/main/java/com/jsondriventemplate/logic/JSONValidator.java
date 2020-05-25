@@ -17,20 +17,6 @@ import java.io.InputStream;
 @Component
 public class JSONValidator {
 
-    public void process(String json) {
-        String schemaFilePath = null;
-        try (InputStream inputStream = new FileInputStream(schemaFilePath)) {
-            JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
-            JSONObject jsonObject = new JSONObject(json);
-            Schema schema = SchemaLoader.load(rawSchema);
-            schema.validate(jsonObject);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public String validJSONFormat(String json) throws JSONValidationException {
         try {
             ObjectMapper mapper = new ObjectMapper();
