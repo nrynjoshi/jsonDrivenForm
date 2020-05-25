@@ -3,23 +3,6 @@
         <nav class="left-nav hidden-xs hidden-sm hidden-md">
 
         <ul class="nolist">
-        <%-- <li>
-         <a href="#">Editor</a>
-         <ul class="nolist">
-         <li>
-         <a href="#">Websites</a>
-         </li>
-         <li>
-         <a href="#">Hosting</a>
-         </li>
-         <li>
-         <a href="#">Engagement</a>
-         </li>
-         <li>
-         <a href="#">Support</a>
-         </li>
-         </ul>
-         </li>--%>
         <li>
         <a href="/admin/dashboard" >Dashboard</a>
         </li>
@@ -29,16 +12,31 @@
         <li>
         <a href="/admin/jsontemplate" >JSON Template</a>
         </li>
-        <li>
+       <%-- <li>
         <a href="/admin/processfunction" >Process Function</a>
         </li>
         </li>
         <li>
         <a href="/admin/jsfunction" >JS Function</a>
+        </li>--%>
+        <li>
+        <a href="/admin/user" >User</a>
         </li>
+        <li>
+        <a href="#">Employee</a>
+        <ul class="nolist">
             <li>
-            <a href="/admin/user" >User</a>
+            <a href="/admin/employee?type=list">List</a>
             </li>
+        <li>
+        <a href="/admin/employee?type=create">Add</a>
+        </li>
+
+            <li>
+            <a href="/admin/employee?type=search">Search</a>
+            </li>
+        </ul>
+        </li>
         </ul>
         </nav>
         </aside>

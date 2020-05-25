@@ -38,6 +38,12 @@ public class TemplateParser {
         return pageDefinition(uri, jsonData, false, type,null);
     }
 
+    public String pageDefinitionInnerBody(String uri, String jsonData, String type,String id,boolean isInnerBodyOnly) throws IOException, TemplateException {
+        return pageDefinition(uri,jsonData,true,isInnerBodyOnly,type,id,null);
+    }
+
+
+
     public String pageDefinition(String uri, String jsonData, String type,String id) throws IOException, TemplateException {
         return pageDefinition(uri, jsonData, false, type,id);
     }

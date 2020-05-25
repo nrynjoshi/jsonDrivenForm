@@ -65,8 +65,8 @@
                     <#local value=item[key]>
                     <td>${value}</td>
                 </#list>
-                <td><a class="btn btn-primary" href="/auth/process/delete?id=${item['_id']}&uri=${uri}">Delete</a>
-                    <a class="btn btn-primary" href="/auth/${uri}?type=create&id=${item['_id']}">Update</a>
+                <td><a class="btn btn-primary" href="/admin/process/delete?id=${item['_id']}&uri=${uri}">Delete</a>
+                    <a class="btn btn-primary" href="/admin/${uri}?type=create&id=${item['_id']}">Update</a>
                 </td>
             </tr>
         </#list>

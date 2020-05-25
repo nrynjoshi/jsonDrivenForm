@@ -209,4 +209,6 @@ public class AdminController {
         AppInject.mongoClientProvider.delete(id, DBConstant.JS_FUNCTION);
         return "redirect:" + Endpoints.ADMIN + Endpoints.JS_FUNCTION;
     }
+
+
 }

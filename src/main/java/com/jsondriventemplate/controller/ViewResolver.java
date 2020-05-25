@@ -18,6 +18,7 @@ final class ViewResolver {
     private static final String JS_FUNCTION_EDIT="js-function-edit";
 
     static final String AUTH_INDEX=AUTH+SEPERATOR+INDEX;
+    static final String ADMIN_INDEX=ADMIN+SEPERATOR+INDEX;
     protected static final String AUTH_DASHBOARD=AUTH+SEPERATOR+DASHBOARD;
     static final String ADMIN_EDITOR=ADMIN+SEPERATOR+EDITOR;
     static final String ADMIN_DASHBOARD=ADMIN+SEPERATOR+DASHBOARD;
