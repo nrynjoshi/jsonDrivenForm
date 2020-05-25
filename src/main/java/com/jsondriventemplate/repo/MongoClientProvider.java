@@ -73,6 +73,13 @@ public class MongoClientProvider {
         }
         mongoOperations.createCollection(collectionName);
     }
+    public void dropCollection(String collectionName) {
+        boolean collectionExists = mongoOperations.collectionExists(collectionName);
+        if (!collectionExists) {
+            return;
+        }
+        mongoOperations.dropCollection(collectionName);
+    }
 
     private String UUID() {
         return UUID.randomUUID().toString();

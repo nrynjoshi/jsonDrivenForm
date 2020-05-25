@@ -14,6 +14,7 @@ import org.springframework.util.ResourceUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
@@ -25,6 +26,8 @@ public class JSONDrivenTemplateApplication implements CommandLineRunner {
     private String userName;
     @Value("${default.password}")
     private String password;
+    @Value("${database.createupdate}")
+    private String createUpdate;
 
     @PostConstruct
     public void initApp(){
@@ -38,9 +41,16 @@ public class JSONDrivenTemplateApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         //create necessary collection if not exist
+        if(createUpdate.equalsIgnoreCase("create")){
+            Field[] fields = DBConstant.class.getDeclaredFields();
+            for (Field field : fields) {
+                String value = (String) field.get(new DBConstant());
+                AppInject.mongoClientProvider.dropCollection(value);
+            }
+        }
         AppInject.mongoClientProvider.collection(DBConstant.TEMPLATE_INFORMATION);
         AppInject.mongoClientProvider.collection(DBConstant.JSON_TEMPLATE_DEFINITION);
-
+        AppInject.mongoClientProvider.collection(DBConstant.USER);
         {
             Map login = AppInject.mongoClientProvider.findByAtt("username","superadmin", DBConstant.USER);
             if(login==null || StringUtils.isBlank((CharSequence) login.get("_id"))){
