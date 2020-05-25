@@ -145,7 +145,7 @@
         <div class="input-group">
             <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i>
                 </span> </#if>
-            <input name="${name}" <@populate field=field ></@populate> />
+            <input name="${name}" <@populate field=field ></@populate>  <#if field.validation_regx?has_content> data-smk-pattern="${field.validation_regx}" </#if> />
         </div>
     </div>
 </#macro>

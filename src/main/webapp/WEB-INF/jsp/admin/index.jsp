@@ -6,7 +6,10 @@
 <head>
     <title>Dashboard</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/smoke.min.css">
     <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/app.css">
+
 </head>
 <body>
 <div class="row">
@@ -25,7 +28,10 @@
     <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.js"></script>
+    <script src="/js/smoke.min.js"></script>
     <script src="/js/sidebar.js"></script>
+    <script src="/js/app.js"></script>
+
 
     <script>
         $(document).ready(function () {
@@ -36,7 +42,6 @@
             <c:if test="${not empty _id}">
             loadData();
             </c:if>
-
             <c:if test="${not empty _id}">
 
             function loadData() {
@@ -54,22 +59,42 @@
             }
 
             </c:if>
-            <c:if test="${not empty type && type eq 'search'}">
+            <c:choose>
+            <c:when test="${not empty type && type eq 'search'}">
             $('button[type="submit"]').on('click', function (e) { //use on if jQuery 1.7+
                 e.preventDefault();  //prevent form from submitting
                 var data = $("form :input").serializeArray();
                 console.log(data); //use the console for debugging, F12 in Chrome, not alerts
-                $.ajax({
-                    url: "/admin/process/search",
-                    type: 'POST',
-                    data: data,
-                    success: function (res) {
-                        $('#searchList').html(res);
-                    }
-                });
+                if ($('form').smkValidate()) {
+                    $.ajax({
+                        url: "/admin/process/search",
+                        type: 'POST',
+                        data: data,
+                        success: function (res) {
+                            $('#searchList').html(res);
+                        }
+                    });
+                }else{
+                    $.smkAlert({
+                        text: 'Validation Error!',
+                        type: 'error'
+                    });
+                }
+
             });
 
-            </c:if>
+            </c:when>
+            <c:otherwise>
+            $('button[type="submit"]').click(function(e) {
+                e.preventDefault();
+                if ($('form').smkValidate()) {
+                    $('form').submit();
+                }
+            });
+            </c:otherwise>
+            </c:choose>
+
+
         });
 
     </script>

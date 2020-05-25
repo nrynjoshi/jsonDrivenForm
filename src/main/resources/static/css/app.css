@@ -7,3 +7,8 @@
 .min-vw-70{
     min-width: 70vh;
 }
+
+.has-feedback .smk-error-msg {
+    position: unset;
+    color: red;
+}
