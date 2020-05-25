@@ -85,7 +85,7 @@ public class JSONDrivenTemplateApplication implements CommandLineRunner {
         {
             Map login = AppInject.mongoClientProvider.findByURL(url, DBConstant.TEMPLATE_INFORMATION);
             Map templateDef = AppInject.mongoClientProvider.findById((String) login.get("_id"), DBConstant.JSON_TEMPLATE_DEFINITION);
-            if (templateDef == null || StringUtils.isBlank((CharSequence) templateDef.get("value"))) {
+            if (templateDef == null || StringUtils.isBlank((CharSequence) templateDef.get("json"))) {
                 Map<String, Object> loginTemplateInformation = new HashMap<>();
                 loginTemplateInformation.put("_id", login.get("_id"));
                 File file = ResourceUtils.getFile("classpath:" + JSONTemplateConst.JSON_SCHEMA_ATTR + fileName);

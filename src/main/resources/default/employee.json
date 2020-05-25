@@ -27,6 +27,28 @@
           "$ref": "#/definitions/addBtn",
           "gridrowindex": "1,2",
           "gridcolumnindex": "1,2"
+        },
+        "fields": {
+          "firstname": {
+            "label": "First Name",
+            "class": "",
+            "id": ""
+          },
+          "lastname": {
+            "label": "Last Name",
+            "class": "",
+            "id": ""
+          },
+          "address": {
+            "label": "Address",
+            "class": "",
+            "id": ""
+          },
+          "salary": {
+            "label": "Income",
+            "class": "",
+            "id": ""
+          }
         }
       }
     },
@@ -146,6 +168,40 @@
             "class": "form-control",
             "id": ""
           },
+          "username": {
+            "type": "text",
+            "label": "Username",
+            "placeholder": "Enter username",
+            "snippet": "div.form-group",
+            "value": "",
+            "gridindex": {
+              "column": "1,6",
+              "row": "2,3"
+            },
+            "jsvalidation": "",
+            "submittransform": "",
+            "icon": "",
+            "required": true,
+            "class": "form-control",
+            "id": ""
+          },
+          "password": {
+            "type": "password",
+            "label": "Password",
+            "placeholder": "Enter Password",
+            "snippet": "div.form-group",
+            "value": "",
+            "gridindex": {
+              "column": "7,12",
+              "row": "2,3"
+            },
+            "jsvalidation": "",
+            "submittransform": "",
+            "icon": "",
+            "required": true,
+            "class": "form-control",
+            "id": ""
+          },
           "address": {
             "type": "text",
             "label": "Address",
@@ -153,8 +209,8 @@
             "snippet": "div.form-group",
             "value": "",
             "gridindex": {
-              "column": "1,12",
-              "row": "2,3"
+              "column": "1,6",
+              "row": "3,4"
             },
             "jsvalidation": "",
             "submittransform": "",
@@ -170,7 +226,7 @@
             "snippet": "div.form-group",
             "value": "",
             "gridindex": {
-              "column": "1,6",
+              "column": "7,12",
               "row": "3,4"
             },
             "jsvalidation": "",
@@ -187,8 +243,8 @@
             "snippet": "div.form-group",
             "value": "",
             "gridindex": {
-              "column": "7,12",
-              "row": "3,4"
+              "column": "1,6",
+              "row": "4,5"
             },
             "jsvalidation": "",
             "submittransform": "",
@@ -204,7 +260,7 @@
             "snippet": "div.form-group",
             "value": "",
             "gridindex": {
-              "column": "1,6",
+              "column": "7,12",
               "row": "4,5"
             },
             "jsvalidation": "",
@@ -225,8 +281,8 @@
               "O": "Other"
             },
             "gridindex": {
-              "column": "7,12",
-              "row": "4,5"
+              "column": "1,6",
+              "row": "5,6"
             },
             "jsvalidation": "",
             "submittransform": "",
@@ -242,7 +298,7 @@
             "snippet": "div.form-group",
             "value": "",
             "gridindex": {
-              "column": "1,12",
+              "column": "7,12",
               "row": "5,6"
             },
             "jsvalidation": "",

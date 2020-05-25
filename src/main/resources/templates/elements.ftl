@@ -47,23 +47,30 @@
     <table class="table" <#if requestData.class?has_content> class="${requestData.class}" </#if>
             <#if requestData.id?has_content> id="${requestData.id}" </#if>
     >
-        <#if  list_value?has_content>
-        <#local lastItem=list_value[list_value?size-1] >
+
         <thead>
         <tr>
-            <#list lastItem?keys as key>
-                <th scope="col">${key}</th>
+            <#list requestData.fields?keys as name>
+            <#assign field=requestData.fields[name]>
+<#--            <#list lastItem?keys as key>-->
+                <th scope="col">${field.label}</th>
             </#list>
             <th>Action</th>
         </tr>
 
         </thead>
+        <#if  list_value?has_content> <#local lastItem=list_value[list_value?size-1] >
         <tbody>
         <#list list_value as item>
             <tr>
+                <#list requestData.fields?keys as name>
+                 <#assign field=requestData.fields[name]>
                 <#list lastItem?keys as key>
-                    <#local value=item[key]>
-                    <td>${value}</td>
+                    <#if name == key>
+                        <#local value=item[name]>
+                        <td <#if field.class?has_content>class="${field.class}"</#if>>${value}</td>
+                    </#if>
+                </#list>
                 </#list>
                 <td><a class="btn btn-primary" href="/admin/process/delete?id=${item['_id']}&uri=${uri}">Delete</a>
                     <a class="btn btn-primary" href="/admin/${uri}?type=update&id=${item['_id']}">Update</a>
