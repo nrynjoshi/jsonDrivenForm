@@ -35,8 +35,6 @@
 <#macro populate field>
     <#if field.class?has_content> class="${field.class}" <#else>class="form-control"</#if>
     <#if field.id?has_content> id="${field.id}" </#if>
-    <#if field.jsvalidation?has_content> ontest="${field.jsvalidation}" </#if>
-    <#if field.submittransform?has_content> ontest="${field.submittransform}" </#if>
     <#if field.type?has_content> type="${field.type}" </#if>
     <#if field.placeholder?has_content> placeholder="${field.placeholder}" </#if>
     <#if field.value?has_content> value="${field.value}" </#if>
@@ -47,12 +45,10 @@
     <table class="table" <#if requestData.class?has_content> class="${requestData.class}" </#if>
             <#if requestData.id?has_content> id="${requestData.id}" </#if>
     >
-
         <thead>
         <tr>
             <#list requestData.fields?keys as name>
                 <#assign field=requestData.fields[name]>
-            <#--            <#list lastItem?keys as key>-->
                 <th scope="col">${field.label}</th>
             </#list>
             <th>Action</th>
@@ -114,7 +110,7 @@
 <#macro selectBody field name>
     <div class="form-group"
          <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if>
-         .">
+    >
     <#if name?has_content> <label>${field.label}</label> </#if>
     <div class="input-group">
         <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i>
@@ -132,7 +128,7 @@
 <#macro checkBoxBody field name >
     <div class="form-group"
          <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if>
-         .">
+         >
     <input name="${name}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
     <#if name?has_content> <label class="form-check-label">${field.label} </label> </#if>
     </div>
@@ -144,7 +140,7 @@
 <#macro radioButton field name>
     <div class="form-group"
          <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if>
-         .">
+         >
     <input name="${field.radioname}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
     <#if name?has_content> <label class="form-check-label">${field.label}</label> </#if>
     </div>
@@ -165,9 +161,6 @@
 <#macro formBody requestData>
     <form <#if requestData.class?has_content> class="${requestData.class}" </#if>
             <#if requestData.id?has_content> id="${requestData.id}" </#if>
-            <#if requestData.method?has_content> method="${requestData.method}" </#if>
-            <#if requestData.action?has_content> action="${requestData.action}" </#if>
-            <#if requestData.jsmethod?has_content> onsubmit="${requestData.jsmethod}" </#if>
     >
         <#if requestData['grid']?? && requestData.grid?has_content>
         <div style="${gridcontainerwork(requestData.grid)}"></#if>
