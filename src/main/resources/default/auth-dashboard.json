@@ -159,7 +159,7 @@
           },
           "create": {
             "type": "submit",
-            "label": "Update Employee",
+            "label": "Update Profile",
             "value": "",
             "gridindex": {
               "column": "5,8",
