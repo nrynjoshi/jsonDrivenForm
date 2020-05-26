@@ -19,16 +19,6 @@ import java.util.Map;
 @Controller
 public class GenericController {
 
-//    @GetMapping(value = Endpoints.AUTH + Endpoints.DASHBOARD)
-//    public String globalPage(Model model) throws Exception {
-//        String jsonData = AppInject.templateService.getJSONOnlyFromURI("auth-dashboard");
-//        model.addAttribute("uri","auth-dashboard");
-//        model.addAttribute("type","update");
-//
-//        model.addAttribute(JSONTemplateConst.TEMPLATE, AppInject.templateParser.pageDefinition("auth-dashboard",jsonData,"update",null));
-//        return ViewResolver.AUTH_INDEX;
-//    }
-
     @GetMapping(value = Endpoints.AUTH + Endpoints.URI)
     public String globalPage(Model model, @PathVariable String uri,@RequestParam(required = false) String type,@RequestParam(required = false) String id) throws Exception {
         String jsonData = AppInject.templateService.getJSONOnlyFromURI(uri);
