@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.*;
 
 @Component
-public class TemplateParser {
+public final class TemplateParser {
 
 
     public void validateURIJSON(String uri) throws Exception {

@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class DefaultLoader {
+public final class DefaultLoader {
 
     @Value("${default.username}")
     private String userName;

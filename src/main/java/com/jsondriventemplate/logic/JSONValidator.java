@@ -6,7 +6,7 @@ import com.jsondriventemplate.exception.JSONValidationException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JSONValidator {
+public final class JSONValidator {
 
     public String validJSONFormat(String json) throws JSONValidationException {
         try {

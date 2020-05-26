@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class JDTScript {
+public final class JDTScript {
 
     private static final List<String> JDT_SCRIPT = Arrays.asList(
             "create", "update", "delete", "retrieve", "retrieveByID","search"

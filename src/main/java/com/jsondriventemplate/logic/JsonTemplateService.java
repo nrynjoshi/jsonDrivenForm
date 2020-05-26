@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component
-public class JsonTemplateService {
+public final class JsonTemplateService {
     public Map<String,Object> getJSONFromURIEditorView(String uri) throws Exception {
         try {
             return getJSONFromURI(uri);
