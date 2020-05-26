@@ -60,7 +60,10 @@ public class MongoClientProvider {
     public List<?> search(Map<String,Object> searchMap, String collectionName) {
         Query query = new Query();
         for(Map.Entry<String, Object> entity:searchMap.entrySet()){
-            query.addCriteria(Criteria.where(entity.getKey()).regex(".*"+entity.getValue()+".*","i"));
+            String value = (String) entity.getValue();
+            if(StringUtils.isNotBlank(value)){
+                query.addCriteria(Criteria.where(entity.getKey()).regex(".*"+ value +".*","i"));
+            }
         }
         return mongoOperations.find(query,Map.class,collectionName);
     }
