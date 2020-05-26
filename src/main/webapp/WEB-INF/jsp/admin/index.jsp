@@ -74,11 +74,6 @@
                             $('#searchList').html(res);
                         }
                     });
-                }else{
-                    $.smkAlert({
-                        text: 'Validation Error!',
-                        type: 'error'
-                    });
                 }
 
             });
