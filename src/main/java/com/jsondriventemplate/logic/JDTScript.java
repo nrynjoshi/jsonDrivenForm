@@ -81,9 +81,11 @@ public class JDTScript {
             }
             if(value.has("validation_regx") && StringUtils.isNotBlank(value.getString("validation_regx"))){
                 String validation_regx = value.getString("validation_regx");
-                boolean matches = ((String) dataMap.get(key)).matches(validation_regx);
-                if(!matches ){
-                    error.append(key).append(" does not contain valid data.");
+                if(dataMap.containsKey(key)){
+                    boolean matches = ((String) dataMap.get(key)).matches(validation_regx);
+                    if(!matches ){
+                        error.append(key).append(" does not contain valid data.");
+                    }
                 }
             }
         }
