@@ -34,13 +34,13 @@
             "class": "",
             "id": ""
           },
-          "username": {
-            "label": "Username",
+          "lastname": {
+            "label": "Last Name",
             "class": "",
             "id": ""
           },
-          "lastname": {
-            "label": "Last Name",
+          "username": {
+            "label": "Username",
             "class": "",
             "id": ""
           },
@@ -49,8 +49,28 @@
             "class": "",
             "id": ""
           },
+          "designation": {
+            "label": "Designation",
+            "class": "",
+            "id": ""
+          },
           "salary": {
-            "label": "Income",
+            "label": "Salary",
+            "class": "",
+            "id": ""
+          },
+          "phone": {
+            "label": "Phone number",
+            "class": "",
+            "id": ""
+          },
+          "gender": {
+            "label": "Gender",
+            "class": "",
+            "id": ""
+          },
+          "age": {
+            "label": "Age",
             "class": "",
             "id": ""
           }
@@ -219,11 +239,11 @@
             "type": "select",
             "label": "Gender",
             "snippet": "div.form-group",
-            "value": "M",
+            "value": "Male",
             "list": {
-              "M": "Male",
-              "F": "Female",
-              "O": "Other"
+              "Male": "Male",
+              "Female": "Female",
+              "Other": "Other"
             },
             "gridindex": {
               "column": "9,12",
@@ -421,11 +441,11 @@
             "type": "select",
             "label": "Gender",
             "snippet": "div.form-group",
-            "value": "M",
+            "value": "Male",
             "list": {
-              "M": "Male",
-              "F": "Female",
-              "O": "Other"
+              "Male": "Male",
+              "Female": "Female",
+              "Other": "Other"
             },
             "gridindex": {
               "column": "1,6",
@@ -517,6 +537,40 @@
             "class": "form-control",
             "id": ""
           },
+          "username": {
+            "type": "text",
+            "label": "Username",
+            "placeholder": "Enter username",
+            "snippet": "div.form-group",
+            "value": "",
+            "gridindex": {
+              "column": "1,6",
+              "row": "2,3"
+            },
+            "jsvalidation": "",
+            "submittransform": "",
+            "icon": "",
+            "required": true,
+            "class": "form-control",
+            "id": ""
+          },
+          "password": {
+            "type": "password",
+            "label": "Password",
+            "placeholder": "Enter Password",
+            "snippet": "div.form-group",
+            "value": "",
+            "gridindex": {
+              "column": "7,12",
+              "row": "2,3"
+            },
+            "jsvalidation": "",
+            "submittransform": "",
+            "icon": "",
+            "required": true,
+            "class": "form-control",
+            "id": ""
+          },
           "address": {
             "type": "text",
             "label": "Address",
@@ -524,8 +578,8 @@
             "snippet": "div.form-group",
             "value": "",
             "gridindex": {
-              "column": "1,12",
-              "row": "2,3"
+              "column": "1,6",
+              "row": "3,4"
             },
             "jsvalidation": "",
             "submittransform": "",
@@ -541,7 +595,7 @@
             "snippet": "div.form-group",
             "value": "",
             "gridindex": {
-              "column": "1,6",
+              "column": "7,12",
               "row": "3,4"
             },
             "jsvalidation": "",
@@ -558,8 +612,8 @@
             "snippet": "div.form-group",
             "value": "",
             "gridindex": {
-              "column": "7,12",
-              "row": "3,4"
+              "column": "1,6",
+              "row": "4,5"
             },
             "jsvalidation": "",
             "submittransform": "",
@@ -575,7 +629,7 @@
             "snippet": "div.form-group",
             "value": "",
             "gridindex": {
-              "column": "1,6",
+              "column": "7,12",
               "row": "4,5"
             },
             "jsvalidation": "",
@@ -589,15 +643,15 @@
             "type": "select",
             "label": "Gender",
             "snippet": "div.form-group",
-            "value": "M",
+            "value": "Male",
             "list": {
-              "M": "Male",
-              "F": "Female",
-              "O": "Other"
+              "Male": "Male",
+              "Female": "Female",
+              "Other": "Other"
             },
             "gridindex": {
-              "column": "7,12",
-              "row": "4,5"
+              "column": "1,6",
+              "row": "5,6"
             },
             "jsvalidation": "",
             "submittransform": "",
@@ -613,7 +667,7 @@
             "snippet": "div.form-group",
             "value": "",
             "gridindex": {
-              "column": "1,12",
+              "column": "7,12",
               "row": "5,6"
             },
             "jsvalidation": "",

@@ -20,22 +20,27 @@ public class AuthProvider {
             throw new AuthenticationException("Username/Password is empty");
         }
         Set<GrantedAuthority> authoritySet = new HashSet<>();
+        boolean validPassword = false;
         Map user = AppInject.mongoClientProvider.findByAtt("username", username, DBConstant.USER);
         if (user == null || user.isEmpty()) {
-            throw new UsernameNotFoundException("username not found");
+            user = AppInject.mongoClientProvider.findByAtt("username", username, DBConstant.EMPLOYEE);
+            if(user == null || user.isEmpty()) {
+                throw new UsernameNotFoundException("username not found");
+            }
+            validPassword = password.equals(user.get("password"));
+        }else{
+            validPassword = AppInject.passwordEncoder.matches(password, (String) user.get("password"));
         }
 
-        boolean validPassword = AppInject.passwordEncoder.matches(password, (String) user.get("password"));
         if (!validPassword) {
             throw new UsernameNotFoundException("username not found");
         }
 
-        String role = (String) user.get("role");
-        if(StringUtils.equalsAnyIgnoreCase(role,"SUPER_ADMIN")){
+        if(user.containsKey("role") && StringUtils.equalsAnyIgnoreCase((String) user.get("role"),"SUPER_ADMIN")){
+            authoritySet.add(new SimpleGrantedAuthority("ROLE_" + StringUtils.upperCase((String) user.get("role"))));
+        }else {
             authoritySet.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
-        authoritySet.add(new SimpleGrantedAuthority("ROLE_" + StringUtils.upperCase(role)));
-
         return new UsernamePasswordAuthenticationToken(username, password, authoritySet);
     }
 

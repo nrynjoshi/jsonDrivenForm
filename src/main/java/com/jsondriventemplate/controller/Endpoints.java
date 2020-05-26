@@ -9,6 +9,7 @@ public final class Endpoints {
     public static final String JSON_DEFINITION="/json_definition";
     public static final String ID="/{id}";
     public static final String DASHBOARD="/dashboard";
+    public static final String AUTH_DASHBOARD="/auth-dashboard";
     public static final String LOGIN="/login";
     public static final String URI="/{uri}";
     public static final String AUTH="/auth";

@@ -57,6 +57,7 @@ public class JSONDrivenTemplateApplication implements CommandLineRunner {
         loadDefaultJSON("login", "Login Page", "login.json");
         loadDefaultJSON("dashboard", "Dashboard", "dashboard.json");
         loadDefaultJSON("employee", "Employee", "employee.json");
+        loadDefaultJSON("auth-dashboard", "Employee Dashboard", "auth-dashboard.json");
     }
 
     private void loadDefaultUser() {

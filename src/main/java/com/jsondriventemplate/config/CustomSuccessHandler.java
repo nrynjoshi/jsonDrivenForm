@@ -1,6 +1,8 @@
 package com.jsondriventemplate.config;
 
+import com.jsondriventemplate.AppInject;
 import com.jsondriventemplate.controller.Endpoints;
+import com.jsondriventemplate.repo.DBConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -35,7 +38,9 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 					redirectUrl = Endpoints.ADMIN+Endpoints.DASHBOARD;
 					break;
 				}else{
-					redirectUrl = Endpoints.AUTH+Endpoints.DASHBOARD;
+					String username = (String) authentication.getPrincipal();
+					Map user = AppInject.mongoClientProvider.findByAtt("username", username, DBConstant.EMPLOYEE);
+					redirectUrl = Endpoints.AUTH+Endpoints.AUTH_DASHBOARD+"?type=update&id="+user.get("_id");
 					break;
 				}
 			}

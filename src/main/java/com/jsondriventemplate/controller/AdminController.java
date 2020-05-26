@@ -34,7 +34,7 @@ public class AdminController {
         String previewURL="";
         if(StringUtils.isNotBlank(query)){
             jsonData = AppInject.templateService.getJSONFromURIEditorView(query);
-            previewURL="/preview/"+query;
+            previewURL="/admin/preview/"+query;
         }
 
         if(jsonData==null){
