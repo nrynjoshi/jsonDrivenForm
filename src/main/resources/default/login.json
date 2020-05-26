@@ -18,7 +18,7 @@
         "class": "",
         "id": "",
         "grid": {
-          "columnsize": "5",
+          "columnsize": "11",
           "minrowheight": "10vh"
         },
         "fields": {
@@ -29,7 +29,7 @@
             "snippet": "div.form-group",
             "value": "",
             "gridindex": {
-              "column": "1,3",
+              "column": "1,6",
               "row": "1,2"
             },
             "jsvalidation": "",
@@ -46,7 +46,7 @@
             "snippet": "div.form-group",
             "value": "",
             "gridindex": {
-              "column": "4,6",
+              "column": "7,12",
               "row": "1,2"
             },
             "jsvalidation": "",
@@ -61,7 +61,7 @@
             "label": "Login",
             "value": "",
             "gridindex": {
-              "column": "1,7",
+              "column": "5,8",
               "row": "3,4"
             },
             "jsvalidation": "",

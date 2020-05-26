@@ -3,7 +3,7 @@
     "page": {
       "title": "Employee Create Form",
       "layout": "layout.json",
-      "snippet": "",
+      "snippet": "div.card.min-vw-90>div.card-body>h5.card-title.text-center[],p.card-text",
       "elements": [
         {
           "$ref": "#/definitions/create"
@@ -97,7 +97,7 @@
           "columnsize": "11",
           "minrowheight": "10vh"
         },
-        "snippet": "div.container>div.row.center-content>div.card.min-vw-70>div.card-body>h5.card-title.text-center[Employee Create],p.card-text",
+        "snippet": "",
         "fields": {
           "firstname": {
             "type": "text",

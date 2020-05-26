@@ -3,7 +3,7 @@
     "page": {
       "title": "User Dashboard",
       "layout": "layout.json",
-      "snippet": "",
+      "snippet": "div.row>div.card.min-vw-70>div.card-body>h5.card-title.text-center[],p.card-text",
       "elements": [
         {
           "$ref": "#/definitions/employeeAdd"
