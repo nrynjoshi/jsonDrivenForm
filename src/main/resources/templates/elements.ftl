@@ -161,6 +161,8 @@
 <#macro formBody requestData>
     <form <#if requestData.class?has_content> class="${requestData.class}" </#if>
             <#if requestData.id?has_content> id="${requestData.id}" </#if>
+            <#if requestData.method?has_content> method="${requestData.method}" </#if>
+            <#if requestData.action?has_content> action="${requestData.action}" </#if>
     >
         <#if requestData['grid']?? && requestData.grid?has_content>
         <div style="${gridcontainerwork(requestData.grid)}"></#if>
