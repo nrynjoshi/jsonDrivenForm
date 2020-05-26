@@ -346,6 +346,7 @@
               "row": "2,3"
             },
             "jsvalidation": "",
+            "validation_regx": "^[0-9a-zA-Z_.-]+$",
             "submittransform": "",
             "icon": "",
             "required": true,

@@ -3,6 +3,7 @@ package com.jsondriventemplate.config;
 import com.jsondriventemplate.exception.AuthenticationException;
 import com.jsondriventemplate.exception.JSONValidationException;
 import com.jsondriventemplate.exception.URINotFoundException;
+import com.jsondriventemplate.exception.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -18,6 +19,13 @@ public class GlobalControllerAdvice {
     public String notFound(Model model, Exception x) {
         process(model, x);
         return "error/404";
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public String validationException(Model model, Exception x) {
+
+        process(model, x);
+        return "error/422";
     }
 
 

@@ -50,7 +50,7 @@ public class AdminGenericController {
     public String updateRecord(@RequestBody MultiValueMap map) throws Exception {
         Map map1 = map.toSingleValueMap();
         String uri = (String) map1.get("uri");
-        map1.put("type","create");
+        map1.put("type","update");
         AppInject.jdtScript.process(map1);
         return "redirect:/admin/"+uri+"?type=list";
     }

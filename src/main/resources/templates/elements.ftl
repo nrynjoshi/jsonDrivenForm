@@ -51,8 +51,8 @@
         <thead>
         <tr>
             <#list requestData.fields?keys as name>
-            <#assign field=requestData.fields[name]>
-<#--            <#list lastItem?keys as key>-->
+                <#assign field=requestData.fields[name]>
+            <#--            <#list lastItem?keys as key>-->
                 <th scope="col">${field.label}</th>
             </#list>
             <th>Action</th>
@@ -60,24 +60,28 @@
 
         </thead>
         <#if  list_value?has_content> <#local lastItem=list_value[list_value?size-1] >
-        <tbody>
-        <#list list_value as item>
-            <tr>
-                <#list requestData.fields?keys as name>
-                 <#assign field=requestData.fields[name]>
-                <#list lastItem?keys as key>
-                    <#if name == key>
-                        <#local value=item[name]>
-                        <td <#if field.class?has_content>class="${field.class}"</#if>>${value}</td>
-                    </#if>
-                </#list>
-                </#list>
-                <td><a class="btn btn-primary" href="/admin/process/delete?id=${item['_id']}&uri=${uri}">Delete</a>
-                    <a class="btn btn-primary" href="/admin/${uri}?type=update&id=${item['_id']}">Update</a>
-                </td>
-            </tr>
-        </#list>
-        </tbody>
+            <tbody>
+            <#list list_value as item>
+                <tr>
+                    <#list requestData.fields?keys as name>
+                        <#assign field=requestData.fields[name]>
+                        <#list lastItem?keys as key>
+                            <#if name == key>
+                                <#if item[name]?? >
+                                    <#local value=item[name]>
+                                <#else >
+                                    <#local value=''>
+                                </#if>
+                                <td <#if field.class?has_content>class="${field.class}"</#if>>${value}</td>
+                            </#if>
+                        </#list>
+                    </#list>
+                    <td><a class="btn btn-primary" href="/admin/process/delete?id=${item['_id']}&uri=${uri}">Delete</a>
+                        <a class="btn btn-primary" href="/admin/${uri}?type=update&id=${item['_id']}">Update</a>
+                    </td>
+                </tr>
+            </#list>
+            </tbody>
         </#if>
 
 
@@ -92,14 +96,15 @@
 <#macro linkBody requestData <#--columnindex-->>
     <div>
         <a href="<#if requestData.href?has_content> ${requestData.href}<#else> # </#if>" <#if requestData.class?has_content> class="${requestData.class}" </#if>
-                         <#if requestData.id?has_content> id="${requestData.id}" </#if>
+                <#if requestData.id?has_content> id="${requestData.id}" </#if>
         >${requestData.label}
         </a>
     </div>
 </#macro>
 
 <#macro buttonBody field name>
-    <div class="box-footer"   <#if field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> >
+    <div class="box-footer"
+         <#if field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> >
         <button type="submit"<@populate field=field ></@populate>
         <#if field.icon?has_content><i class="fa fa-${field.icon}"></i></#if> >${field.label}
         </button>
@@ -107,25 +112,29 @@
 </#macro>
 
 <#macro selectBody field name>
-    <div class="form-group"   <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> .">
-        <#if name?has_content> <label>${field.label}</label> </#if>
-        <div class="input-group">
-            <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i>
-                </span> </#if>
-            <select name="${name}" <@populate field=field ></@populate> >
-                <#list field["list"]?keys as groupKey>
-                    <option <#if field.value==groupKey>selected</#if>
-                            value='${(groupKey!"")}'>${field["list"][groupKey]}</option>
-                </#list>
-            </select>
-        </div>
+    <div class="form-group"
+         <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if>
+         .">
+    <#if name?has_content> <label>${field.label}</label> </#if>
+    <div class="input-group">
+        <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i>
+            </span> </#if>
+        <select name="${name}" <@populate field=field ></@populate> >
+            <#list field["list"]?keys as groupKey>
+                <option <#if field.value==groupKey>selected</#if>
+                        value='${(groupKey!"")}'>${field["list"][groupKey]}</option>
+            </#list>
+        </select>
+    </div>
     </div>
 </#macro>
 
 <#macro checkBoxBody field name >
-    <div class="form-group"   <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> .">
-        <input name="${name}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
-        <#if name?has_content> <label class="form-check-label">${field.label} </label> </#if>
+    <div class="form-group"
+         <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if>
+         .">
+    <input name="${name}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
+    <#if name?has_content> <label class="form-check-label">${field.label} </label> </#if>
     </div>
 </#macro>
 <#macro hidden field name>
@@ -133,19 +142,22 @@
 </#macro>
 
 <#macro radioButton field name>
-    <div class="form-group"   <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> .">
-        <input name="${field.radioname}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
-        <#if name?has_content> <label class="form-check-label">${field.label}</label> </#if>
+    <div class="form-group"
+         <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if>
+         .">
+    <input name="${field.radioname}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
+    <#if name?has_content> <label class="form-check-label">${field.label}</label> </#if>
     </div>
 </#macro>
 
 <#macro default field name>
-    <div class="form-group" <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> >
+    <div class="form-group"
+         <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if> >
         <#if name?has_content> <label>${field.label}</label> </#if>
         <div class="input-group">
             <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i>
                 </span> </#if>
-            <input name="${name}" <@populate field=field ></@populate> />
+            <input name="${name}" <@populate field=field ></@populate>  <#if field.validation_regx?has_content> data-smk-pattern="${field.validation_regx}" </#if> />
         </div>
     </div>
 </#macro>
@@ -157,33 +169,34 @@
             <#if requestData.action?has_content> action="${requestData.action}" </#if>
             <#if requestData.jsmethod?has_content> onsubmit="${requestData.jsmethod}" </#if>
     >
-        <#if requestData['grid']?? && requestData.grid?has_content><div style="${gridcontainerwork(requestData.grid)}"></#if>
-        <#list requestData.fields?keys as name>
-            <#assign field=requestData.fields[name]>
-            <#switch field.type>
-                <#case "select" >
-                    <@selectBody field=field name=name></@selectBody>
-                    <#break>
-                <#case "button" >
-                    <@buttonBody field=field name=name></@buttonBody>
-                    <#break>
-                <#case "submit" >
-                    <@buttonBody field=field name=name></@buttonBody>
-                    <#break>
-                <#case "checkbox">
-                    <@checkBoxBody field=field name=name></@checkBoxBody>
-                    <#break>
-                <#case "radio">
-                    <@radioButton field=field name=name></@radioButton>
-                    <#break>
-                <#case "hidden">
-                    <@hidden field=field name=name ></@hidden>
-                    <#break>
-                <#default>
-                    <@default field=field name=name></@default>
-            </#switch>
-        </#list>
-        <#if requestData.grid?has_content></div></#if>
+        <#if requestData['grid']?? && requestData.grid?has_content>
+        <div style="${gridcontainerwork(requestData.grid)}"></#if>
+            <#list requestData.fields?keys as name>
+                <#assign field=requestData.fields[name]>
+                <#switch field.type>
+                    <#case "select" >
+                        <@selectBody field=field name=name></@selectBody>
+                        <#break>
+                    <#case "button" >
+                        <@buttonBody field=field name=name></@buttonBody>
+                        <#break>
+                    <#case "submit" >
+                        <@buttonBody field=field name=name></@buttonBody>
+                        <#break>
+                    <#case "checkbox">
+                        <@checkBoxBody field=field name=name></@checkBoxBody>
+                        <#break>
+                    <#case "radio">
+                        <@radioButton field=field name=name></@radioButton>
+                        <#break>
+                    <#case "hidden">
+                        <@hidden field=field name=name ></@hidden>
+                        <#break>
+                    <#default>
+                        <@default field=field name=name></@default>
+                </#switch>
+            </#list>
+            <#if requestData.grid?has_content></div></#if>
     </form>
 
 </#macro>
