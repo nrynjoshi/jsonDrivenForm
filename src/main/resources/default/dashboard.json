@@ -18,10 +18,6 @@
         "type": "link",
         "label": "Employee Add",
         "href": "employee?type=create",
-        "value": "",
-        "gridindex": "2,1",
-        "jsvalidation": "",
-        "submittransform": "",
         "class": "btn btn-primary btn-block"
       }
     },
@@ -30,10 +26,6 @@
         "type": "link",
         "label": "Employee List",
         "href": "employee?type=list",
-        "value": "",
-        "gridindex": "2,1",
-        "jsvalidation": "",
-        "submittransform": "",
         "class": "btn btn-primary btn-block mt-2"
       }
     }

@@ -49,7 +49,6 @@
                         for (var i in data) {
                             $('input[name="'+i+'"]').val(data[i]);
                         }
-                        // $('form').loadJSON(data);
                     }
                 });
             }

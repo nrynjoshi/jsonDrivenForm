@@ -27,15 +27,11 @@
             "type": "text",
             "label": "First Name",
             "placeholder": "Enter your first name",
-            "snippet": "div.form-group",
             "value": "",
             "gridindex": {
               "column": "1,6",
               "row": "1,2"
             },
-            "jsvalidation": "",
-            "submittransform": "",
-            "icon": "",
             "required": true,
             "class": "form-control",
             "id": ""
@@ -44,15 +40,11 @@
             "type": "text",
             "label": "Last Name",
             "placeholder": "Enter your last name",
-            "snippet": "div.form-group",
             "value": "",
             "gridindex": {
               "column": "7,12",
               "row": "1,2"
             },
-            "jsvalidation": "",
-            "submittransform": "",
-            "icon": "",
             "required": true,
             "class": "form-control",
             "id": ""
@@ -61,15 +53,11 @@
             "type": "text",
             "label": "Username",
             "placeholder": "Enter username",
-            "snippet": "div.form-group",
             "value": "",
             "gridindex": {
               "column": "1,6",
               "row": "2,3"
             },
-            "jsvalidation": "",
-            "submittransform": "",
-            "icon": "",
             "required": true,
             "class": "form-control",
             "id": ""
@@ -78,15 +66,11 @@
             "type": "password",
             "label": "Password",
             "placeholder": "Enter Password",
-            "snippet": "div.form-group",
             "value": "",
             "gridindex": {
               "column": "7,12",
               "row": "2,3"
             },
-            "jsvalidation": "",
-            "submittransform": "",
-            "icon": "",
             "required": true,
             "class": "form-control",
             "id": ""
@@ -95,15 +79,11 @@
             "type": "text",
             "label": "Address",
             "placeholder": "Enter the address",
-            "snippet": "div.form-group",
             "value": "",
             "gridindex": {
               "column": "1,6",
               "row": "3,4"
             },
-            "jsvalidation": "",
-            "submittransform": "",
-            "icon": "",
             "required": true,
             "class": "form-control",
             "id": ""
@@ -112,15 +92,11 @@
             "type": "text",
             "label": "Designation",
             "placeholder": "Enter your designation",
-            "snippet": "div.form-group",
             "value": "",
             "gridindex": {
               "column": "7,12",
               "row": "3,4"
             },
-            "jsvalidation": "",
-            "submittransform": "",
-            "icon": "",
             "required": true,
             "class": "form-control",
             "id": ""
@@ -129,15 +105,11 @@
             "type": "text",
             "label": "Salary",
             "placeholder": "Enter your salary",
-            "snippet": "div.form-group",
             "value": "",
             "gridindex": {
               "column": "1,6",
               "row": "4,5"
             },
-            "jsvalidation": "",
-            "submittransform": "",
-            "icon": "",
             "required": true,
             "class": "form-control",
             "id": ""
@@ -146,15 +118,11 @@
             "type": "text",
             "label": "Phone number",
             "placeholder": "Enter your phone number",
-            "snippet": "div.form-group",
             "value": "",
             "gridindex": {
               "column": "7,12",
               "row": "4,5"
             },
-            "jsvalidation": "",
-            "submittransform": "",
-            "icon": "",
             "required": true,
             "class": "form-control",
             "id": ""
@@ -162,7 +130,6 @@
           "gender": {
             "type": "select",
             "label": "Gender",
-            "snippet": "div.form-group",
             "value": "Male",
             "list": {
               "Male": "Male",
@@ -173,9 +140,6 @@
               "column": "1,6",
               "row": "5,6"
             },
-            "jsvalidation": "",
-            "submittransform": "",
-            "icon": "",
             "required": true,
             "class": "form-control",
             "id": ""
@@ -184,15 +148,11 @@
             "type": "number",
             "label": "Age",
             "placeholder": "Enter your age",
-            "snippet": "div.form-group",
             "value": "",
             "gridindex": {
               "column": "7,12",
               "row": "5,6"
             },
-            "jsvalidation": "",
-            "submittransform": "",
-            "icon": "",
             "required": true,
             "class": "form-control",
             "id": ""
@@ -205,8 +165,6 @@
               "column": "5,8",
               "row": "7,8"
             },
-            "jsvalidation": "",
-            "submittransform": "",
             "class": "btn btn-primary btn-block"
           }
         }
