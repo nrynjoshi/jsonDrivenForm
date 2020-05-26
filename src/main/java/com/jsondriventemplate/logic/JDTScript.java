@@ -50,6 +50,7 @@ public final class JDTScript {
                 return AppInject.mongoClientProvider.findById((String)requestDTO.get("_id"), uri);
             default:
                 validation(uri,type,requestDTO);
+                checkUserNamePassword(uri, type, requestDTO);
                 removeBeforeOperation(requestDTO);
                 AppInject.mongoClientProvider.save(requestDTO, uri);
         }
@@ -59,6 +60,42 @@ public final class JDTScript {
     private void removeBeforeOperation(Map<String, Object> requestDTO) {
         requestDTO.remove("type");
         requestDTO.remove("uri");
+    }
+    private void checkUserNamePassword(String uri, String type, Map<String, Object> dataMap) throws ValidationException {
+        if(type.equals("create")){
+            if(dataMap.containsKey("username")) {
+
+                Map user = AppInject.mongoClientProvider.findByAtt("username", (String) dataMap.get("username"), uri);
+                if (user != null && !user.isEmpty()) {
+                    throw new ValidationException("username already exits");
+                }
+            }
+            if(dataMap.containsKey("password")){
+                String encodedPassword = AppInject.passwordEncoder.encode((String)dataMap.get("password"));
+                dataMap.put("password",encodedPassword);
+            }
+        }
+        if(type.equals("update")) {
+            Map user = null;
+            if (dataMap.containsKey("username")) {
+                user = AppInject.mongoClientProvider.findByAtt("username", (String) dataMap.get("username"), uri);
+                if(user != null && !user.isEmpty() ) {
+                    String _id = (String) user.get("_id");
+                    if (!dataMap.containsKey("_id") || !_id.equals(dataMap.get("_id"))) {
+                        throw new ValidationException("username already exits");
+                    }
+                }
+            }
+            if (dataMap.containsKey("password")) {
+                if (user != null && !user.isEmpty()) {
+                    String dbpassword  = (String) user.get("password");
+                    if(!dbpassword.equals(dataMap.get("password"))){
+                        String encodedPassword = AppInject.passwordEncoder.encode((String) dataMap.get("password"));
+                        dataMap.put("password", encodedPassword);
+                    }
+                }
+            }
+        }
     }
 
     private void validation(String uri,String type,Map<String,Object> dataMap) throws Exception {

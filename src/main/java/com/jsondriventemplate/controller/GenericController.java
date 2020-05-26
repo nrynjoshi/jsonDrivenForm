@@ -35,7 +35,7 @@ public class GenericController {
     @PostMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.UPDATE)
     public String updateRecord(@RequestBody MultiValueMap map) throws Exception {
         Map<String,Object> map1 = map.toSingleValueMap();
-        map1.put("type","create");
+        map1.put("type","update");
         AppInject.jdtScript.process(map1);
         return "redirect:"+Endpoints.AUTH+Endpoints.AUTH_DASHBOARD+"?type=update&id="+map1.get("_id");
     }

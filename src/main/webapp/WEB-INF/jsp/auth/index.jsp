@@ -10,6 +10,7 @@
 </head>
 <body>
 <div class="row justify-content-center">
+    <jsp:include page="../admin/layout/header.jsp"/>
     <div class="col-lg-10">
         ${template}
     </div>

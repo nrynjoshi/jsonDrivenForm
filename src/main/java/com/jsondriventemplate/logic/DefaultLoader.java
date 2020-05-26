@@ -45,15 +45,14 @@ public final class DefaultLoader {
     }
 
     public void loadDefaultUser() {
-        Map login = AppInject.mongoClientProvider.findByAtt("username","superadmin", DBConstant.USER);
+        Map login = AppInject.mongoClientProvider.findByAtt("username","superadmin", DBConstant.EMPLOYEE);
         if(login==null || StringUtils.isBlank((CharSequence) login.get("_id"))){
             Map<String,Object> user=new HashMap<>();
             user.put("username",userName);
             user.put("password",AppInject.passwordEncoder.encode(password));
-            user.put("enable","on");
             user.put("fullname","Super User");
             user.put("role","Super_Admin");
-            AppInject.mongoClientProvider.save(user, DBConstant.USER);
+            AppInject.mongoClientProvider.save(user, DBConstant.EMPLOYEE);
         }
     }
 
