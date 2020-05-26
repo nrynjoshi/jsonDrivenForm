@@ -2,18 +2,12 @@ package com.jsondriventemplate.controller;
 
 import com.jsondriventemplate.AppInject;
 import com.jsondriventemplate.JSONTemplateConst;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.AuthenticatedPrincipal;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -32,7 +26,7 @@ public class GenericController {
     //------------------- Post and get Function will be used for all json request as per script -------------------------
     @GetMapping(value =Endpoints.AUTH+Endpoints.PROCESS+Endpoints.GET_ID)
     public @ResponseBody Map getById(@RequestParam String id,@RequestParam String uri) throws Exception {
-        Map map1 = new HashMap();
+        Map<String,Object> map1 = new HashMap();
         map1.put("type","retrieveByID");
         map1.put("_id",id);
         map1.put("uri",uri);
@@ -40,7 +34,7 @@ public class GenericController {
     }
     @PostMapping(value = Endpoints.AUTH + Endpoints.PROCESS+Endpoints.UPDATE)
     public String updateRecord(@RequestBody MultiValueMap map) throws Exception {
-        Map map1 = map.toSingleValueMap();
+        Map<String,Object> map1 = map.toSingleValueMap();
         map1.put("type","create");
         AppInject.jdtScript.process(map1);
         return "redirect:"+Endpoints.AUTH+Endpoints.AUTH_DASHBOARD+"?type=update&id="+map1.get("_id");

@@ -1,15 +1,12 @@
 package com.jsondriventemplate.repo;
 
-import com.mongodb.BasicDBObject;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
-import org.springframework.data.domain.Example;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -18,16 +15,19 @@ import java.util.UUID;
 public class MongoClientProvider {
 
     private final MongoOperations mongoOperations;
+    private static final String _ID = "_ID";
+    private static final String URL = "url";
 
     public MongoClientProvider(MongoOperations mongoOperations) {
         this.mongoOperations = mongoOperations;
     }
 
-    public Document save(Map dataMap, String collectionName) {
+    public Document save(Map<String,Object> dataMap, String collectionName) {
         collection(collectionName);
         Document document = new Document();
-        if(!dataMap.containsKey("_id") && StringUtils.isBlank((CharSequence) dataMap.get("_id"))){
-            document.put("_id", UUID());
+
+        if(!dataMap.containsKey(_ID) && StringUtils.isBlank((CharSequence) dataMap.get(_ID))){
+            document.put(_ID, UUID());
         }
         document.putAll(dataMap);
         mongoOperations.save(document, collectionName);
@@ -35,7 +35,7 @@ public class MongoClientProvider {
     }
 
     public void delete(String id, String collectionName) {
-        Query query = Query.query(Criteria.where("_id").is(id));
+        Query query = Query.query(Criteria.where(_ID).is(id));
         mongoOperations.remove(query, collectionName);
     }
 
@@ -44,12 +44,12 @@ public class MongoClientProvider {
     }
 
     public Map findById(String id, String collectionName) {
-        Query query = Query.query(Criteria.where("_id").is(id));
+        Query query = Query.query(Criteria.where(_ID).is(id));
         return mongoOperations.findOne(query, Map.class,collectionName);
     }
 
     public Map findByURL(String url, String collectionName) {
-        Query query = Query.query(Criteria.where("url").is(url));
+        Query query = Query.query(Criteria.where(URL).is(url));
         return mongoOperations.findOne(query, Map.class,collectionName);
     }
     public Map findByAtt(String attr,String value, String collectionName) {

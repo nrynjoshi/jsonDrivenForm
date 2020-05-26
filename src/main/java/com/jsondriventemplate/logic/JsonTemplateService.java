@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Component
 public class JsonTemplateService {
-    public Map getJSONFromURIEditorView(String uri) throws Exception {
+    public Map<String,Object> getJSONFromURIEditorView(String uri) throws Exception {
         try {
             return getJSONFromURI(uri);
         } catch (URINotFoundException e) {
@@ -31,10 +31,10 @@ public class JsonTemplateService {
         return (String) byURL.get("_id");
     }
 
-    public Map getJSONFromURI(String uri) throws Exception {
+    private Map<String,Object> getJSONFromURI(String uri) throws Exception {
         AppInject.templateParser.validateURIJSON(uri);
         Map byURL = AppInject.mongoClientProvider.findByURL(uri, DBConstant.TEMPLATE_INFORMATION);
-        Map byAtt = AppInject.mongoClientProvider.findByAtt("_id", (String) byURL.get("_id"), DBConstant.JSON_TEMPLATE_DEFINITION);
+        Map<String,Object> byAtt =(Map<String,Object>) AppInject.mongoClientProvider.findByAtt("_id", (String) byURL.get("_id"), DBConstant.JSON_TEMPLATE_DEFINITION);
         if (byAtt == null) {
             throw new URINotFoundException("JSON definition is not found for particular page");
         }

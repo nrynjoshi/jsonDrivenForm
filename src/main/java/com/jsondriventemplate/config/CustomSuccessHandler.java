@@ -35,12 +35,12 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 			for (GrantedAuthority grantedAuthority : authorities) {
 				System.out.println("role " + grantedAuthority.getAuthority());
 				if (grantedAuthority.getAuthority().equals("ROLE_SUPER_ADMIN")) {
-					redirectUrl = Endpoints.ADMIN+Endpoints.DASHBOARD;
+					redirectUrl = Endpoints.ADMIN + Endpoints.DASHBOARD;
 					break;
-				}else{
+				} else {
 					String username = (String) authentication.getPrincipal();
 					Map user = AppInject.mongoClientProvider.findByAtt("username", username, DBConstant.EMPLOYEE);
-					redirectUrl = Endpoints.AUTH+Endpoints.AUTH_DASHBOARD+"?type=update&id="+user.get("_id");
+					redirectUrl = Endpoints.AUTH + Endpoints.AUTH_DASHBOARD + "?type=update&id=" + user.get("_id");
 					break;
 				}
 			}

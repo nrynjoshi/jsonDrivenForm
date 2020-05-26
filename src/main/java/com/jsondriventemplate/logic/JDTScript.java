@@ -71,12 +71,8 @@ public class JDTScript {
             JSONObject value = (JSONObject) schema.get(key);
             if(value.has("required")){
                 Boolean required = value.getBoolean("required");
-                if(required==null){
-                    continue;
-                }
                 if((required && StringUtils.isBlank((CharSequence) dataMap.get(key)))){
                     error.append(key).append(" is a required field.");
-                    
                 }
             }
             if(value.has("validation_regx") && StringUtils.isNotBlank(value.getString("validation_regx"))){

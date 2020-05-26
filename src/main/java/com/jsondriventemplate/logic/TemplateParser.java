@@ -12,12 +12,10 @@ import net.minidev.json.JSONArray;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.*;
 
 @Component
@@ -35,24 +33,18 @@ public class TemplateParser {
     }
 
     public String pageDefinition(String uri, String jsonData, String type) throws IOException, TemplateException {
-        return pageDefinition(uri, jsonData, false, type,null);
+        return pageDefinition(uri, jsonData, false, type, null);
     }
 
-    public String pageDefinitionInnerBody(String uri, String jsonData, String type,String id,boolean isInnerBodyOnly) throws IOException, TemplateException {
-        return pageDefinition(uri,jsonData,true,isInnerBodyOnly,type,id,null);
+    public String pageDefinitionInnerBody(String uri, String jsonData, String type, String id, boolean isInnerBodyOnly) throws IOException, TemplateException {
+        return pageDefinition(uri, jsonData, true, isInnerBodyOnly, type, id, null);
     }
 
-
-
-    public String pageDefinition(String uri, String jsonData, String type,String id) throws IOException, TemplateException {
-        return pageDefinition(uri, jsonData, false, type,id);
+    public String pageDefinition(String uri, String jsonData, boolean isAdminPreview, String type, String id) throws IOException, TemplateException {
+        return pageDefinition(uri, jsonData, isAdminPreview, false, type, id, null);
     }
 
-    public String pageDefinition(String uri, String jsonData, boolean isAdminPreview, String type,String id) throws IOException, TemplateException {
-        return pageDefinition(uri,jsonData,isAdminPreview,false,type,id,null);
-    }
-
-    public String pageDefinition(String uri, String jsonData, boolean isAdminPreview,boolean isInnerBodyOnly, String type,String id,List<Map> value) throws IOException, TemplateException {
+    public String pageDefinition(String uri, String jsonData, boolean isAdminPreview, boolean isInnerBodyOnly, String type, String id, List<Map> value) throws IOException, TemplateException {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("uri", uri);
         paramMap.put("type", type);
@@ -60,26 +52,22 @@ public class TemplateParser {
         try {
             paramMap.put(JSONTemplateConst.LAYOUT, layoutProcess(jsonData));
             paramMap.put(JSONTemplateConst.ELEMENTS, element(jsonData, type));
-            if(StringUtils.isNotBlank(id)){
-                paramMap.put("_id",id);
+            if (StringUtils.isNotBlank(id)) {
+                paramMap.put("_id", id);
             }
-            if(value!=null){
+            if (value != null) {
                 paramMap.put("list_value", value);
-            }else {
-                try{
-                    if (StringUtils.isBlank(type)) {
-                        type="list";
-                    }
-                    if (StringUtils.isNotBlank(type)) {
-                        switch (type) {
-                            case "list":
-                                List<?> all = AppInject.mongoClientProvider.findAll(uri);
-                                paramMap.put("list_value", all);
-                                break;
-                        }
-                    }
-                }catch (Exception x){
+            } else {
+                if (StringUtils.isBlank(type)) {
+                    type = "list";
                 }
+                if (StringUtils.isNotBlank(type)) {
+                    if ("list".equals(type)) {
+                        List<?> all = AppInject.mongoClientProvider.findAll(uri);
+                        paramMap.put("list_value", all);
+                    }
+                }
+
             }
 
 
@@ -88,9 +76,9 @@ public class TemplateParser {
                 throw x;
             }
         }
-        String templateFtl="home.ftl";
-        if(isInnerBodyOnly){
-            templateFtl="innerbody.ftl";
+        String templateFtl = "home.ftl";
+        if (isInnerBodyOnly) {
+            templateFtl = "innerbody.ftl";
         }
         Template template = AppInject.configuration.getTemplate(templateFtl);
         return executeDef(jsonData, template, paramMap);
@@ -99,7 +87,7 @@ public class TemplateParser {
     private Map<String, Object> layoutProcess(String jsonData) throws IOException {
         String layout = JsonPath.parse(jsonData).read("$['definitions']['page']['layout']");
 //        File file = Paths.get(JSONTemplateConst.JSON_SCHEMA_ATTR, layout).toFile();
-        File file = ResourceUtils.getFile("classpath:"+JSONTemplateConst.JSON_SCHEMA_ATTR+layout);
+        File file = ResourceUtils.getFile("classpath:" + JSONTemplateConst.JSON_SCHEMA_ATTR + layout);
         return JSONLoader.mapper(JSONLoader.laodJSONDefinition(file));
     }
 
@@ -138,24 +126,13 @@ public class TemplateParser {
         return elementList;
     }
 
-    public String execute(String json) throws IOException, TemplateException {
-        Template template = AppInject.configuration.getTemplate("body.ftl");
-        return execute(json, template);
-    }
-
-    private String execute(String json, Template template) throws IOException, TemplateException {
-        Map<String, Object> dataMap = new HashMap<>();
-        dataMap.put(JSONTemplateConst.ELEMENTS, JSONLoader.mapper(json));
-        return FreeMarkerTemplateUtils.processTemplateIntoString(template, dataMap);
-    }
-
     private String executeDef(String json, Template template, Map<String, Object> paramMap) throws IOException, TemplateException {
         Map<String, Object> dataMap = JSONLoader.mapper(json);
         dataMap.putAll(paramMap);
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, dataMap);
     }
 
-    private String cleanUpJSONData(String jsonData, Map param) {
+    private String cleanUpJSONData(String jsonData, Map<String, Object> param) {
         org.apache.commons.text.StrSubstitutor substitutor = new org.apache.commons.text.StrSubstitutor(param);
         return substitutor.replace(jsonData);
     }

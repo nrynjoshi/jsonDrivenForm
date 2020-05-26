@@ -20,7 +20,7 @@ public class AuthProvider {
             throw new AuthenticationException("Username/Password is empty");
         }
         Set<GrantedAuthority> authoritySet = new HashSet<>();
-        boolean validPassword = false;
+        boolean validPassword ;
         Map user = AppInject.mongoClientProvider.findByAtt("username", username, DBConstant.USER);
         if (user == null || user.isEmpty()) {
             user = AppInject.mongoClientProvider.findByAtt("username", username, DBConstant.EMPLOYEE);

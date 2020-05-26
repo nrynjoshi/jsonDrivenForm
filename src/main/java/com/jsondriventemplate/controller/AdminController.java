@@ -4,20 +4,15 @@ import com.jsondriventemplate.AppInject;
 import com.jsondriventemplate.JSONTemplateConst;
 import com.jsondriventemplate.exception.JSONValidationException;
 import com.jsondriventemplate.repo.DBConstant;
-import freemarker.template.TemplateException;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = Endpoints.ADMIN)
@@ -25,7 +20,7 @@ public class AdminController {
 
     @GetMapping(value = Endpoints.EDITOR)
     public String editor(Model model, @RequestParam(name = JSONTemplateConst.query, defaultValue = "", required = false) String query) throws Exception {
-        Map jsonData=null;
+        Map<String,Object> jsonData=null;
         String previewURL="";
         if(StringUtils.isNotBlank(query)){
             jsonData = AppInject.templateService.getJSONFromURIEditorView(query);
@@ -47,7 +42,7 @@ public class AdminController {
 
     @PostMapping(value = Endpoints.EDITOR)
     public @ResponseBody
-    String pageUpdate(@RequestBody MultiValueMap jsonMap) throws IOException, TemplateException {
+    String pageUpdate(@RequestBody MultiValueMap jsonMap) {
         String jsonData = (String) jsonMap.toSingleValueMap().get("json");
         if (StringUtils.isBlank(jsonData)) {
             return "Non thing to display..";

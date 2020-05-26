@@ -39,7 +39,7 @@ public class AdminGenericController {
     //--------------------------------------------------------------------------------------------
     @PostMapping(value = Endpoints.PROCESS+Endpoints.SAVE)
     public String saveRecord(@RequestBody MultiValueMap map) throws Exception {
-        Map map1 = map.toSingleValueMap();
+        Map<String,Object> map1 = map.toSingleValueMap();
         String uri = (String) map1.get("uri");
         map1.put("type","create");
         AppInject.jdtScript.process(map1);
@@ -48,7 +48,7 @@ public class AdminGenericController {
 
     @PostMapping(value = Endpoints.PROCESS+Endpoints.UPDATE)
     public String updateRecord(@RequestBody MultiValueMap map) throws Exception {
-        Map map1 = map.toSingleValueMap();
+        Map<String,Object> map1 = map.toSingleValueMap();
         String uri = (String) map1.get("uri");
         map1.put("type","update");
         AppInject.jdtScript.process(map1);
@@ -57,7 +57,7 @@ public class AdminGenericController {
 
     @PostMapping(value = Endpoints.PROCESS+Endpoints.SEARCH)
     public @ResponseBody String searchRecord(@RequestBody MultiValueMap map) throws Exception {
-        Map map1 = map.toSingleValueMap();
+        Map<String,Object> map1 = map.toSingleValueMap();
         map1.put("type","search");
         String uri = (String) map1.get("uri");
         String jsonData = AppInject.templateService.getJSONOnlyFromURI(uri);
@@ -66,7 +66,7 @@ public class AdminGenericController {
 
     @GetMapping(value = Endpoints.PROCESS+Endpoints.DELETE)
     public String deleteRecord(@RequestParam String id,@RequestParam String uri) throws Exception {
-        Map map1 = new HashMap();
+        Map<String,Object> map1 = new HashMap();
         map1.put("type","delete");
         map1.put("_id",id);
         map1.put("uri",uri);
@@ -76,7 +76,7 @@ public class AdminGenericController {
 
     @GetMapping(value = Endpoints.PROCESS+Endpoints.GET_ID)
     public @ResponseBody Map getById(@RequestParam String id,@RequestParam String uri) throws Exception {
-        Map map1 = new HashMap();
+        Map<String,Object> map1 = new HashMap();
         map1.put("type","retrieveByID");
         map1.put("_id",id);
         map1.put("uri",uri);
@@ -84,7 +84,7 @@ public class AdminGenericController {
     }
     @GetMapping(value = Endpoints.PROCESS+Endpoints.GET)
     public void getAll(@RequestParam String uri) throws Exception {
-        Map map1 = new HashMap();
+        Map<String,Object> map1 = new HashMap();
         map1.put("type","retrieve");
         map1.put("uri",uri);
         AppInject.jdtScript.process(map1);

@@ -1,10 +1,7 @@
 package com.jsondriventemplate;
 
 import com.jsondriventemplate.config.MessageReader;
-import com.jsondriventemplate.logic.JDTScript;
-import com.jsondriventemplate.logic.JSONValidator;
-import com.jsondriventemplate.logic.JsonTemplateService;
-import com.jsondriventemplate.logic.TemplateParser;
+import com.jsondriventemplate.logic.*;
 import com.jsondriventemplate.repo.MongoClientProvider;
 import freemarker.template.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,9 +18,11 @@ public class AppInject {
     public static JSONValidator jsonValidator;
     public static JDTScript jdtScript;
     public static PasswordEncoder passwordEncoder;
+    public static DefaultLoader defaultLoader;
 
     public AppInject(TemplateParser templateParser, MessageReader messageReader, MongoClientProvider mongoClientProvider, JsonTemplateService templateService,
-                     Configuration configuration, JSONValidator jsonValidator,JDTScript jdtScript,PasswordEncoder passwordEncoder
+                     Configuration configuration, JSONValidator jsonValidator,JDTScript jdtScript,PasswordEncoder passwordEncoder,
+                     DefaultLoader defaultLoader
     ) {
         AppInject.templateParser = templateParser;
         AppInject.messageReader = messageReader;
@@ -33,5 +32,6 @@ public class AppInject {
         AppInject.jsonValidator = jsonValidator;
         AppInject.jdtScript = jdtScript;
         AppInject.passwordEncoder = passwordEncoder;
+        AppInject.defaultLoader = defaultLoader;
     }
 }

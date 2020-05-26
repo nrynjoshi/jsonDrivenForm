@@ -2,8 +2,7 @@ package com.jsondriventemplate;
 
 public enum  StatusCode {
 
-    NOT_FOUND("404"),
-    INTERNAL_ERROR("500");
+    NOT_FOUND("404");
 
     private final String value;
 

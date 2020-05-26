@@ -7,7 +7,6 @@ final class ViewResolver {
     static final String INDEX="index";
     private static final String ADMIN="admin";
     private static final String EDITOR="editor";
-    private static final String DASHBOARD="dashboard";
     private static final String JSON_TEMPLATE="json-template";
     private static final String JSON_TEMPLATE_EDIT="json-template-edit";
 
