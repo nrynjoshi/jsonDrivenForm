@@ -15,7 +15,7 @@ import java.util.UUID;
 public class MongoClientProvider {
 
     private final MongoOperations mongoOperations;
-    private static final String _ID = "_ID";
+    private static final String _ID = "_id";
     private static final String URL = "url";
 
     public MongoClientProvider(MongoOperations mongoOperations) {
