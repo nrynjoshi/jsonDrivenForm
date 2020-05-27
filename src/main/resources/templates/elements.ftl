@@ -59,18 +59,14 @@
             <tbody>
             <#list list_value as item>
                 <tr>
-                    <#list requestData.fields?keys as name>
-                        <#assign field=requestData.fields[name]>
-                        <#list lastItem?keys as key>
-                            <#if name == key>
-                                <#if item[name]?? >
-                                    <#local value=item[name]>
-                                <#else >
-                                    <#local value=''>
-                                </#if>
-                                <td <#if field.class?has_content>class="${field.class}"</#if>>${value}</td>
+                        <#list requestData.fields?keys as name>
+                            <#assign field=requestData.fields[name]>
+                            <#if item[name]?? >
+                                <#local value=item[name]>
+                            <#else >
+                                <#local value=''>
                             </#if>
-                        </#list>
+                            <td <#if field.class?has_content>class="${field.class}"</#if>>${value}</td>
                     </#list>
                     <td><a class="btn btn-primary" href="/admin/process/delete?id=${item['_id']}&uri=${uri}">Delete</a>
                         <a class="btn btn-primary" href="/admin/${uri}?type=update&id=${item['_id']}">Update</a>
@@ -104,26 +100,26 @@
     <div class="form-group"
          <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if>
     >
-    <#if name?has_content> <label>${field.label}</label> </#if>
-    <div class="input-group">
-        <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i>
-            </span> </#if>
-        <select name="${name}" <@populate field=field ></@populate> >
-            <#list field["list"]?keys as groupKey>
-                <option <#if field.value==groupKey>selected</#if>
-                        value='${(groupKey!"")}'>${field["list"][groupKey]}</option>
-            </#list>
-        </select>
-    </div>
+        <#if name?has_content> <label>${field.label}</label> </#if>
+        <div class="input-group">
+            <#if field.icon?has_content><span class="input-group-addon"> <i class="fa fa-${field.icon}"></i>
+                </span> </#if>
+            <select name="${name}" <@populate field=field ></@populate> >
+                <#list field["list"]?keys as groupKey>
+                    <option <#if field.value==groupKey>selected</#if>
+                            value='${(groupKey!"")}'>${field["list"][groupKey]}</option>
+                </#list>
+            </select>
+        </div>
     </div>
 </#macro>
 
 <#macro checkBoxBody field name >
     <div class="form-group"
          <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if>
-         >
-    <input name="${name}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
-    <#if name?has_content> <label class="form-check-label">${field.label} </label> </#if>
+    >
+        <input name="${name}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
+        <#if name?has_content> <label class="form-check-label">${field.label} </label> </#if>
     </div>
 </#macro>
 <#macro hidden field name>
@@ -133,9 +129,9 @@
 <#macro radioButton field name>
     <div class="form-group"
          <#if field['gridindex']?? && field.gridindex?has_content >style="${gridindexwork(field.gridindex.column,field.gridindex.row)}"</#if>
-         >
-    <input name="${field.radioname}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
-    <#if name?has_content> <label class="form-check-label">${field.label}</label> </#if>
+    >
+        <input name="${field.radioname}" <@populate field=field ></@populate> <#if field.checkvalue?has_content><#if field.checkvalue==true>checked</#if></#if> >
+        <#if name?has_content> <label class="form-check-label">${field.label}</label> </#if>
     </div>
 </#macro>
 
