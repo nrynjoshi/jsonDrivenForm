@@ -10,17 +10,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
     @ExceptionHandler(URINotFoundException.class)
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
     public String notFound(Model model, Exception x) {
         process(model, x);
         return "error/404";
     }
 
     @ExceptionHandler(ValidationException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public String validationException(Model model, Exception x) {
 
         process(model, x);
@@ -30,6 +33,7 @@ public class GlobalControllerAdvice {
 
 
     @ExceptionHandler(freemarker.core.NonSequenceOrCollectionException.class)
+    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     public String parserError(Model model, Exception x) {
         // TODO: 5/11/2020 to notify administrator if something went wrong while converting JSON to view
         process(model, x);
@@ -42,12 +46,14 @@ public class GlobalControllerAdvice {
     }
 
     @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    @ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE)
     public String accessDeniedException(Model model, Exception x) {
         process(model, x);
         return "error/403";
     }
 
     @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     public String authenticationException(Model model, Exception x) {
         process(model, x);
         return "/login";
@@ -57,10 +63,11 @@ public class GlobalControllerAdvice {
     public @ResponseBody
     ResponseEntity jsonValidationException(JSONValidationException x) {
         x.printStackTrace();
-        return new ResponseEntity<>(x.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(x.getMessage(),HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
+    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     public String global(Model model, Exception x) {
         process(model, x);
         return "error/-1";
