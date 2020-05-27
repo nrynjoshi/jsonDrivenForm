@@ -102,6 +102,8 @@ public final class JDTScript {
                     if(!dbpassword.equals(dataMap.get("password")) && !StringUtils.equalsAnyIgnoreCase((String)dataMap.get("password"),MASK_PASSWORD)){
                         String encodedPassword = AppInject.passwordEncoder.encode((String) dataMap.get("password"));
                         dataMap.put("password", encodedPassword);
+                    }else{
+                        dataMap.put("password", user.get("password"));
                     }
                 }
             }
