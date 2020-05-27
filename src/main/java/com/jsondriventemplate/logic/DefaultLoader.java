@@ -50,7 +50,14 @@ public final class DefaultLoader {
             Map<String,Object> user=new HashMap<>();
             user.put("username",userName);
             user.put("password",AppInject.passwordEncoder.encode(password));
-            user.put("fullname","Super User");
+            user.put("firstname","Super User");
+            user.put("lastname","");
+            user.put("address","");
+            user.put("designation","");
+            user.put("salary","");
+            user.put("phone","");
+            user.put("gender","");
+            user.put("age","");
             user.put("role","Super_Admin");
             AppInject.mongoClientProvider.save(user, DBConstant.EMPLOYEE);
         }

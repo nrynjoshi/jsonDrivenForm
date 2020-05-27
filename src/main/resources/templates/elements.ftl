@@ -79,13 +79,6 @@
             </#list>
             </tbody>
         </#if>
-
-
-
-        <#--<#if list_value??>
-
-
-        </#if>-->
     </table>
 </#macro>
 
