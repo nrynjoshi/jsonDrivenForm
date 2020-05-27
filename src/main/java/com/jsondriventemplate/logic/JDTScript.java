@@ -16,6 +16,8 @@ import java.util.Map;
 @Component
 public final class JDTScript {
 
+    private static final String MASK_PASSWORD="***********";
+
     private static final List<String> JDT_SCRIPT = Arrays.asList(
             "create", "update", "delete", "retrieve", "retrieveByID","search"
     );
@@ -36,22 +38,30 @@ public final class JDTScript {
     private Object scriptProcess(Map<String,Object> requestDTO) throws Exception {
         String uri = (String) requestDTO.get("uri");
         String type = (String) requestDTO.get("type");
+        String id=(String)requestDTO.get("_id");
+        removeBeforeOperation(requestDTO);
         switch (type) {
             case "delete":
-                AppInject.mongoClientProvider.delete((String)requestDTO.get("_id"), uri);
+                AppInject.mongoClientProvider.delete(id, uri);
                 break;
             case "search":
                 validation(uri,type,requestDTO);
-                removeBeforeOperation(requestDTO);
                 return AppInject.mongoClientProvider.search(requestDTO, uri);
             case "retrieve":
                 return  AppInject.mongoClientProvider.findAll(uri);
             case "retrieveByID":
-                return AppInject.mongoClientProvider.findById((String)requestDTO.get("_id"), uri);
-            default:
+                Map record = AppInject.mongoClientProvider.findById(id, uri);
+                if(record.containsKey("password")){
+                    record.put("password",MASK_PASSWORD);
+                }
+                return record;
+            case "create":
                 validation(uri,type,requestDTO);
                 checkUserNamePassword(uri, type, requestDTO);
-                removeBeforeOperation(requestDTO);
+                AppInject.mongoClientProvider.save(requestDTO, uri);
+            case "update":
+                validation(uri,type,requestDTO);
+                checkUserNamePassword(uri, type, requestDTO);
                 AppInject.mongoClientProvider.save(requestDTO, uri);
         }
         return null;
@@ -89,9 +99,11 @@ public final class JDTScript {
             if (dataMap.containsKey("password")) {
                 if (user != null && !user.isEmpty()) {
                     String dbpassword  = (String) user.get("password");
-                    if(!dbpassword.equals(dataMap.get("password"))){
+                    if(!dbpassword.equals(dataMap.get("password")) && !StringUtils.equalsAnyIgnoreCase((String)dataMap.get("password"),MASK_PASSWORD)){
                         String encodedPassword = AppInject.passwordEncoder.encode((String) dataMap.get("password"));
                         dataMap.put("password", encodedPassword);
+                    }else{
+                        dataMap.put("password", user.get("password"));
                     }
                 }
             }
