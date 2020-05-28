@@ -65,8 +65,7 @@ public final class JDTScript {
             case AppConst.CREATE:
                 validation(uri, type, requestDTO);
                 checkUserNamePassword(uri, type, requestDTO);
-                AppInject.mongoClientProvider.save(requestDTO, uri);
-                break;
+                return AppInject.mongoClientProvider.save(requestDTO, uri);
             case AppConst.UPDATE:
                 if (StringUtils.isBlank(id)) {
                     throw new ValidationException("id is required");
