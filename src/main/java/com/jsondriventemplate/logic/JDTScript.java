@@ -16,7 +16,7 @@ import java.util.Map;
 @Component
 public final class JDTScript {
 
-    private static final String MASK_PASSWORD = "***********";
+    private static final String MASK_PASSWORD = "passwordCannotBeVisible";
 
     private static final List<String> JDT_SCRIPT = Arrays.asList(
             "create", "update", "delete", "retrieve", "retrieveByID", "search"
