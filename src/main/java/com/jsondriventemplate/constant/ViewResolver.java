@@ -15,7 +15,7 @@ public final class ViewResolver {
     public static final String ADMIN_JSON_TEMPLATE = ADMIN + SEPERATOR + JSON_TEMPLATE;
     public static final String ADMIN_JSON_TEMPLATE_EDIT = ADMIN + SEPERATOR + JSON_TEMPLATE_EDIT;
     private static final String PREVIEW = "preview";
-    public static final String ADMIN_PREVIEW = ADMIN + SEPERATOR + PREVIEW + SEPERATOR;
+    public static final String ADMIN_PREVIEW = PREVIEW + SEPERATOR;
 
 
 }
