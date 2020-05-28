@@ -1,6 +1,6 @@
-package com.jsondriventemplate.app;
+package com.jsondriventemplate.app.impl;
 
-import org.junit.Test;
+import com.jsondriventemplate.app.AbstractJDTScriptTest;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -10,13 +10,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class JDTScriptIT {
+public class JDTScriptIT extends AbstractJDTScriptTest {
 
 
-
-    @Test
-    public void test() {
-        System.out.println("test");
+    public JDTScriptIT() {
+        super(false);
     }
 
 }
