@@ -55,11 +55,7 @@ public final class JDTScript {
                     record.put("password", MASK_PASSWORD);
                 }
                 return record;
-            case "create":
-                validation(uri, type, requestDTO);
-                checkUserNamePassword(uri, type, requestDTO);
-                AppInject.mongoClientProvider.save(requestDTO, uri);
-            case "update":
+            default:
                 validation(uri, type, requestDTO);
                 checkUserNamePassword(uri, type, requestDTO);
                 AppInject.mongoClientProvider.save(requestDTO, uri);
