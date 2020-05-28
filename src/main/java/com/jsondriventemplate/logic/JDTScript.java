@@ -38,7 +38,7 @@ public final class JDTScript {
     private Object scriptProcess(Map<String,Object> requestDTO) throws Exception {
         String uri = (String) requestDTO.get("uri");
         String type = (String) requestDTO.get("type");
-        String id=(String)requestDTO.get("_id");
+        String id = (String) requestDTO.get("_id");
         removeBeforeOperation(requestDTO);
         switch (type) {
             case "delete":
@@ -103,7 +103,8 @@ public final class JDTScript {
                         String encodedPassword = AppInject.passwordEncoder.encode((String) dataMap.get("password"));
                         dataMap.put("password", encodedPassword);
                     }else{
-                        dataMap.put("password", user.get("password"));
+                        dataMap.remove("password");
+                        dataMap.put("password",dbpassword);
                     }
                 }
             }
