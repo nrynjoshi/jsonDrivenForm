@@ -28,9 +28,9 @@
     <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.js"></script>
-    <script src="/js/smoke.min.js"></script>
     <script src="/js/sidebar.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/smoke.min.js"></script>
 
 
     <script>
@@ -78,6 +78,22 @@
 
             });
 
+            </c:when>
+            <c:when test="${not empty type && type eq 'list'}">
+
+            $('.deleteBtn').on('click', function (e) { //use on if jQuery 1.7+
+                e.preventDefault();  //prevent form from submitting
+                var href = this.href;
+                $.smkConfirm({
+                    text: 'Are you sure?',
+                    accept: 'Yes',
+                    cancel: 'No'
+                }, function (res) {
+                    if (res) {
+                        window.location.href = href
+                    }
+                });
+            });
             </c:when>
             <c:otherwise>
             $('button[type="submit"]').click(function(e) {

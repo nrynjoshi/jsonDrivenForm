@@ -68,7 +68,7 @@
                             </#if>
                             <td <#if field.class?has_content>class="${field.class}"</#if>>${value}</td>
                     </#list>
-                    <td><a class="btn btn-primary" href="/admin/process/delete?id=${item['_id']}&uri=${uri}">Delete</a>
+                    <td><a class="btn btn-primary deleteBtn" href="/admin/process/delete?id=${item['_id']}&uri=${uri}">Delete</a>
                         <a class="btn btn-primary" href="/admin/${uri}?type=update&id=${item['_id']}">Update</a>
                     </td>
                 </tr>
