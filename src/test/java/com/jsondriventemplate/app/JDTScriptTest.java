@@ -1,14 +1,13 @@
 package com.jsondriventemplate.app;
 
 import com.jsondriventemplate.AppInject;
+import com.jsondriventemplate.constant.AppConst;
 import com.jsondriventemplate.logic.JDTScript;
 import com.jsondriventemplate.logic.JsonTemplateService;
 import com.jsondriventemplate.repo.MongoClientProvider;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.platform.commons.util.CollectionUtils;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,8 +36,8 @@ public class JDTScriptTest {
         JDTScript jdtScript=new JDTScript();
         Map<String,Object> requestDTO=new HashMap<>();
         requestDTO.put("type","search");
-        requestDTO.put("uri","employee");
-        requestDTO.put("_id","");
+        requestDTO.put("uri", "employee");
+        requestDTO.put(AppConst.ID, "");
         jdtScript.processAndReturn(requestDTO);
         System.out.println("test");
     }

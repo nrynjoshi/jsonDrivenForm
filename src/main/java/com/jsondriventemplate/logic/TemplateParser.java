@@ -2,8 +2,10 @@ package com.jsondriventemplate.logic;
 
 import com.jayway.jsonpath.JsonPath;
 import com.jsondriventemplate.AppInject;
-import com.jsondriventemplate.JSONTemplateConst;
 import com.jsondriventemplate.StatusCode;
+import com.jsondriventemplate.constant.AppConst;
+import com.jsondriventemplate.constant.Endpoints;
+import com.jsondriventemplate.constant.JSONTemplateConst;
 import com.jsondriventemplate.exception.URINotFoundException;
 import com.jsondriventemplate.repo.DBConstant;
 import freemarker.template.Template;
@@ -46,25 +48,25 @@ public final class TemplateParser {
 
     public String pageDefinition(String uri, String jsonData, boolean isAdminPreview, boolean isInnerBodyOnly, String type, String id, List<Map> value) throws IOException, TemplateException {
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("uri", uri);
-        paramMap.put("type", type);
+        paramMap.put(AppConst.URI, uri);
+        paramMap.put(AppConst.TYPE, type);
         jsonData = cleanUpJSONData(jsonData, paramMap);
         try {
             paramMap.put(JSONTemplateConst.LAYOUT, layoutProcess(jsonData));
             paramMap.put(JSONTemplateConst.ELEMENTS, element(jsonData, type));
             if (StringUtils.isNotBlank(id)) {
-                paramMap.put("_id", id);
+                paramMap.put(AppConst.ID, id);
             }
             if (value != null) {
-                paramMap.put("list_value", value);
+                paramMap.put(AppConst.LIST_VALUE, value);
             } else {
                 if (StringUtils.isBlank(type)) {
-                    type = "list";
+                    type = AppConst.LIST;
                 }
                 if (StringUtils.isNotBlank(type)) {
-                    if ("list".equals(type)) {
+                    if (AppConst.LIST.equals(type)) {
                         List<?> all = AppInject.mongoClientProvider.findAll(uri);
-                        paramMap.put("list_value", all);
+                        paramMap.put(AppConst.LIST_VALUE, all);
                     }
                 }
 
@@ -76,9 +78,9 @@ public final class TemplateParser {
                 throw x;
             }
         }
-        String templateFtl = "home.ftl";
+        String templateFtl = JSONTemplateConst.HOME_FTL;
         if (isInnerBodyOnly) {
-            templateFtl = "innerbody.ftl";
+            templateFtl = JSONTemplateConst.INNERBODY_FTL;
         }
         Template template = AppInject.configuration.getTemplate(templateFtl);
         return executeDef(jsonData, template, paramMap);
@@ -86,7 +88,6 @@ public final class TemplateParser {
 
     private Map<String, Object> layoutProcess(String jsonData) throws IOException {
         String layout = JsonPath.parse(jsonData).read("$['definitions']['page']['layout']");
-//        File file = Paths.get(JSONTemplateConst.JSON_SCHEMA_ATTR, layout).toFile();
         File file = ResourceUtils.getFile("classpath:" + JSONTemplateConst.JSON_SCHEMA_ATTR + layout);
         return JSONLoader.mapper(JSONLoader.laodJSONDefinition(file));
     }
@@ -103,7 +104,7 @@ public final class TemplateParser {
             StringBuilder builder = new StringBuilder("$");
             LinkedHashMap elementsJSONObject = (LinkedHashMap) element;
             String $ref = (String) elementsJSONObject.get("$ref");
-            String[] splitVal = StringUtils.split($ref, "/");
+            String[] splitVal = StringUtils.split($ref, Endpoints.SEPERATOR);
             String lastType = null;
             for (String val : splitVal) {
                 if (StringUtils.equalsAnyIgnoreCase(val, "#")) {

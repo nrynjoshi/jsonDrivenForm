@@ -1,5 +1,6 @@
 package com.jsondriventemplate.repo;
 
+import com.jsondriventemplate.constant.AppConst;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -15,7 +16,7 @@ import java.util.UUID;
 public class MongoClientProvider {
 
     private final MongoOperations mongoOperations;
-    private static final String _ID = "_id";
+    private static final String _ID = AppConst.ID;
     private static final String URL = "url";
 
     public MongoClientProvider(MongoOperations mongoOperations) {

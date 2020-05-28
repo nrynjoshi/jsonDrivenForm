@@ -1,7 +1,9 @@
 package com.jsondriventemplate.logic;
 
 import com.jsondriventemplate.AppInject;
-import com.jsondriventemplate.JSONTemplateConst;
+import com.jsondriventemplate.constant.AppConst;
+import com.jsondriventemplate.constant.AuthConst;
+import com.jsondriventemplate.constant.JSONTemplateConst;
 import com.jsondriventemplate.repo.DBConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,19 +23,21 @@ public final class DefaultLoader {
     private String userName;
     @Value("${default.password}")
     private String password;
+    @Value("${default.firstname}")
+    private String firstName;
     @Value("${database.createupdate}")
     private String createUpdate;
 
     public void defaultJSONLoader() throws IOException {
-        loadDefaultJSON("login", "Login Page", "login.json");
-        loadDefaultJSON("dashboard", "Dashboard", "dashboard.json");
-        loadDefaultJSON("employee", "Employee", "employee.json");
-        loadDefaultJSON("auth-dashboard", "Employee Dashboard", "auth-dashboard.json");
+        loadDefaultJSON(JSONTemplateConst.LOGIN, JSONTemplateConst.LOGIN_NAME, JSONTemplateConst.LOGIN_JSON);
+        loadDefaultJSON(JSONTemplateConst.DASHBOARD, JSONTemplateConst.DASHBOARD_NAME, JSONTemplateConst.DASHBOARD_JSON);
+        loadDefaultJSON(JSONTemplateConst.EMPLOYEEE, JSONTemplateConst.EMPLOYEEE_NAME, JSONTemplateConst.EMPLOYEEE_JSON);
+        loadDefaultJSON(JSONTemplateConst.EMPLOYEE_DASHBOARD, JSONTemplateConst.EMPLOYEE_DASHBOARD_NAME, JSONTemplateConst.EMPLOYEE_DASHBOARD_JSON);
     }
 
     public void createUpdateDefaultJSON() throws IllegalAccessException {
         //create necessary collection if not exist
-        if(createUpdate.equalsIgnoreCase("create")){
+        if (createUpdate.equalsIgnoreCase(AppConst.CREATE)) {
             Field[] fields = DBConstant.class.getDeclaredFields();
             for (Field field : fields) {
                 String value = (String) field.get(new DBConstant());
@@ -45,13 +49,13 @@ public final class DefaultLoader {
     }
 
     public void loadDefaultUser() {
-        Map login = AppInject.mongoClientProvider.findByAtt("username","superadmin", DBConstant.EMPLOYEE);
-        if(login==null || StringUtils.isBlank((CharSequence) login.get("_id"))){
-            Map<String,Object> user=new HashMap<>();
-            user.put("username",userName);
-            user.put("password",AppInject.passwordEncoder.encode(password));
-            user.put("firstname","Super User");
-            user.put("role","Super_Admin");
+        Map login = AppInject.mongoClientProvider.findByAtt(AuthConst.USERNAME, userName, DBConstant.EMPLOYEE);
+        if (login == null || StringUtils.isBlank((CharSequence) login.get(AppConst.ID))) {
+            Map<String, Object> user = new HashMap<>();
+            user.put(AuthConst.USERNAME, userName);
+            user.put(AuthConst.PASSWORD, AppInject.passwordEncoder.encode(password));
+            user.put(AuthConst.FIRST_NAME, firstName);
+            user.put(AuthConst.ROLE, AuthConst.SUPER_ADMIN_ROLE);
             AppInject.mongoClientProvider.save(user, DBConstant.EMPLOYEE);
         }
     }
@@ -59,21 +63,21 @@ public final class DefaultLoader {
     private void loadDefaultJSON(String url, String name, String fileName) throws IOException {
         {
             Map login = AppInject.mongoClientProvider.findByURL(url, DBConstant.TEMPLATE_INFORMATION);
-            if (login == null || StringUtils.isBlank((CharSequence) login.get("url"))) {
+            if (login == null || StringUtils.isBlank((CharSequence) login.get(AppConst.URL))) {
                 Map<String, Object> loginTemplateInformation = new HashMap<>();
-                loginTemplateInformation.put("url", url);
-                loginTemplateInformation.put("name", name);
+                loginTemplateInformation.put(AppConst.URL, url);
+                loginTemplateInformation.put(JSONTemplateConst.NAME, name);
                 AppInject.mongoClientProvider.save(loginTemplateInformation, DBConstant.TEMPLATE_INFORMATION);
             }
         }
         {
             Map login = AppInject.mongoClientProvider.findByURL(url, DBConstant.TEMPLATE_INFORMATION);
-            Map templateDef = AppInject.mongoClientProvider.findById((String) login.get("_id"), DBConstant.JSON_TEMPLATE_DEFINITION);
-            if (templateDef == null || StringUtils.isBlank((CharSequence) templateDef.get("json"))) {
+            Map templateDef = AppInject.mongoClientProvider.findById((String) login.get(AppConst.ID), DBConstant.JSON_TEMPLATE_DEFINITION);
+            if (templateDef == null || StringUtils.isBlank((CharSequence) templateDef.get(AppConst.JSON))) {
                 Map<String, Object> loginTemplateInformation = new HashMap<>();
-                loginTemplateInformation.put("_id", login.get("_id"));
+                loginTemplateInformation.put(AppConst.ID, login.get(AppConst.ID));
                 File file = ResourceUtils.getFile("classpath:" + JSONTemplateConst.JSON_SCHEMA_ATTR + fileName);
-                loginTemplateInformation.put("json", JSONLoader.laodJSONDefinition(file));
+                loginTemplateInformation.put(AppConst.JSON, JSONLoader.laodJSONDefinition(file));
                 AppInject.mongoClientProvider.save(loginTemplateInformation, DBConstant.JSON_TEMPLATE_DEFINITION);
             }
         }
