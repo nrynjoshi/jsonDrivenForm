@@ -8,6 +8,7 @@ import com.jsondriventemplate.exception.ValidationException;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.LinkedHashMap;
@@ -23,7 +24,14 @@ public final class JDTScript {
     }
 
     public <T> T processAndReturn(@NotNull Map<String, Object> requestDTO) throws Exception {
-        boolean isScriptProcessAble = AppConst.JDT_SCRIPT.contains(requestDTO.get(AppConst.TYPE));
+        if (CollectionUtils.isEmpty(requestDTO)) {
+            throw new ValidationException("request is not valid");
+        }
+        String type = (String) requestDTO.get(AppConst.TYPE);
+        if (StringUtils.isBlank(type)) {
+            throw new ValidationException("type is required");
+        }
+        boolean isScriptProcessAble = AppConst.JDT_SCRIPT.contains(type);
         if (!isScriptProcessAble) {
             throw new Exception("provided script is not available within this system");
         }
@@ -33,6 +41,9 @@ public final class JDTScript {
 
     private Object scriptProcess(Map<String, Object> requestDTO) throws Exception {
         String uri = (String) requestDTO.get(AppConst.URI);
+        if (StringUtils.isBlank(uri)) {
+            throw new ValidationException("uri is required");
+        }
         String type = (String) requestDTO.get(AppConst.TYPE);
         String id = (String) requestDTO.get(AppConst.ID);
         removeBeforeOperation(requestDTO);
@@ -51,10 +62,19 @@ public final class JDTScript {
                     record.put(AuthConst.PASSWORD, MASK_PASSWORD);
                 }
                 return record;
-            default:
+            case AppConst.CREATE:
                 validation(uri, type, requestDTO);
                 checkUserNamePassword(uri, type, requestDTO);
                 AppInject.mongoClientProvider.save(requestDTO, uri);
+                break;
+            case AppConst.UPDATE:
+                if (StringUtils.isBlank(id)) {
+                    throw new ValidationException("id is required");
+                }
+                validation(uri, type, requestDTO);
+                checkUserNamePassword(uri, type, requestDTO);
+                AppInject.mongoClientProvider.save(requestDTO, uri);
+                break;
         }
         return null;
     }
@@ -125,9 +145,12 @@ public final class JDTScript {
             }
             if (value.has("validation_regx") && StringUtils.isNotBlank(value.getString("validation_regx"))) {
                 String validation_regx = value.getString("validation_regx");
-                boolean matches = ((String) dataMap.get(key)).matches(validation_regx);
-                if (!matches) {
-                    error.append(key).append(" does not contain valid data.");
+                String actualData = (String) dataMap.get(key);
+                if (StringUtils.isNotBlank(actualData)) {
+                    boolean matches = actualData.matches(validation_regx);
+                    if (!matches) {
+                        error.append(key).append(" does not contain valid data.");
+                    }
                 }
             }
         }
