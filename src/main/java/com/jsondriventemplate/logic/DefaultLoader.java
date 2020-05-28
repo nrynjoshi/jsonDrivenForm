@@ -51,13 +51,6 @@ public final class DefaultLoader {
             user.put("username",userName);
             user.put("password",AppInject.passwordEncoder.encode(password));
             user.put("firstname","Super User");
-            user.put("lastname","");
-            user.put("address","");
-            user.put("designation","");
-            user.put("salary","");
-            user.put("phone","");
-            user.put("gender","");
-            user.put("age","");
             user.put("role","Super_Admin");
             AppInject.mongoClientProvider.save(user, DBConstant.EMPLOYEE);
         }

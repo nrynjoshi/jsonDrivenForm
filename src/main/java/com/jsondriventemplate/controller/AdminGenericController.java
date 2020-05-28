@@ -2,10 +2,13 @@ package com.jsondriventemplate.controller;
 
 import com.jsondriventemplate.AppInject;
 import com.jsondriventemplate.JSONTemplateConst;
+import com.jsondriventemplate.exception.ValidationException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,20 +41,36 @@ public class AdminGenericController {
 
     //--------------------------------------------------------------------------------------------
     @PostMapping(value = Endpoints.PROCESS+Endpoints.SAVE)
-    public String saveRecord(@RequestBody MultiValueMap map) throws Exception {
+    public String saveRecord(@RequestBody MultiValueMap map, RedirectAttributes redirectAttributes) throws Exception {
         Map<String,Object> map1 = map.toSingleValueMap();
         String uri = (String) map1.get("uri");
         map1.put("type","create");
-        AppInject.jdtScript.process(map1);
+        try{
+            AppInject.jdtScript.process(map1);
+            redirectAttributes.addFlashAttribute("successMessage","Record Created Successfully");
+        }catch (ValidationException ex){
+            redirectAttributes.addFlashAttribute("errorMessage",ex.getMessage());
+            redirectAttributes.addFlashAttribute("record",new JSONObject(map.toSingleValueMap()).toString());
+            return "redirect:/admin/"+uri+"?type=create";
+
+        }
         return "redirect:/admin/"+uri+"?type=list";
     }
 
     @PostMapping(value = Endpoints.PROCESS+Endpoints.UPDATE)
-    public String updateRecord(@RequestBody MultiValueMap map) throws Exception {
+    public String updateRecord(@RequestBody MultiValueMap map, RedirectAttributes redirectAttributes) throws Exception {
         Map<String,Object> map1 = map.toSingleValueMap();
         String uri = (String) map1.get("uri");
         map1.put("type","update");
-        AppInject.jdtScript.process(map1);
+        try{
+            AppInject.jdtScript.process(map1);
+            redirectAttributes.addFlashAttribute("successMessage","Record Updated Successfully");
+        }catch (ValidationException ex){
+            redirectAttributes.addFlashAttribute("errorMessage",ex.getMessage());
+            return "redirect:/admin/"+uri+"?type=update&id="+map1.get("_id");
+
+        }
+
         return "redirect:/admin/"+uri+"?type=list";
     }
 
@@ -65,12 +84,18 @@ public class AdminGenericController {
     }
 
     @GetMapping(value = Endpoints.PROCESS+Endpoints.DELETE)
-    public String deleteRecord(@RequestParam String id,@RequestParam String uri) throws Exception {
+    public String deleteRecord(@RequestParam String id,@RequestParam String uri, RedirectAttributes redirectAttributes) throws Exception {
         Map<String,Object> map1 = new HashMap();
         map1.put("type","delete");
         map1.put("_id",id);
         map1.put("uri",uri);
-        AppInject.jdtScript.process(map1);
+
+        try{
+            AppInject.jdtScript.process(map1);
+            redirectAttributes.addFlashAttribute("successMessage","Record Deleted Successfully");
+        }catch (ValidationException ex){
+            redirectAttributes.addFlashAttribute("errorMessage","Record Cannot Be Deleted.");
+        }
         return "redirect:/admin/"+uri+"?type=list";
     }
 

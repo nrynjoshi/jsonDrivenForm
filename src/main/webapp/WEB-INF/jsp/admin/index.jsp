@@ -24,13 +24,12 @@
         </c:if>
     </div>
 
-
     <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.js"></script>
-    <script src="/js/smoke.min.js"></script>
     <script src="/js/sidebar.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/smoke.min.js"></script>
 
 
     <script>
@@ -50,15 +49,39 @@
                     type: 'GET',
                     dataType: 'json', // added data type
                     success: function (data) {
-                        for (var i in data) {
-                            $('input[name="' + i + '"]').val(data[i]);
-                        }
+                        loadFormData(data);
                         // $('form').loadJSON(data);
                     }
                 });
             }
 
             </c:if>
+
+            function loadFormData(data) {
+                for (var i in data) {
+                    $('input[name="' + i + '"]').val(data[i]);
+                }
+            }
+
+            <c:choose>
+            <c:when test="${not empty errorMessage}">
+            $.smkAlert({
+                text: '${errorMessage}',
+                type: 'danger'
+            });
+            <c:if test="${not empty record}">
+            loadFormData(${record});
+            </c:if>
+            </c:when>
+            <c:when test="${not empty successMessage}">
+            console.log('test');
+            $.smkAlert({
+                text: '${successMessage}',
+                type: 'success'
+            });
+            </c:when>
+            </c:choose>
+
             <c:choose>
             <c:when test="${not empty type && type eq 'search'}">
             $('button[type="submit"]').on('click', function (e) { //use on if jQuery 1.7+
@@ -79,8 +102,24 @@
             });
 
             </c:when>
+            <c:when test="${not empty type && type eq 'list'}">
+
+            $('.deleteBtn').on('click', function (e) { //use on if jQuery 1.7+
+                e.preventDefault();  //prevent form from submitting
+                var href = this.href;
+                $.smkConfirm({
+                    text: 'Are you sure?',
+                    accept: 'Yes',
+                    cancel: 'No'
+                }, function (res) {
+                    if (res) {
+                        window.location.href = href
+                    }
+                });
+            });
+            </c:when>
             <c:otherwise>
-            $('button[type="submit"]').click(function(e) {
+            $('button[type="submit"]').click(function (e) {
                 e.preventDefault();
                 if ($('form').smkValidate()) {
                     $('form').submit();
