@@ -12,12 +12,15 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import net.minidev.json.JSONArray;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import org.springframework.util.ResourceUtils;
+import org.springframework.util.FileCopyUtils;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Component
@@ -88,8 +91,10 @@ public final class TemplateParser {
 
     private Map<String, Object> layoutProcess(String jsonData) throws IOException {
         String layout = JsonPath.parse(jsonData).read("$['definitions']['page']['layout']");
-        File file = ResourceUtils.getFile("classpath:" + JSONTemplateConst.JSON_SCHEMA_ATTR + layout);
-        return JSONLoader.mapper(JSONLoader.laodJSONDefinition(file));
+        Resource resource = new ClassPathResource("classpath:" + JSONTemplateConst.JSON_SCHEMA_ATTR + layout);
+        InputStream inputStream = resource.getInputStream();
+        byte[] bdata = FileCopyUtils.copyToByteArray(inputStream);
+        return JSONLoader.mapper(new String(bdata, StandardCharsets.UTF_8));
     }
 
     private List<LinkedHashMap> element(String jsonData, String type) {

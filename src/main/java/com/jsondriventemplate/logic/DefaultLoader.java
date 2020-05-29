@@ -7,12 +7,15 @@ import com.jsondriventemplate.constant.JSONTemplateConst;
 import com.jsondriventemplate.repo.DBConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
+import org.springframework.util.FileCopyUtils;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,8 +79,10 @@ public final class DefaultLoader {
             if (templateDef == null || StringUtils.isBlank((CharSequence) templateDef.get(AppConst.JSON))) {
                 Map<String, Object> loginTemplateInformation = new HashMap<>();
                 loginTemplateInformation.put(AppConst.ID, login.get(AppConst.ID));
-                File file = ResourceUtils.getFile("classpath:" + JSONTemplateConst.JSON_SCHEMA_ATTR + fileName);
-                loginTemplateInformation.put(AppConst.JSON, JSONLoader.laodJSONDefinition(file));
+                Resource resource = new ClassPathResource("classpath:" + JSONTemplateConst.JSON_SCHEMA_ATTR + fileName);
+                InputStream inputStream = resource.getInputStream();
+                byte[] bdata = FileCopyUtils.copyToByteArray(inputStream);
+                loginTemplateInformation.put(AppConst.JSON, new String(bdata, StandardCharsets.UTF_8));
                 AppInject.mongoClientProvider.save(loginTemplateInformation, DBConstant.JSON_TEMPLATE_DEFINITION);
             }
         }
