@@ -147,6 +147,7 @@
         });
 
         $('#run').bind("click", function () {
+            arrangeJSON();
             var data = $('#json-display').text();
             $.ajax({
                 type: 'POST',
@@ -159,6 +160,7 @@
         });
 
         $('#saveJSON').bind("click", function () {
+            arrangeJSON();
             var data = $('#json-display').text();
             $.ajax({
                 type: 'POST',
