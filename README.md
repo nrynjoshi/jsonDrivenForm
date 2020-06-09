@@ -52,11 +52,11 @@ password: superadmin123
 - After Login to dashboard, Click on Editor Menu from sidebar
 - Select a Login from dropdown menu
 - Click on Load (this will load json definitions for login page)
-    ![Editor Login](https://github.com/nrynjoshi/jsonDrivenForm/img/Editor-with-Login-Page.JPG?raw=true)
+    ![Editor Login](https://github.com/nrynjoshi/jsonDrivenForm/master/img/Editor-with-Login-Page.JPG?raw=true)
 - Login JSON password and username before field chang
-    ![Editor Login](https://github.com/nrynjoshi/jsonDrivenForm/img/Editor-Login-Page-Before-Password-Changed.JPG?raw=true)
+    ![Editor Login](https://github.com/nrynjoshi/jsonDrivenForm/master/img/Editor-Login-Page-Before-Password-Changed.JPG?raw=true)
 - Login JSON password and username field changed
-    ![Editor Login](https://github.com/nrynjoshi/jsonDrivenForm/img/Editor-Login-Page-After-Password-Changed.JPG?raw=true)    
+    ![Editor Login](https://github.com/nrynjoshi/jsonDrivenForm/master/img/Editor-Login-Page-After-Password-Changed.JPG?raw=true)    
 
 ## Deploying the application to Heroku
 
