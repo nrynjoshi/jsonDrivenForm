@@ -34,7 +34,7 @@ $ mvn spring-boot:run
 Navigate to http://localhost:8080.
 
 ## Default Login Credential
-username: superadmin
+username: superadmin  
 password: superadmin123
 
 ## JSON Template Menu Flow
