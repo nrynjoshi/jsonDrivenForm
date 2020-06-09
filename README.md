@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/codecentric/springboot-sample-app.svg?branch=master)](https://travis-ci.org/codecentric/springboot-sample-app)
 [![Coverage Status](https://coveralls.io/repos/github/codecentric/springboot-sample-app/badge.svg?branch=master)](https://coveralls.io/github/codecentric/springboot-sample-app?branch=master)
 
+
 ## About
 Simple [Spring Boot](http://projects.spring.io/spring-boot/) app which parse json template to html form and perform its basic CRUD operation to the db.
 
@@ -51,11 +52,11 @@ password: superadmin123
 - After Login to dashboard, Click on Editor Menu from sidebar
 - Select a Login from dropdown menu
 - Click on Load (this will load json definitions for login page)
-    ![Editor Login](https://github.com/nrynjoshi/jsonDrivenForm/master/img/Editor-with-Login-Page.JPG?raw=true)
+    ![Editor Login](https://raw.githubusercontent.com/nrynjoshi/jsonDrivenForm/master/img/Editor-with-Login-Page.JPG?raw=true)
 - Login JSON password and username before field chang
-    ![Editor Login](https://github.com/nrynjoshi/jsonDrivenForm/master/img/Editor-Login-Page-Before-Password-Changed.JPG?raw=true)
+    ![Editor Login](https://raw.githubusercontent.com/nrynjoshi/jsonDrivenForm/master/img/Editor-Login-Page-Before-Password-Changed.JPG?raw=true)
 - Login JSON password and username field changed
-    ![Editor Login](https://github.com/nrynjoshi/jsonDrivenForm/master/img/Editor-Login-Page-After-Password-Changed.JPG?raw=true)    
+    ![Editor Login](https://raw.githubusercontent.com/nrynjoshi/jsonDrivenForm/master/img/Editor-Login-Page-After-Password-Changed.JPG?raw=true)    
 
 ## Deploying the application to Heroku
 
@@ -126,5 +127,6 @@ JSON template Information
     gridindex is used on each field to fixed grid position you can use
     - column = represent the json field to be populate on particular position/point
     - row = represent the json field to be populate on particular position/point
-             
+     
+
      
