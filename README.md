@@ -1,9 +1,5 @@
 # JSON Driven Form
 
-[![Build Status](https://travis-ci.org/codecentric/springboot-sample-app.svg?branch=master)](https://travis-ci.org/codecentric/springboot-sample-app)
-[![Coverage Status](https://coveralls.io/repos/github/codecentric/springboot-sample-app/badge.svg?branch=master)](https://coveralls.io/github/codecentric/springboot-sample-app?branch=master)
-
-
 ## About
 Simple [Spring Boot](http://projects.spring.io/spring-boot/) app which parse json template to html form and perform its basic CRUD operation to the db.
 
